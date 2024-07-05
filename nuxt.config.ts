@@ -1,5 +1,25 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  app: {
+    head: {
+      link: [
+        { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
+        {
+          rel: "stylesheet",
+          href: "https://unpkg.com/cloudinary-video-player@1.5.9/dist/cld-video-player.min.css",
+        },
+      ],
+      script: [
+        { src: "//www.instagram.com/embed.js" },
+        {
+          src: "https://unpkg.com/cloudinary-core@latest/cloudinary-core-shrinkwrap.min.js",
+        },
+        {
+          src: "https://unpkg.com/cloudinary-video-player@1.5.9/dist/cld-video-player.min.js",
+        },
+      ],
+    },
+  },
   devtools: { enabled: true },
   modules: [
     "@nuxt/content",
@@ -8,7 +28,12 @@ export default defineNuxtConfig({
     "@nuxtjs/supabase",
     "shadcn-nuxt",
     "@nuxtjs/algolia",
+    "@pinia/nuxt",
+    "@nuxtjs/cloudinary",
   ],
+  alias: {
+    pinia: "/node_modules/@pinia/nuxt/node_modules/pinia/dist/pinia.mjs",
+  },
   algolia: {
     apiKey: process.env.ALGOLIA_SEARCH_API_KEY,
     applicationId: process.env.ALGOLIA_APPLICATION_ID,

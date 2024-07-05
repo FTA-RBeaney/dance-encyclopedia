@@ -43,7 +43,7 @@ withDefaults(defineProps<AlbumArtworkProps>(), {
           <ContextMenuSubTrigger>Add to Playlist</ContextMenuSubTrigger>
           <ContextMenuSubContent class="w-48">
             <ContextMenuItem>
-              <PlusCircledIcon class="mr-2 h-4 w-4" />
+              <!-- <PlusCircledIcon class="mr-2 h-4 w-4" /> -->
               New Playlist
             </ContextMenuItem>
             <ContextMenuSeparator />

@@ -1,0 +1,95 @@
+<template>
+  <div v-if="isLoaded" :class="('space-y-3', $attrs.class ?? '')">
+    <div class="relative mr-2 overflow-hidden rounded-md">
+      <a :href="props.media.link" class="relative block w-60 h-96 space-y-3">
+        <video
+          class="absolute"
+          height="100%"
+          @mouseenter="handleMouseEnter"
+          @mouseleave="handleMouseLeave"
+          loop
+          muted
+        >
+          <source :src="media.publicId" type="video/mp4" />
+        </video>
+      </a>
+    </div>
+    <div class="space-y-1 text-sm mt-3">
+      <h3 class="font-medium leading-none">
+        {{ props.media.name }}
+      </h3>
+      <p class="text-xs text-muted-foreground">
+        {{ props.media.artist }}
+      </p>
+    </div>
+  </div>
+  <div v-else>
+    <div
+      role="status"
+      class="flex items-center justify-center w-60 h-96 max-w-sm bg-gray-300 rounded-lg animate-pulse dark:bg-gray-700"
+    >
+      <svg
+        class="w-10 h-10 text-gray-200 dark:text-gray-600"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="currentColor"
+        viewBox="0 0 16 20"
+      >
+        <path
+          d="M5 5V.13a2.96 2.96 0 0 0-1.293.749L.879 3.707A2.98 2.98 0 0 0 .13 5H5Z"
+        />
+        <path
+          d="M14.066 0H7v5a2 2 0 0 1-2 2H0v11a1.97 1.97 0 0 0 1.934 2h12.132A1.97 1.97 0 0 0 16 18V2a1.97 1.97 0 0 0-1.934-2ZM9 13a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2Zm4 .382a1 1 0 0 1-1.447.894L10 13v-2l1.553-1.276a1 1 0 0 1 1.447.894v2.764Z"
+        />
+      </svg>
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+</template>
+
+<script setup>
+const props = defineProps({
+  media: Object,
+  isLoaded: Boolean,
+});
+
+const isLoaded = ref(false);
+
+onMounted(() => {
+  isLoaded.value = true;
+});
+
+const handleMouseEnter = (e) => {
+  const vid = e.target;
+  vid.muted = true;
+  vid.play();
+};
+
+const handleMouseLeave = (e) => {
+  const vid = e.target;
+  vid.muted = true;
+  vid.currentTime = 0;
+  vid.pause();
+};
+</script>
+
+<style>
+.video-container > div {
+  /* width: 250px; */
+  border-radius: calc(var(--radius) - 2px);
+}
+video {
+  object-fit: cover;
+  left: 0;
+  top: 0;
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+div.vjs-poster {
+  background-size: cover;
+}
+</style>

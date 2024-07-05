@@ -1,5 +1,4 @@
 <script setup>
-const { auth } = useSupabaseClient();
 const supabaseUser = useSupabaseUser();
 
 const supabase = useSupabaseClient();

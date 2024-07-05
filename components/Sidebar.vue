@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // import type { Playlist } from "../data/playlists";
-
+const supabaseUser = useSupabaseUser();
 interface SidebarProps {
   playlists: [];
 }
@@ -14,7 +14,7 @@ defineProps<SidebarProps>();
       <div class="px-3 py-2">
         <h2 class="mb-2 px-4 text-lg font-semibold tracking-tight">Discover</h2>
         <div class="space-y-1">
-          <NuxtLink to="/">
+          <NuxtLink to="/moves">
             <Button variant="ghost" class="w-full justify-start">
               <!-- <Button variant="secondary" class="w-full justify-start"></Button> -->
               <svg
@@ -56,7 +56,7 @@ defineProps<SidebarProps>();
           </NuxtLink>
         </div>
       </div>
-      <div class="px-3 py-2">
+      <div v-if="supabaseUser" class="px-3 py-2">
         <h2 class="mb-2 px-4 text-lg font-semibold tracking-tight">
           Sunshine Swing
         </h2>

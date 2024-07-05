@@ -1,11 +1,10 @@
 <template>
   <div>
-    <Heading title="Account" description="Login to your account" />
+    <Heading title="Account" description="Your account" />
     <Account v-if="user" />
   </div>
 </template>
 
 <script setup>
 const user = useSupabaseUser();
-console.log("user", user.value);
 </script>

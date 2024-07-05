@@ -8,28 +8,28 @@ export interface Album {
 export const listenNowAlbums: Album[] = [
   {
     name: "The Shim Sham",
-    artist: "Ethan Byte",
+    artist: "Leonard Reed and Willie Bryant",
     cover:
       "https://www.girlinthejitterbugdress.com/wp-content/uploads/frankie_manning2.jpg",
     link: "https://www.youtube.com/watch?v=bjfM4Wrj9UI",
   },
   {
     name: "The Big Apple",
-    artist: "Nina Netcode",
+    artist: "Frankie Manning",
     cover:
       "https://capetownswing.co.za/wp-content/uploads/2023/02/big-apple.jpeg",
     link: "https://www.youtube.com/watch?v=H1K5M5xluZs",
   },
   {
     name: "The Tranky Doo",
-    artist: "Lena Logic",
+    artist: "Frankie Manning",
     cover:
       "https://i0.wp.com/blog.straycat.me.uk/wp-content/uploads/2020/10/TRANKY-featured-image.png",
     link: "https://www.youtube.com/watch?v=Xz7xSX1F3ZM",
   },
   {
     name: "Mama's Stew",
-    artist: "Beth Binary",
+    artist: "George Sullivan",
     cover:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzVYy4-LRA60P2jIo1rdcKvuY7_2DtvIME6w&s",
     link: "https://www.youtube.com/watch?v=T8ChDfbgP18",
@@ -41,43 +41,47 @@ export const listenNowAlbums: Album[] = [
       "https://swingsters.co.uk/wp-content/uploads/2021/06/Norma-Miller.jpg",
     link: "https://www.youtube.com/watch?v=47bQtvbvOIU",
   },
+  {
+    name: "First stops",
+    artist: "Frankie Manning",
+    cover: "https://i.ytimg.com/vi/pDw_v5NvmG8/maxresdefault.jpg",
+    link: "https://www.youtube.com/watch?v=pDw_v5NvmG8",
+  },
 ];
 
 export const madeForYouAlbums: Album[] = [
   {
-    name: "Thinking Components",
-    artist: "Lena Logic",
+    name: "Hellzapoppin'",
+    artist: "1941",
     cover:
-      "https://images.unsplash.com/photo-1615247001958-f4bc92fa6a4a?w=300&dpr=2&q=80",
+      "https://images.squarespace-cdn.com/content/v1/56841850cbced6a015738a0a/1532376458066-WR2SJ6UKMDAC33Y8CS30/image-asset.png",
+    link: "https://www.youtube.com/watch?v=Sg0foUjMT3c",
   },
   {
-    name: "Functional Fury",
-    artist: "Beth Binary",
-    cover:
-      "https://images.unsplash.com/photo-1513745405825-efaf9a49315f?w=300&dpr=2&q=80",
+    name: "Groovie Movie",
+    artist: "1944",
+    cover: "https://i.ytimg.com/vi/7EPOtDBAeYo/maxresdefault.jpg",
+    link: "https://www.youtube.com/watch?v=WKW8KagR93Q",
   },
   {
-    name: "React Rendezvous",
-    artist: "Ethan Byte",
+    name: "Malcom X",
+    artist: "1992",
     cover:
-      "https://images.unsplash.com/photo-1614113489855-66422ad300a4?w=300&dpr=2&q=80",
+      "https://44.media.tumblr.com/4c41d6e6e624732a52e9913f383ad4d0/tumblr_o41nulAEKD1t30xsso10_500.gif",
+    link: "https://www.youtube.com/watch?v=OapkoQEzQS0",
   },
   {
-    name: "Stateful Symphony",
-    artist: "Beth Binary",
+    name: "A Day at the Races",
+    artist: "1937",
     cover:
-      "https://images.unsplash.com/photo-1446185250204-f94591f7d702?w=300&dpr=2&q=80",
+      "https://swungover.wordpress.com/wp-content/uploads/2020/03/a-day-at-the-races.png?w=1200",
+    link: "https://www.youtube.com/watch?v=egopcBsOPIU",
   },
   {
-    name: "Async Awakenings",
-    artist: "Nina Netcode",
+    name: "Swing Kids",
+    artist: "1993",
     cover:
-      "https://images.unsplash.com/photo-1468817814611-b7edf94b5d60?w=300&dpr=2&q=80",
-  },
-  {
-    name: "The Art of Reusability",
-    artist: "Lena Logic",
-    cover:
-      "https://images.unsplash.com/photo-1490300472339-79e4adc6be4a?w=300&dpr=2&q=80",
+      "https://assets.mubicdn.net/images/film/51173/image-w1280.jpg?1661806840",
+    link: "https://www.youtube.com/watch?v=-WIJ_PF6Yo4",
   },
 ];
