@@ -5,9 +5,20 @@ const user = useSupabaseUser();
 const { data: dancers } = await useAsyncData("dancers", async () => {
   const { data } = await client
     .from("dancers")
-    .select("id, name, image")
+    .select(
+      `
+    *,
+      profiles(
+        *
+      )
+    `
+    )
     // .eq("user", user.value.id)
     .order("name");
+
+  if (data) {
+    console.log("data", data);
+  }
 
   return data;
 });
@@ -47,7 +58,9 @@ const { data: dancers } = await useAsyncData("dancers", async () => {
             <h3 class="font-medium leading-none">
               {{ dancer.name }}
             </h3>
-            <!-- <p class="text-xs text-muted-foreground">Hi</p> -->
+            <p class="text-xs text-muted-foreground">
+              {{ dancer.profiles.first_name }} {{ dancer.profiles.last_name }}
+            </p>
           </div>
         </a>
       </div>

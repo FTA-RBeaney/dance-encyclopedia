@@ -13,6 +13,7 @@
             >
               Welcome {{ fullName }}
             </h1>
+            <pre>{{ supabaseUser }}</pre>
             <p class="mb-8 leading-relaxed">
               Chillwave portland ugh, knausgaard fam polaroid iPhone. Man braid
               swag typewriter affogato, hella selvage wolf narwhal dreamcatcher.
@@ -90,7 +91,7 @@
 
 <script setup lang="ts">
 const supabaseUser = useSupabaseUser();
-const fullName = computed(() => supabaseUser?.value.user_metadata.full_name);
+const fullName = computed(() => supabaseUser?.value?.user_metadata?.full_name);
 
 const props = defineProps({
   global: Object,
