@@ -53,7 +53,7 @@ onMounted(async () => {
 });
 
 async function addFavourite(id) {
-  console.log(id);
+  isFavourite.value = true;
 
   // try {
   //   const user = useSupabaseUser();
@@ -98,8 +98,9 @@ async function addFavourite(id) {
           <div class="flex flex-col sm:flex-row mt-1">
             <div class="sm:w-1/3 text-center sm:pr-8 sm:py-8">
               <img
+                v-if="count.thumbnail"
                 class="w-20 h-20 rounded-full inline-flex items-center justify-center bg-gray-200 text-gray-400 object-cover object-left-top"
-                :src="count.thumbnail.source"
+                :src="count?.thumbnail?.source"
                 alt="Rounded avatar"
               />
 
@@ -115,12 +116,20 @@ async function addFavourite(id) {
                 </p>
                 <div class="mt-2 w-full">
                   <a
+                    v-if="isFavourite"
                     :data-id="count.id"
                     @click.prevent="addFavourite(musician.id)"
-                    class="text-white bg-[#EF4444] hover:bg-[#24292F]/90 focus:ring-4 focus:outline-none focus:ring-[#EF4444]/50 font-medium rounded-lg text-sm px-3 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 dark:hover:bg-[#050708]/30 me-2"
+                    class="text-white bg-[#EF4444] hover:bg-[#EF4444]/90 focus:ring-4 focus:outline-none focus:ring-[#EF4444]/50 font-medium rounded-lg text-sm px-3 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 dark:hover:bg-[#050708]/30 me-2"
                   >
-                    <IconsHeartFull v-if="isFavourite" />
-                    <IconsHeartOutline v-else />
+                    <IconsHeartFull />
+                  </a>
+                  <a
+                    v-else
+                    :data-id="count.id"
+                    @click.prevent="addFavourite(musician.id)"
+                    class="text-white bg-[#24292F] hover:bg-[#24292F]/90 focus:ring-4 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-3 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 dark:hover:bg-[#050708]/30 me-2"
+                  >
+                    <IconsHeartOutline />
                   </a>
                   <a
                     v-if="musician.wikipedia_link"
@@ -227,62 +236,63 @@ async function addFavourite(id) {
                 </svg>
               </a>
 
-              <iframe
-                class="mt-4"
-                v-if="isLoaded"
-                style="border-radius: 12px"
-                :src="`https://open.spotify.com/embed/artist/${artistSpotify}?utm_source=generator&theme=0`"
-                width="100%"
-                height="152"
-                frameBorder="0"
-                allowfullscreen=""
-                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                loading="lazy"
-              ></iframe>
+              <div v-if="musician.spotify_link">
+                <iframe
+                  class="mt-4"
+                  v-if="isLoaded"
+                  style="border-radius: 12px"
+                  :src="`https://open.spotify.com/embed/artist/${artistSpotify}?utm_source=generator&theme=0`"
+                  width="100%"
+                  height="152"
+                  frameBorder="0"
+                  allowfullscreen=""
+                  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                  loading="lazy"
+                ></iframe>
 
-              <div
-                v-else
-                role="status"
-                class="space-y-8 animate-pulse md:space-y-0 md:space-x-8 rtl:space-x-reverse md:flex md:items-center"
-              >
                 <div
-                  class="flex items-center justify-center w-full h-48 bg-gray-300 rounded sm:w-96 dark:bg-gray-700"
+                  v-else
+                  role="status"
+                  class="space-y-8 animate-pulse md:space-y-0 md:space-x-8 rtl:space-x-reverse md:flex md:items-center"
                 >
-                  <svg
-                    class="w-10 h-10 text-gray-200 dark:text-gray-600"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor"
-                    viewBox="0 0 20 18"
+                  <div
+                    class="flex items-center justify-center w-full h-48 bg-gray-300 rounded sm:w-96 dark:bg-gray-700"
                   >
-                    <path
-                      d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z"
-                    />
-                  </svg>
+                    <svg
+                      class="w-10 h-10 text-gray-200 dark:text-gray-600"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="currentColor"
+                      viewBox="0 0 20 18"
+                    >
+                      <path
+                        d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z"
+                      />
+                    </svg>
+                  </div>
+                  <div class="w-full">
+                    <div
+                      class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-48 mb-4"
+                    ></div>
+                    <div
+                      class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[480px] mb-2.5"
+                    ></div>
+                    <div
+                      class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 mb-2.5"
+                    ></div>
+                    <div
+                      class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[440px] mb-2.5"
+                    ></div>
+                    <div
+                      class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[460px] mb-2.5"
+                    ></div>
+                    <div
+                      class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[360px]"
+                    ></div>
+                  </div>
+                  <span class="sr-only">Loading...</span>
                 </div>
-                <div class="w-full">
-                  <div
-                    class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-48 mb-4"
-                  ></div>
-                  <div
-                    class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[480px] mb-2.5"
-                  ></div>
-                  <div
-                    class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 mb-2.5"
-                  ></div>
-                  <div
-                    class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[440px] mb-2.5"
-                  ></div>
-                  <div
-                    class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[460px] mb-2.5"
-                  ></div>
-                  <div
-                    class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[360px]"
-                  ></div>
-                </div>
-                <span class="sr-only">Loading...</span>
               </div>
-
               <!-- related articles -->
               <!-- 
               <div class="flex justify-between pb-4 mt-4">

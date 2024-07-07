@@ -30,7 +30,7 @@ export default defineNuxtConfig({
     "@nuxtjs/algolia",
     "@pinia/nuxt",
     "@nuxtjs/cloudinary",
-    "@nuxt/icon"
+    "@nuxt/icon",
   ],
   alias: {
     pinia: "/node_modules/@pinia/nuxt/node_modules/pinia/dist/pinia.mjs",
@@ -42,6 +42,16 @@ export default defineNuxtConfig({
       // theme: "algolia",
     },
   },
+
+  router: {
+    scrollBehavior(to, from, savedPosition) {
+      if (to.hash) {
+        return { behavior: "smooth" };
+      }
+      return { x: 0, y: 0 }; // only for route changes
+    },
+  },
+
   routeRules: {
     "/": { prerender: true },
   },

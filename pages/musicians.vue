@@ -12,17 +12,12 @@ const { data: musicians } = await useAsyncData("musicians", async () => {
 });
 
 const allMusicians = ref(musicians);
-
-const router = useRouter();
-function navigate(id) {
-  router.push({ path: `./artist/${id}` });
-}
 </script>
 
 <template>
   <div class="px-4 py-6">
     {{ $content }}
-    <Heading title="Musicians" :description="`${musicians.length} records`" />
+    <Heading title="Musicians" :description="`${musicians?.length} records`" />
     <Table>
       <TableHeader>
         <TableRow>
@@ -38,7 +33,7 @@ function navigate(id) {
         </TableRow>
       </TableHeader>
       <TableBody>
-        <TableRow v-for="musician in allMusicians" :key="musician">
+        <TableRow v-for="musician in musicians" :key="musician.id">
           <TableCell class="font-medium">
             {{ musician.name }}
           </TableCell>
