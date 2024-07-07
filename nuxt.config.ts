@@ -30,6 +30,7 @@ export default defineNuxtConfig({
     "@nuxtjs/algolia",
     "@pinia/nuxt",
     "@nuxtjs/cloudinary",
+    "@nuxt/icon"
   ],
   alias: {
     pinia: "/node_modules/@pinia/nuxt/node_modules/pinia/dist/pinia.mjs",

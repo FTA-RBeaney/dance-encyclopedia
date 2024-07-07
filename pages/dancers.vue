@@ -1,6 +1,5 @@
 <script setup lang="ts">
 const client = useSupabaseClient();
-const user = useSupabaseUser();
 
 const { data: dancers } = await useAsyncData("dancers", async () => {
   const { data } = await client
@@ -16,17 +15,13 @@ const { data: dancers } = await useAsyncData("dancers", async () => {
     // .eq("user", user.value.id)
     .order("name");
 
-  if (data) {
-    console.log("data", data);
-  }
-
   return data;
 });
 </script>
 
 <template>
   <div class="px-4 py-6">
-    <Heading title="Dancers" :description="`${dancers.length} records`" />
+    <Heading title="Dancers" :description="`${dancers?.length} records`" />
 
     <!-- <div class="mt-6 space-y-1">
       <h2 class="text-2xl font-semibold tracking-tight">Made for You</h2>

@@ -1,5 +1,7 @@
 <script setup>
+const user = useSupabaseUser();
 const client = useSupabaseClient();
+const supabase = useSupabaseClient();
 const route = useRoute();
 
 const { data: musician } = await useAsyncData("musicians", async () => {
@@ -21,6 +23,21 @@ const { data: count } = await useFetch(url);
 const { data: relatedContent } = await useFetch(relatedUrl);
 
 const artistSpotify = ref("");
+const isFavourite = ref(false);
+
+// check favourites table
+//
+const { data, error } = await supabase
+  .from("favourites")
+  .select("favourite_id")
+  .eq("favourite_id", user.value.id + route.params.slug);
+
+console.log(data);
+
+if (data.length > 0) {
+  console.log("THIS PAGE IS A FAVOURITE");
+  isFavourite.value = true;
+}
 
 if (musician.value.spotify_link) {
   let newSubstring = musician.value.spotify_link;
@@ -34,6 +51,35 @@ const isLoaded = ref(false);
 onMounted(async () => {
   return (isLoaded.value = true);
 });
+
+async function addFavourite(id) {
+  console.log(id);
+
+  // try {
+  //   const user = useSupabaseUser();
+
+  const { data } = await supabase
+    .from("favourites")
+    .upsert({
+      favourite_id: user.value.id + id,
+      user_id: user.value.id,
+      post_id: id,
+    })
+    .select();
+
+  //   console.log("INITIAL", data[0]);
+
+  //   if (data[0].favourites.length > 0) {
+
+  //   } else {
+  //     return;
+  //   }
+  //   if (error) throw error;
+  // } catch (error) {
+  //   alert(error.message);
+  // } finally {
+  // }
+}
 </script>
 
 <template>
@@ -67,7 +113,15 @@ onMounted(async () => {
                 <p class="text-base">
                   {{ count.description }}
                 </p>
-                <div class="mt-2">
+                <div class="mt-2 w-full">
+                  <a
+                    :data-id="count.id"
+                    @click.prevent="addFavourite(musician.id)"
+                    class="text-white bg-[#EF4444] hover:bg-[#24292F]/90 focus:ring-4 focus:outline-none focus:ring-[#EF4444]/50 font-medium rounded-lg text-sm px-3 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 dark:hover:bg-[#050708]/30 me-2"
+                  >
+                    <IconsHeartFull v-if="isFavourite" />
+                    <IconsHeartOutline v-else />
+                  </a>
                   <a
                     v-if="musician.wikipedia_link"
                     :href="musician.wikipedia_link"
@@ -229,6 +283,8 @@ onMounted(async () => {
                 <span class="sr-only">Loading...</span>
               </div>
 
+              <!-- related articles -->
+              <!-- 
               <div class="flex justify-between pb-4 mt-4">
                 <p class="font-bold text-xl">Related</p>
               </div>
@@ -244,7 +300,7 @@ onMounted(async () => {
                     :href="related.content_urls.desktop.page"
                   ></a>
                 </li>
-              </ul>
+              </ul> -->
             </div>
           </div>
         </div>

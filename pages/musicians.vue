@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useRouter } from "vue-router";
 const client = useSupabaseClient();
 
 const { data: musicians } = await useAsyncData("musicians", async () => {
@@ -10,7 +11,7 @@ const { data: musicians } = await useAsyncData("musicians", async () => {
   return data;
 });
 
-import { useRouter } from "vue-router";
+const allMusicians = ref(musicians);
 
 const router = useRouter();
 function navigate(id) {
@@ -37,7 +38,7 @@ function navigate(id) {
         </TableRow>
       </TableHeader>
       <TableBody>
-        <TableRow v-for="musician in musicians" :key="musician">
+        <TableRow v-for="musician in allMusicians" :key="musician">
           <TableCell class="font-medium">
             {{ musician.name }}
           </TableCell>
