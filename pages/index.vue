@@ -89,14 +89,9 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 const supabaseUser = useSupabaseUser();
 const fullName = computed(() => supabaseUser?.value?.user_metadata?.full_name);
-
-const props = defineProps({
-  global: Object,
-  moves: Object,
-});
 </script>
 
 <style scoped>

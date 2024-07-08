@@ -40,19 +40,6 @@ export default defineNuxtConfig({
     applicationId: "3GXH3T2OIX",
   },
 
-  router: {
-    scrollBehavior(to, from, savedPosition) {
-      if (to.hash) {
-        return { behavior: "smooth" };
-      }
-      return { x: 0, y: 0 }; // only for route changes
-    },
-  },
-
-  routeRules: {
-    "/": { prerender: true },
-  },
-
   runtimeConfig: {
     public: {
       GOOGLE_API_KEY: "AIzaSyC9kNzY_EqckULIwSmij1ztvzWjKyvcHso",
@@ -63,26 +50,6 @@ export default defineNuxtConfig({
   tailwindcss: {
     exposeConfig: true,
     viewer: true,
-  },
-  content: {
-    experimental: {
-      search: {
-        indexed: true,
-        options: {
-          fields: ["title", "titles"],
-          storeFields: ["title", "titles"],
-          addAll: true,
-          searchOptions: {
-            prefix: true,
-            fuzzy: 0.2,
-            boost: {
-              title: 2,
-              titles: 0,
-            },
-          },
-        },
-      },
-    },
   },
 
   shadcn: {
@@ -97,6 +64,12 @@ export default defineNuxtConfig({
       login: "/login",
       callback: "/confirm",
       exclude: ["/", "/search", "/classes", "/*"],
+    },
+  },
+
+  nitro: {
+    prerender: {
+      ignore: ["/"],
     },
   },
 });
