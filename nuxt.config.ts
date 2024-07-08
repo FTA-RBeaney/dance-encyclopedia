@@ -37,7 +37,7 @@ export default defineNuxtConfig({
   },
   algolia: {
     apiKey: "b17aa4af840f1188bd26139185711c9f",
-    applicationId: process.env.PUBLIC_ALGOLIA_APPLICATION_ID,
+    applicationId: "3GXH3T2OIX",
   },
 
   router: {
@@ -55,8 +55,8 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      GOOGLE_API_KEY: process.env.GOOGLE_API_KEY,
-      SPREAD_SHEET_ID: process.env.SPREAD_SHEET_ID,
+      GOOGLE_API_KEY: "AIzaSyC9kNzY_EqckULIwSmij1ztvzWjKyvcHso",
+      SPREAD_SHEET_ID: "1CVkFzZB8Eg6Ig8GvvvWgSC_uHjzRYp31DRnKV-sfxzQ",
     },
   },
 
@@ -85,20 +85,14 @@ export default defineNuxtConfig({
     },
   },
 
-  env: {
-    spotifyClientID: process.env.SPOTIFY_CLIENT_ID,
-    spotifyClientSecret: process.env.SPOTIFY_CLIENT_SECRET,
-    spotifyRefreshToken: process.env.SPOTIFY_RT,
-  },
-
   shadcn: {
     prefix: "",
     componentDir: "./components/ui",
   },
 
   supabase: {
-    url: process.env.PUBLIC_SUPABASE_URL,
-    key: process.env.PUBLIC_SUPABASE_KEY,
+    url: "https://misyrpoxvyxwrnhnmeww.supabase.co",
+    key: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1pc3lycG94dnl4d3JuaG5tZXd3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTk0ODkxMjEsImV4cCI6MjAzNTA2NTEyMX0.IIVld8FNxJrqPbIfBzXxYMOz2RCEBWwvfeHNHaenZ-Q",
     redirectOptions: {
       login: "/login",
       callback: "/confirm",
