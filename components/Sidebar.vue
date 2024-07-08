@@ -53,9 +53,8 @@ onUnmounted(() => {
       <div class="px-3 py-2">
         <h2 class="mb-2 px-4 text-lg font-semibold tracking-tight">Discover</h2>
         <div class="space-y-1">
-          <NuxtLink to="/moves">
+          <!-- <NuxtLink to="/moves">
             <Button variant="ghost" class="w-full justify-start">
-              <!-- <Button variant="secondary" class="w-full justify-start"></Button> -->
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -73,7 +72,7 @@ onUnmounted(() => {
               </svg>
               Browse
             </Button>
-          </NuxtLink>
+          </NuxtLink> -->
 
           <NuxtLink to="/videos">
             <Button variant="ghost" class="w-full justify-start">
