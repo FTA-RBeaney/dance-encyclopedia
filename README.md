@@ -43,3 +43,6 @@ npm run preview
 
 Using auth-ui-vue to help withg displaying authentication
 auth-ui-vue: https://github.com/nuxtbase/auth-ui-vue?tab=readme-ov-file#for-nuxt-3
+
+How to auto-update data from Supabase:
+https://dev.to/jacobandrewsky/supabase-realtime-changes-in-nuxt-i6b
