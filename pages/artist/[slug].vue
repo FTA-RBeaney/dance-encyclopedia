@@ -99,6 +99,7 @@ onMounted(async () => {
                 <div class="mt-4 w-full">
                   <a
                     v-if="isFavourite"
+                    href="#"
                     :data-id="count.id"
                     @click.prevent="addFavourite(musician.id)"
                     class="text-white bg-[#EF4444] hover:bg-[#EF4444]/90 focus:ring-4 focus:outline-none focus:ring-[#EF4444]/50 font-medium rounded-lg text-sm px-3 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 dark:hover:bg-[#050708]/30 me-2"
@@ -282,3 +283,9 @@ onMounted(async () => {
     </section>
   </div>
 </template>
+
+<style scoped>
+a:hover {
+  cursor: pointer;
+}
+</style>

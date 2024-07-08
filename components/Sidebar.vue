@@ -1,11 +1,50 @@
-<script setup lang="ts">
-// import type { Playlist } from "../data/playlists";
+<script setup>
+import { playlists } from "../data/playlists";
+import { RealtimeChannel } from "@supabase/supabase-js";
 const supabaseUser = useSupabaseUser();
-interface SidebarProps {
-  playlists: [];
-}
+const supabase = useSupabaseClient();
 
-defineProps<SidebarProps>();
+let realtimeChannel = RealtimeChannel;
+
+const { data: loggedInUser, error } = await supabase
+  .from("profiles")
+  .select()
+  .eq("id", supabaseUser.value.id);
+
+// check favourites table
+const { data: favourites, refresh: refreshFavourites } = await useAsyncData(
+  "favourites",
+  async () => {
+    const { data } = await supabase
+      .from("favourites")
+      .select(
+        `
+    *,
+      musicians(
+        *
+      )
+    `
+      )
+      .eq("user_id", supabaseUser.value.id);
+
+    return data;
+  }
+);
+
+onMounted(() => {
+  realtimeChannel = supabase
+    .channel("public:favourites")
+    .on(
+      "postgres_changes",
+      { event: "*", schema: "public", table: "favourites" },
+      () => refreshFavourites()
+    );
+  realtimeChannel.subscribe();
+});
+
+onUnmounted(() => {
+  supabase.removeChannel(realtimeChannel);
+});
 </script>
 
 <template>
@@ -56,7 +95,62 @@ defineProps<SidebarProps>();
           </NuxtLink>
         </div>
       </div>
-      <div v-if="supabaseUser" class="px-3 py-2">
+      <div class="px-3 py-2">
+        <h2 class="mb-2 px-4 text-lg font-semibold tracking-tight">Library</h2>
+        <div class="space-y-1">
+          <!-- <Button variant="ghost" class="w-full justify-start">
+            <IconsPlaylist />
+            Playlists
+          </Button> -->
+          <!-- <Button variant="ghost" class="w-full justify-start">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              class="mr-2 h-4 w-4"
+            >
+              <circle cx="8" cy="18" r="4" />
+              <path d="M12 18V2l7 4" />
+            </svg>
+            Songs
+          </Button> -->
+          <NuxtLink to="/dancers">
+            <Button variant="ghost" class="w-full justify-start">
+              <IconsPerson />
+              Dancers
+            </Button>
+          </NuxtLink>
+          <NuxtLink to="/musicians">
+            <Button variant="ghost" class="w-full justify-start">
+              <IconsMicrophone />
+              Musicians
+            </Button>
+          </NuxtLink>
+          <!-- <Button variant="ghost" class="w-full justify-start">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              class="mr-2 h-4 w-4"
+            >
+              <path d="m16 6 4 14" />
+              <path d="M12 6v14" />
+              <path d="M8 8v12" />
+              <path d="M4 4v16" />
+            </svg>
+            Albums
+          </Button> -->
+        </div>
+      </div>
+      <div v-if="loggedInUser[0].role === 'admin'" class="px-3 py-2">
         <h2 class="mb-2 px-4 text-lg font-semibold tracking-tight">
           Sunshine Swing
         </h2>
@@ -99,130 +193,22 @@ defineProps<SidebarProps>();
           </NuxtLink>
         </div>
       </div>
-      <div class="px-3 py-2">
-        <h2 class="mb-2 px-4 text-lg font-semibold tracking-tight">Library</h2>
-        <div class="space-y-1">
-          <Button variant="ghost" class="w-full justify-start">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              class="mr-2 h-4 w-4"
-            >
-              <path d="M21 15V6" />
-              <path d="M18.5 18a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
-              <path d="M12 12H3" />
-              <path d="M16 6H3" />
-              <path d="M12 18H3" />
-            </svg>
-            Playlists
-          </Button>
-          <Button variant="ghost" class="w-full justify-start">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              class="mr-2 h-4 w-4"
-            >
-              <circle cx="8" cy="18" r="4" />
-              <path d="M12 18V2l7 4" />
-            </svg>
-            Songs
-          </Button>
-          <NuxtLink to="/dancers">
-            <Button variant="ghost" class="w-full justify-start">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                class="mr-2 h-4 w-4"
-              >
-                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
-                <circle cx="12" cy="7" r="4" />
-              </svg>
-              Dancers
-            </Button>
-          </NuxtLink>
-          <NuxtLink to="/musicians">
-            <Button variant="ghost" class="w-full justify-start">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                class="mr-2 h-4 w-4"
-              >
-                <path d="m12 8-9.04 9.06a2.82 2.82 0 1 0 3.98 3.98L16 12" />
-                <circle cx="17" cy="7" r="5" />
-              </svg>
-              Musicians
-            </Button>
-          </NuxtLink>
-          <Button variant="ghost" class="w-full justify-start">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              class="mr-2 h-4 w-4"
-            >
-              <path d="m16 6 4 14" />
-              <path d="M12 6v14" />
-              <path d="M8 8v12" />
-              <path d="M4 4v16" />
-            </svg>
-            Albums
-          </Button>
-        </div>
-      </div>
-      <div class="py-2">
+      <div v-if="favourites.length > 0" class="py-2">
         <h2 class="relative px-7 text-lg font-semibold tracking-tight">
-          Playlists
+          Favourites
         </h2>
         <ScrollArea class="h-[300px] px-1">
           <div class="space-y-1 p-2">
-            <Button
-              v-for="(playlist, i) in playlists"
-              :key="`${playlist}-${i}`"
-              variant="ghost"
-              class="w-full justify-start font-normal"
+            <NuxtLink
+              v-for="(favourite, i) in favourites"
+              :key="`${favourite}-${i}`"
+              :to="`/artist/${favourite.musicians.id}`"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                class="mr-2 h-4 w-4"
-              >
-                <path d="M21 15V6" />
-                <path d="M18.5 18a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
-                <path d="M12 12H3" />
-                <path d="M16 6H3" />
-                <path d="M12 18H3" />
-              </svg>
-              {{ playlist }}
-            </Button>
+              <Button variant="ghost" class="w-full justify-start font-normal">
+                <IconsPlaylist />
+                {{ favourite.musicians.name }}
+              </Button>
+            </NuxtLink>
           </div>
         </ScrollArea>
       </div>

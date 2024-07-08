@@ -1,22 +1,17 @@
-<script setup lang="ts">
+<script setup>
 const client = useSupabaseClient();
 
-const { data: dancers } = await useAsyncData("dancers", async () => {
-  const { data } = await client
-    .from("dancers")
-    .select(
-      `
+const { data: dancers } = await client
+  .from("dancers")
+  .select(
+    `
     *,
       profiles(
         *
       )
     `
-    )
-    // .eq("user", user.value.id)
-    .order("name");
-
-  return data;
-});
+  )
+  .order("name");
 </script>
 
 <template>
