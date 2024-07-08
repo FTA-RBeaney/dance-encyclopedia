@@ -1,100 +1,82 @@
 <script setup>
 const user = useSupabaseUser();
-const client = useSupabaseClient();
 const supabase = useSupabaseClient();
 const route = useRoute();
 
-const { data: musician } = await useAsyncData("musicians", async () => {
-  const { data } = await client
-    .from("musicians")
-    .select("id, name, spotify_embed, wikipedia_link, spotify_link")
-    .eq("id", route.params.slug)
-    .limit(1)
-    .single();
+const artistSpotify = ref("");
+const isFavourite = ref(false);
+const isLoaded = ref(false);
 
-  return data;
-});
+// get the musician data from the supabase table
 
-const key = musician.value.name.trim().replace(/'/g, "%27").replace(/ /g, "_");
+const { data: musician } = await supabase
+  .from("musicians")
+  .select("id, name, spotify_embed, wikipedia_link, spotify_link")
+  .eq("id", route.params.slug)
+  .limit(1)
+  .single();
 
+// get the musician name and change it to a format that we can use in Wikipedia's rest API
+const key = musician.name.trim().replace(/'/g, "%27").replace(/ /g, "_");
 var url = `https://en.wikipedia.org/api/rest_v1/page/summary/${key}`;
 var relatedUrl = `https://en.wikipedia.org/api/rest_v1/page/related/${key}`;
 const { data: count } = await useFetch(url);
 const { data: relatedContent } = await useFetch(relatedUrl);
 
-const artistSpotify = ref("");
-const isFavourite = ref(false);
-
 // check favourites table
-//
 const { data, error } = await supabase
   .from("favourites")
   .select("favourite_id")
   .eq("favourite_id", user.value.id + route.params.slug);
 
-console.log(data);
-
 if (data.length > 0) {
-  console.log("THIS PAGE IS A FAVOURITE");
   isFavourite.value = true;
 }
 
-if (musician.value.spotify_link) {
-  let newSubstring = musician.value.spotify_link;
+// get the musician ID to be used for the embed
+if (musician.spotify_link) {
+  let newSubstring = musician.spotify_link;
   artistSpotify.value = newSubstring.substring(
     newSubstring.lastIndexOf("/") + 1,
     newSubstring.lastIndexOf("?")
   );
 }
 
-const isLoaded = ref(false);
-onMounted(async () => {
-  return (isLoaded.value = true);
-});
-
+// add favourite functionality
 async function addFavourite(id) {
   isFavourite.value = true;
 
-  // try {
-  //   const user = useSupabaseUser();
+  try {
+    const user = useSupabaseUser();
 
-  const { data } = await supabase
-    .from("favourites")
-    .upsert({
-      favourite_id: user.value.id + id,
-      user_id: user.value.id,
-      post_id: id,
-    })
-    .select();
+    const { data } = await supabase
+      .from("favourites")
+      .upsert({
+        favourite_id: user.value.id + id,
+        user_id: user.value.id,
+        post_id: id,
+      })
+      .select();
 
-  //   console.log("INITIAL", data[0]);
-
-  //   if (data[0].favourites.length > 0) {
-
-  //   } else {
-  //     return;
-  //   }
-  //   if (error) throw error;
-  // } catch (error) {
-  //   alert(error.message);
-  // } finally {
-  // }
+    if (error) throw error;
+  } catch (error) {
+    alert(error.message);
+  } finally {
+  }
 }
+
+// change loaded state on mount
+onMounted(async () => {
+  return (isLoaded.value = true);
+});
 </script>
 
 <template>
   <div class="px-4 py-6">
-    <Heading :title="musician.name" :description="count.description" />
+    <Heading :title="musician?.name" :description="count.description" />
     <section class="text-gray-600 body-font">
       <div class="container flex flex-col">
         <div class="lg:w-5/6">
-          <!-- <div class="rounded-lg h-64 overflow-hidden">
-            <img
-              alt="content"
-              class="object-cover object-center h-full w-full object-left-top"
-              :src="count.originalimage.source"
-            />
-          </div> -->
           <div class="flex flex-col sm:flex-row mt-1">
             <div class="sm:w-1/3 text-center sm:pr-8 sm:py-8">
               <img
@@ -114,7 +96,7 @@ async function addFavourite(id) {
                 <p class="text-base">
                   {{ count.description }}
                 </p>
-                <div class="mt-2 w-full">
+                <div class="mt-4 w-full">
                   <a
                     v-if="isFavourite"
                     :data-id="count.id"
@@ -293,24 +275,6 @@ async function addFavourite(id) {
                   <span class="sr-only">Loading...</span>
                 </div>
               </div>
-              <!-- related articles -->
-              <!-- 
-              <div class="flex justify-between pb-4 mt-4">
-                <p class="font-bold text-xl">Related</p>
-              </div>
-              <ul class="flex flex-col pl-1">
-                <li
-                  class="border-b py-2 dark:border-gray-600"
-                  v-for="related in relatedContent.pages"
-                  :key="related"
-                >
-                  <a
-                    class="dark:text-gray-300"
-                    v-html="related.displaytitle"
-                    :href="related.content_urls.desktop.page"
-                  ></a>
-                </li>
-              </ul> -->
             </div>
           </div>
         </div>

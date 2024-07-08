@@ -27,7 +27,6 @@ result.value.splice(0, 1);
             class="font-bold"
           >
           </TableHead>
-          <TableHead class="font-bold text-right"> Action </TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -39,9 +38,7 @@ result.value.splice(0, 1);
             {{ col[1] }}
           </TableCell>
           <TableCell>{{ col[2] }} </TableCell>
-          <TableCell class="font-bold text-right">
-            <NuxtLink :to="`/sheet/${col[0]}`">View</NuxtLink>
-          </TableCell>
+          <TableCell>{{ col[3] }} </TableCell>
         </TableRow>
       </TableBody>
     </Table>
