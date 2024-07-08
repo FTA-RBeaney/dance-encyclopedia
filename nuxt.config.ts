@@ -36,8 +36,8 @@ export default defineNuxtConfig({
     pinia: "/node_modules/@pinia/nuxt/node_modules/pinia/dist/pinia.mjs",
   },
   algolia: {
-    apiKey: process.env.ALGOLIA_API_KEY,
-    applicationId: process.env.ALGOLIA_APPLICATION_ID,
+    apiKey: process.env.PUBLIC_ALGOLIA_API_KEY,
+    applicationId: process.env.PUBLIC_ALGOLIA_APPLICATION_ID,
     instantSearch: {
       // theme: "algolia",
     },
