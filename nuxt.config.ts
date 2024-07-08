@@ -38,9 +38,6 @@ export default defineNuxtConfig({
   algolia: {
     apiKey: process.env.PUBLIC_ALGOLIA_API_KEY,
     applicationId: process.env.PUBLIC_ALGOLIA_APPLICATION_ID,
-    instantSearch: {
-      // theme: "algolia",
-    },
   },
 
   router: {
