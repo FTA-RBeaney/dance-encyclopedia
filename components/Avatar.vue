@@ -69,11 +69,7 @@ watch(path, () => {
       class="avatar image mr-2"
       style="width: 10em; height: 10em"
     />
-    <div
-      v-else
-      class="avatar no-image"
-      :style="{ height: size, width: size }"
-    />
+    <div v-else class="avatar no-image" />
 
     <div
       style="position: relative"

@@ -5,22 +5,18 @@ const supabase = useSupabaseClient();
 
 const loading = ref(true);
 const username = ref("");
-const website = ref("");
-const avatar_path = ref("");
 
 loading.value = true;
 const user = useSupabaseUser();
 
 const { data } = await supabase
   .from("profiles")
-  .select(`username, website, avatar_url`)
+  .select(`username`)
   .eq("id", user.value.id)
   .single();
 
 if (data) {
   username.value = data.username;
-  website.value = data.website;
-  avatar_path.value = data.avatar_url;
   console.log(data);
 }
 
@@ -34,8 +30,6 @@ async function updateProfile() {
     const updates = {
       id: user.value.id,
       username: username.value,
-      website: website.value,
-      avatar_url: avatar_path.value,
       updated_at: new Date(),
     };
 
@@ -73,7 +67,6 @@ async function userLogout() {
         <CardDescription> Change your details below </CardDescription>
       </CardHeader>
       <CardContent class="grid gap-4">
-        <Avatar v-model:path="avatar_path" @upload="updateProfile" />
         <div>
           <Label for="email">Email</Label>
           <Input
@@ -93,16 +86,6 @@ async function userLogout() {
             class="inputField"
             placeholder="Your username"
             v-model="username"
-          />
-        </div>
-        <div>
-          <Label for="website">Website</Label>
-          <Input
-            id="website"
-            type="url"
-            class="inputField"
-            placeholder="Your website"
-            v-model="website"
           />
         </div>
 

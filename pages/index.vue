@@ -13,7 +13,6 @@
             >
               Welcome {{ fullName }}
             </h1>
-            <pre>{{ supabaseUser }}</pre>
             <p class="mb-8 leading-relaxed">
               Chillwave portland ugh, knausgaard fam polaroid iPhone. Man braid
               swag typewriter affogato, hella selvage wolf narwhal dreamcatcher.

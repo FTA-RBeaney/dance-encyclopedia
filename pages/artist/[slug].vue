@@ -23,7 +23,7 @@ var relatedUrl = `https://en.wikipedia.org/api/rest_v1/page/related/${key}`;
 const { data: count } = await useFetch(url);
 const { data: relatedContent } = await useFetch(relatedUrl);
 
-// check favourites table
+// check favourites table to see if current page is a favourite
 const { data, error } = await supabase
   .from("favourites")
   .select("favourite_id")

@@ -6,45 +6,84 @@ const supabase = useSupabaseClient();
 
 let realtimeChannel = RealtimeChannel;
 
-const { data: loggedInUser, error } = await supabase
-  .from("profiles")
-  .select()
-  .eq("id", supabaseUser.value.id);
+const isUserLoggedIn = ref(false);
+const user = ref([]);
+const userId = ref();
+const favourites = ref([]);
 
-// check favourites table
-const { data: favourites, refresh: refreshFavourites } = await useAsyncData(
-  "favourites",
-  async () => {
-    const { data } = await supabase
-      .from("favourites")
-      .select(
-        `
-    *,
-      musicians(
-        *
-      )
-    `
-      )
-      .eq("user_id", supabaseUser.value.id);
+// const { data: loggedInUser, error } = await supabase
+//   .from("profiles")
+//   .select()
+//   .eq("id", supabaseUser.value.id);
 
-    return data;
+// if (loggedInUser) {
+//   isUserLoggedIn.value = true;
+// }
+
+const getUser = async () => {
+  console.log("1. getUser executed");
+  const user = await supabase.auth.getUser();
+  console.log(user.data.user?.id);
+  if (user) {
+    const fetchedUserId = user.data.user?.id;
+    userId.value = fetchedUserId;
   }
-);
+};
+
+const getUserInfo = async () => {
+  console.log("2. getUserInfo executed");
+  try {
+    const { data, error } = await supabase
+      .from("profiles")
+      .select()
+      .eq("id", supabaseUser.value.id);
+
+    user.value = data;
+    if (error) throw error;
+  } catch (error) {
+    console.log("error: ", error);
+  }
+};
+
+const getFavourites = async () => {
+  // check favourites table
+  const { data } = await supabase
+    .from("favourites")
+    .select(`*,musicians(*)`)
+    .eq("user_id", supabaseUser.value.id);
+
+  favourites.value = data;
+  console.log("faves", favourites.value.length);
+};
+
+const channel = supabase
+  .channel("public:favourites")
+  .on(
+    "postgres_changes",
+    {
+      event: "*",
+      schema: "public",
+      table: "favourites",
+    },
+
+    (payload) => getFavourites()
+  )
+  .subscribe();
 
 onMounted(() => {
-  realtimeChannel = supabase
-    .channel("public:favourites")
-    .on(
-      "postgres_changes",
-      { event: "*", schema: "public", table: "favourites" },
-      () => refreshFavourites()
-    );
-  realtimeChannel.subscribe();
+  if (supabaseUser) {
+    getUser();
+    getUserInfo();
+    getFavourites();
+  }
 });
 
 onUnmounted(() => {
-  supabase.removeChannel(realtimeChannel);
+  supabase.removeChannel(channel);
 });
+
+const inputLength = computed(() => favourites.value.length);
+console.log("faves on mount", inputLength);
 </script>
 
 <template>
@@ -149,7 +188,7 @@ onUnmounted(() => {
           </Button> -->
         </div>
       </div>
-      <div v-if="loggedInUser[0].role === 'admin'" class="px-3 py-2">
+      <div v-if="supabaseUser" class="px-3 py-2">
         <h2 class="mb-2 px-4 text-lg font-semibold tracking-tight">
           Sunshine Swing
         </h2>
@@ -192,7 +231,7 @@ onUnmounted(() => {
           </NuxtLink>
         </div>
       </div>
-      <div v-if="favourites.length > 0" class="py-2">
+      <div v-if="supabaseUser && inputLength" class="py-2">
         <h2 class="relative px-7 text-lg font-semibold tracking-tight">
           Favourites
         </h2>

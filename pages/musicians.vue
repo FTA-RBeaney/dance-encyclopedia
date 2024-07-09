@@ -31,7 +31,7 @@ const allMusicians = ref(data);
           <TableCell>{{ musician.years }} </TableCell>
 
           <TableCell class="font-bold text-right">
-            <NuxtLink :to="`./artist/${musician.id}`">View</NuxtLink>
+            <NuxtLink :to="`/artist/${musician.id}`">View</NuxtLink>
           </TableCell>
         </TableRow>
       </TableBody>
