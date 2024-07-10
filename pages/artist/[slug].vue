@@ -65,6 +65,25 @@ async function addFavourite(id) {
   }
 }
 
+//remove favourite
+async function removeFavourite(id) {
+  isFavourite.value = false;
+
+  try {
+    const user = useSupabaseUser();
+
+    const { data } = await supabase
+      .from("favourites")
+      .delete()
+      .eq("favourite_id", user.value.id + id);
+
+    if (error) throw error;
+  } catch (error) {
+    alert(error.message);
+  } finally {
+  }
+}
+
 // change loaded state on mount
 onMounted(async () => {
   return (isLoaded.value = true);
@@ -73,7 +92,31 @@ onMounted(async () => {
 
 <template>
   <div class="px-4 py-6">
-    <Heading :title="musician?.name" :description="count.description" />
+    <div class="flex justify-between items-center">
+      <Heading :title="musician?.name" :description="count.description" />
+      <div>
+        <a
+          v-if="isFavourite"
+          href="#"
+          :data-id="count.id"
+          @click.prevent="removeFavourite(musician.id)"
+          class="text-white bg-[#EF4444] hover:bg-[#EF4444]/90 focus:ring-4 focus:outline-none focus:ring-[#EF4444]/50 font-medium rounded-xl text-sm px-3 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 dark:hover:bg-[#050708]/30 me-2"
+        >
+          Favourited!
+          <IconsHeartFull class="ml-2" />
+        </a>
+        <a
+          v-else
+          :data-id="count.id"
+          @click.prevent="addFavourite(musician.id)"
+          class="text-white bg-[#24292F] hover:bg-[#24292F]/90 focus:ring-4 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-3 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 dark:hover:bg-[#050708]/30 me-2"
+        >
+          Add to favourites
+          <IconsHeartOutline class="ml-2" />
+        </a>
+      </div>
+    </div>
+
     <section class="text-gray-600 body-font">
       <div class="container flex flex-col">
         <div class="lg:w-5/6">
@@ -97,23 +140,6 @@ onMounted(async () => {
                   {{ count.description }}
                 </p>
                 <div class="mt-4 w-full">
-                  <a
-                    v-if="isFavourite"
-                    href="#"
-                    :data-id="count.id"
-                    @click.prevent="addFavourite(musician.id)"
-                    class="text-white bg-[#EF4444] hover:bg-[#EF4444]/90 focus:ring-4 focus:outline-none focus:ring-[#EF4444]/50 font-medium rounded-lg text-sm px-3 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 dark:hover:bg-[#050708]/30 me-2"
-                  >
-                    <IconsHeartFull />
-                  </a>
-                  <a
-                    v-else
-                    :data-id="count.id"
-                    @click.prevent="addFavourite(musician.id)"
-                    class="text-white bg-[#24292F] hover:bg-[#24292F]/90 focus:ring-4 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-3 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 dark:hover:bg-[#050708]/30 me-2"
-                  >
-                    <IconsHeartOutline />
-                  </a>
                   <a
                     v-if="musician.wikipedia_link"
                     :href="musician.wikipedia_link"
