@@ -3,7 +3,6 @@ import { data } from "../data/classes";
 
 const categories = ref(["weeks", "months"]);
 const currentCategory = ref("weeks");
-console.log(currentCategory);
 </script>
 
 <template>

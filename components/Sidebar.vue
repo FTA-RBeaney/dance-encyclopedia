@@ -21,9 +21,7 @@ const favourites = ref([]);
 // }
 
 const getUser = async () => {
-  console.log("1. getUser executed");
   const user = await supabase.auth.getUser();
-  console.log(user.data.user?.id);
   if (user) {
     const fetchedUserId = user.data.user?.id;
     userId.value = fetchedUserId;
@@ -31,7 +29,6 @@ const getUser = async () => {
 };
 
 const getUserInfo = async () => {
-  console.log("2. getUserInfo executed");
   try {
     const { data, error } = await supabase
       .from("profiles")
@@ -53,7 +50,6 @@ const getFavourites = async () => {
     .eq("user_id", supabaseUser.value.id);
 
   favourites.value = data;
-  console.log("faves", favourites.value.length);
 };
 
 const channel = supabase
@@ -83,7 +79,6 @@ onUnmounted(() => {
 });
 
 const inputLength = computed(() => favourites.value.length);
-console.log("faves on mount", inputLength);
 </script>
 
 <template>

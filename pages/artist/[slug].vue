@@ -20,7 +20,7 @@ const { data: musician } = await supabase
 const key = musician.name.trim().replace(/'/g, "%27").replace(/ /g, "_");
 var url = `https://en.wikipedia.org/api/rest_v1/page/summary/${key}`;
 var relatedUrl = `https://en.wikipedia.org/api/rest_v1/page/related/${key}`;
-const { data: count } = await useFetch(url);
+const { data: wikiInfo } = await useFetch(url);
 const { data: relatedContent } = await useFetch(relatedUrl);
 
 // check favourites table to see if current page is a favourite
@@ -93,27 +93,21 @@ onMounted(async () => {
 <template>
   <div class="px-4 py-6">
     <div class="flex justify-between items-center">
-      <Heading :title="musician?.name" :description="count.description" />
+      <Heading :title="musician?.name" :description="wikiInfo.description" />
       <div>
-        <a
+        <FavouriteButton
           v-if="isFavourite"
-          href="#"
-          :data-id="count.id"
-          @click.prevent="removeFavourite(musician.id)"
-          class="text-white bg-[#EF4444] hover:bg-[#EF4444]/90 focus:ring-4 focus:outline-none focus:ring-[#EF4444]/50 font-medium rounded-xl text-sm px-3 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 dark:hover:bg-[#050708]/30 me-2"
-        >
-          Favourited!
-          <IconsHeartFull class="ml-2" />
-        </a>
-        <a
+          @click.native="removeFavourite(musician.id)"
+          extraClasses="bg-[#EF4444] hover:bg-[#EF4444]/90 focus:ring-[#EF4444]/50"
+          :dataId="musician.id"
+          >Favourited! <IconsHeartFull class="ml-2"
+        /></FavouriteButton>
+        <FavouriteButton
           v-else
-          :data-id="count.id"
-          @click.prevent="addFavourite(musician.id)"
-          class="text-white bg-[#24292F] hover:bg-[#24292F]/90 focus:ring-4 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-3 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 dark:hover:bg-[#050708]/30 me-2"
-        >
-          Add to favourites
-          <IconsHeartOutline class="ml-2" />
-        </a>
+          @click="addFavourite(musician.id)"
+          :dataId="musician.id"
+          >Favourite <IconsHeartOutline class="ml-2"
+        /></FavouriteButton>
       </div>
     </div>
 
@@ -123,9 +117,9 @@ onMounted(async () => {
           <div class="flex flex-col sm:flex-row mt-1">
             <div class="sm:w-1/3 text-center sm:pr-8 sm:py-8">
               <img
-                v-if="count.thumbnail"
+                v-if="wikiInfo.thumbnail"
                 class="w-20 h-20 rounded-full inline-flex items-center justify-center bg-gray-200 text-gray-400 object-cover object-left-top"
-                :src="count?.thumbnail?.source"
+                :src="wikiInfo?.thumbnail?.source"
                 alt="Rounded avatar"
               />
 
@@ -133,11 +127,11 @@ onMounted(async () => {
                 class="flex flex-col items-center text-center justify-center"
               >
                 <h2 class="font-medium title-font mt-4 text-gray-900 text-lg">
-                  {{ count.title }}
+                  {{ wikiInfo.title }}
                 </h2>
                 <div class="w-12 h-1 bg-indigo-500 rounded mt-2 mb-4"></div>
                 <p class="text-base">
-                  {{ count.description }}
+                  {{ wikiInfo.description }}
                 </p>
                 <div class="mt-4 w-full">
                   <a
@@ -226,11 +220,11 @@ onMounted(async () => {
               class="sm:w-2/3 sm:pl-8 sm:py-8 sm:border-l border-gray-200 sm:border-t-0 border-t mt-4 pt-4 sm:mt-0 text-center sm:text-left"
             >
               <p class="leading-relaxed text-lg mb-4">
-                {{ count.extract }}
+                {{ wikiInfo.extract }}
               </p>
               <a
                 class="text-indigo-500 inline-flex items-center"
-                :href="count.content_urls.desktop.page"
+                :href="wikiInfo.content_urls.desktop.page"
                 >Learn More
                 <svg
                   fill="none"
