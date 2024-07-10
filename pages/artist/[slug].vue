@@ -94,7 +94,7 @@ onMounted(async () => {
   <div class="px-4 py-6">
     <div class="flex justify-between items-center">
       <Heading :title="musician?.name" :description="wikiInfo.description" />
-      <div>
+      <div class="px-4 py-4">
         <FavouriteButton
           v-if="isFavourite"
           @click.native="removeFavourite(musician.id)"
