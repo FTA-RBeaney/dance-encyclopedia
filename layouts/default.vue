@@ -7,7 +7,10 @@
       <div class="bg-background">
         <div class="grid lg:grid-cols-5">
           <Sidebar class="hidden lg:block" />
-          <div class="col-span-3 lg:col-span-4 lg:border-l">
+          <div
+            id="main-content"
+            class="main-content col-span-3 lg:col-span-4 lg:border-l relative"
+          >
             <slot />
           </div>
         </div>
