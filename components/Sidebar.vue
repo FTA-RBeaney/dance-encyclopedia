@@ -46,8 +46,10 @@ const getFavourites = async () => {
   // check favourites table
   const { data } = await supabase
     .from("favourites")
-    .select(`*,musicians(*)`)
+    .select("*")
     .eq("user_id", supabaseUser.value.id);
+
+  console.log("data", data);
 
   favourites.value = data;
 };
@@ -232,16 +234,12 @@ const inputLength = computed(() => favourites.value.length);
         </h2>
         <ScrollArea class="h-[300px] px-1">
           <div class="space-y-1 p-2">
-            <NuxtLink
+            <SideBarFavourite
               v-for="(favourite, i) in favourites"
+              :favourite="favourite"
               :key="`${favourite}-${i}`"
-              :to="`/artist/${favourite.musicians.id}`"
             >
-              <Button variant="ghost" class="w-full justify-start font-normal">
-                <IconsPlaylist />
-                {{ favourite.musicians.name }}
-              </Button>
-            </NuxtLink>
+            </SideBarFavourite>
           </div>
         </ScrollArea>
       </div>

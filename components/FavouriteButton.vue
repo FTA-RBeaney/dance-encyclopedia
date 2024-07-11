@@ -9,8 +9,6 @@
 
 <script setup>
 const props = defineProps({
-  text: String,
-  dataId: Number,
   extraClasses: String,
 });
 </script>

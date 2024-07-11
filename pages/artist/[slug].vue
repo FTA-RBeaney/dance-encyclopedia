@@ -101,15 +101,11 @@ const spotInfoHtml = spotInfo.value.html;
         <div class="px-4 py-4">
           <FavouriteButton
             v-if="isFavourite"
-            @click.native="removeFavourite(everything.id)"
+            @click="removeFavourite(artistId)"
             extraClasses="bg-[#EF4444] hover:bg-[#EF4444]/90 focus:ring-[#EF4444]/50"
-            :dataId="everything.id"
             >Favourited! <IconsHeartFull class="ml-2"
           /></FavouriteButton>
-          <FavouriteButton
-            v-else
-            @click="addFavourite(everything.id)"
-            :dataId="everything.id"
+          <FavouriteButton v-else @click="addFavourite(artistId)"
             >Favourite <IconsHeartOutline class="ml-2"
           /></FavouriteButton>
         </div>
@@ -122,6 +118,24 @@ const spotInfoHtml = spotInfo.value.html;
           </div>
         </div>
       </section>
+
+      <div class="flex items-center justify-between">
+        <div class="space-y-1">
+          <h2 class="text-2xl font-semibold tracking-tight">Albums</h2>
+          <p class="text-sm text-muted-foreground">A list of all the albums</p>
+        </div>
+      </div>
+      <Separator class="my-4" />
+      <ArtistAlbumList :everything="everything" :allTheImages="allTheImages" />
+
+      <div class="bottom-drawer">
+        <div class="h-2 bg-red-light"></div>
+        <div class="inline-flex items-center justify-center bg-red-lightest">
+          <div class="shadow-lg rounded-lg">
+            <div v-html="spotInfoHtml"></div>
+          </div>
+        </div>
+      </div>
     </div>
     <Script
       async
