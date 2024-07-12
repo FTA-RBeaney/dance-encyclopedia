@@ -79,23 +79,28 @@ onMounted(async () => {
 
 <style scoped lang="scss">
 ul {
+  /**
+   * User input values.
+   */
+  --grid-layout-gap: 10px;
+  --grid-column-count: 8;
+  --grid-item--min-width: 100px;
+
+  /**
+   * Calculated values.
+   */
+  --gap-count: calc(var(--grid-column-count) - 1);
+  --total-gap-width: calc(var(--gap-count) * var(--grid-layout-gap));
+  --grid-item--max-width: calc(
+    (100% - var(--total-gap-width)) / var(--grid-column-count)
+  );
+
   display: grid;
-  margin-bottom: 4rem;
-  gap: 1rem;
-  grid-template-columns: repeat(1, 1fr);
-  grid-auto-rows: 1fr;
-
-  @media (width >= 600px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  @media (width >= 1200px) {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  @media (width >= 1400px) {
-    grid-template-columns: repeat(8, 1fr);
-  }
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(max(var(--grid-item--min-width), var(--grid-item--max-width)), 1fr)
+  );
+  grid-gap: var(--grid-layout-gap);
 }
 
 li {

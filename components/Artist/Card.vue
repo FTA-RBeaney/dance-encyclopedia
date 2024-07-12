@@ -1,7 +1,18 @@
 <template>
   <div
-    class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+    class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 relative"
   >
+    <div class="absolute top-1 right-1">
+      <FavouriteButton
+        v-if="isFavourite"
+        @click="removeFavourite(artistId)"
+        extraClasses="bg-[#EF4444] hover:bg-[#EF4444]/90 focus:ring-[#EF4444]/50"
+        ><IconsHeartFull
+      /></FavouriteButton>
+      <FavouriteButton v-else @click="addFavourite(artistId)"
+        ><IconsHeartOutline
+      /></FavouriteButton>
+    </div>
     <NuxtLink :to="`/artist/${artistId}`">
       <img
         class="w-full card-image"
@@ -12,7 +23,7 @@
     <div class="py-2 px-3">
       <a href="#">
         <h5
-          class="text-lg font-bold tracking-tight text-gray-900 dark:text-white"
+          class="text-md font-bold tracking-tight text-gray-900 dark:text-white"
         >
           {{ artistData.name }}
         </h5>
@@ -64,6 +75,59 @@ const key = artistData.value.name
   .replace(/ /g, "_");
 var url = `https://en.wikipedia.org/api/rest_v1/page/summary/${key}`;
 const { data: wikiInfo } = await useFetch(url);
+
+const isFavourite = ref(false);
+const user = useSupabaseUser();
+const supabase = useSupabaseClient();
+const route = useRoute();
+// check favourites table to see if current page is a favourite
+const { data, error } = await supabase
+  .from("favourites")
+  .select("favourite_id")
+  .eq("favourite_id", user.value.id + props.artistId);
+console.log(data);
+
+if (data.length > 0) {
+  isFavourite.value = true;
+}
+
+// add favourite functionality
+async function addFavourite(id) {
+  isFavourite.value = true;
+
+  try {
+    const { data } = await supabase
+      .from("favourites")
+      .upsert({
+        favourite_id: user.value.id + id,
+        user_id: user.value.id,
+        post_id: id,
+      })
+      .select();
+
+    if (error) throw error;
+  } catch (error) {
+    alert(error.message);
+  } finally {
+  }
+}
+
+//remove favourite
+async function removeFavourite(id) {
+  isFavourite.value = false;
+
+  try {
+    const { data } = await supabase
+      .from("favourites")
+      .delete()
+      .eq("favourite_id", user.value.id + id);
+
+    if (error) throw error;
+  } catch (error) {
+    alert(error.message);
+  } finally {
+  }
+}
 </script>
 
 <style scoped lang="scss">
@@ -74,7 +138,7 @@ const { data: wikiInfo } = await useFetch(url);
   object-fit: cover;
 
   @media (width >= 600px) {
-    max-height: 180px;
+    max-height: 160px;
   }
 }
 </style>
