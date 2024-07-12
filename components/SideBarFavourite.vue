@@ -9,7 +9,7 @@
 
 <script setup>
 const props = defineProps({
-  favourite: Array,
+  favourite: Object,
 });
 
 const artistFetchUrl = `https://musicbrainz.org/ws/2/artist/${props.favourite.post_id}?&fmt=json`;
