@@ -1,17 +1,19 @@
 <script setup>
 const client = useSupabaseClient();
+const user = useSupabaseUser();
+const supabase = useSupabaseClient();
 
 const isLoaded = ref(false);
 
 const allMusicians = ref([]);
 
-const musicianId = [
-  "3af06bc4-68ad-4cae-bb7a-7eeeb45e411f",
-  "54799c0e-eb45-4eea-996d-c4d71a63c499",
-  "b6d381bb-3642-455c-ab73-125ba1259b71",
-  "85545102-7c29-4707-aea2-30ff55018df9",
-  "0dbd6300-efdc-420b-857e-895e18fad317",
-];
+const { data: allTheMusic } = await useFetch(
+  "https://musicbrainz.org/ws/2/artist?query=tag:swing&limit=20&fmt=json"
+);
+
+const { data: musicianId, error } = await supabase
+  .from("musicians")
+  .select("*");
 
 const isToggled = ref(false);
 
@@ -41,17 +43,21 @@ onMounted(async () => {
         />
       </div>
       <ul v-if="!isToggled" class="flex">
-        <li v-for="musician in musicianId" :key="musician" class="flex">
-          <ArtistCard :artistId="musician" />
+        <li
+          v-for="musician in allTheMusic.artists"
+          :key="musician"
+          class="flex"
+        >
+          <ArtistCard :artistId="musician.id" :musician="musician" />
         </li>
       </ul>
       <Table v-else>
         <TableHeader>
           <TableRow>
             <TableHead class="font-bold"> Name </TableHead>
-            <TableHead class="font-bold"> Country </TableHead>
-            <TableHead class="font-bold"> Born </TableHead>
-            <TableHead class="font-bold"> Died </TableHead>
+            <TableHead class="font-bold"> Description </TableHead>
+            <!-- <TableHead class="font-bold"> Born </TableHead>
+            <TableHead class="font-bold"> Died </TableHead> -->
             <TableHead class="font-bold text-right"> Action </TableHead>
           </TableRow>
         </TableHeader>
@@ -59,7 +65,8 @@ onMounted(async () => {
           <ArtistRow
             v-for="musician in musicianId"
             :key="musician"
-            :artistId="musician"
+            :artistId="musician.id"
+            :musician="musician"
           />
           <!-- <TableRow v-for="musician in allMusicians" :key="musician">
           <TableCell class="font-medium">
@@ -83,7 +90,7 @@ ul {
    * User input values.
    */
   --grid-layout-gap: 10px;
-  --grid-column-count: 8;
+  --grid-column-count: 6;
   --grid-item--min-width: 100px;
 
   /**

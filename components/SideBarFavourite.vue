@@ -1,5 +1,5 @@
 <template>
-  <NuxtLink :key="`${favourite}-${i}`" :to="`/artist/${favourite.post_id}`">
+  <NuxtLink :to="`/artist/${favourite.post_id}`">
     <Button variant="ghost" class="w-full justify-start font-normal">
       <IconsPlaylist />
       {{ artistData.name }}

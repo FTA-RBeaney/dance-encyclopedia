@@ -14,18 +14,36 @@
       /></FavouriteButton>
     </div>
     <NuxtLink :to="`/artist/${artistId}`">
-      <img
+      <NuxtImg
+        v-if="wikiInfo?.thumbnail?.source"
         class="w-full card-image"
         :src="wikiInfo?.thumbnail?.source"
+        format="webp"
+        width="300"
+        height="300"
+        preload
+        loading="lazy"
+        :placeholder="[50, 25, 75, 5]"
+        @error="
+          $event.target.src =
+            'https://archive.org/download/placeholder-image/placeholder-image.jpg'
+        "
+        alt=""
+      />
+      <NuxtImg
+        v-else
+        class="w-full card-image"
+        src="https://archive.org/download/placeholder-image/placeholder-image.jpg"
         alt=""
       />
     </NuxtLink>
     <div class="py-2 px-3">
       <a href="#">
         <h5
+          v-if="wikiInfo"
           class="text-md font-bold tracking-tight text-gray-900 dark:text-white"
         >
-          {{ artistData.name }}
+          {{ wikiInfo.titles.normalized }}
         </h5>
       </a>
       <!-- <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
@@ -61,18 +79,13 @@
 </template>
 
 <script setup>
+const img = useImage();
 const props = defineProps({
   artistId: String,
+  musician: Object,
 });
 
-const artistFetchUrl = `https://musicbrainz.org/ws/2/artist/${props.artistId}?&fmt=json`;
-const { data: artistData } = await useFetch(artistFetchUrl);
-
-console.log(artistData);
-const key = artistData.value.name
-  .trim()
-  .replace(/'/g, "%27")
-  .replace(/ /g, "_");
+const key = props.musician.name.trim().replace(/'/g, "%27").replace(/ /g, "_");
 var url = `https://en.wikipedia.org/api/rest_v1/page/summary/${key}`;
 const { data: wikiInfo } = await useFetch(url);
 
@@ -80,6 +93,7 @@ const isFavourite = ref(false);
 const user = useSupabaseUser();
 const supabase = useSupabaseClient();
 const route = useRoute();
+
 // check favourites table to see if current page is a favourite
 const { data, error } = await supabase
   .from("favourites")
@@ -138,7 +152,7 @@ async function removeFavourite(id) {
   object-fit: cover;
 
   @media (width >= 600px) {
-    max-height: 160px;
+    max-height: 140px;
   }
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div class="relative">
-    <div class="grid-container">
+    <div class="grid-container" :class="imageIsLoaded ? 'block' : 'invisible'">
       <a
         v-for="(item, index) in everything['release-groups']"
         :key="`${item}+${index}`"
@@ -10,16 +10,17 @@
         target="_blank"
       >
         <div class="overflow-hidden rounded-md">
-          <img
+          <NuxtImg
             :src="allTheImages[index]"
-            @error="
-              $event.target.src =
-                'https://archive.org/download/placeholder-image/placeholder-image.jpg'
-            "
+            format="webp"
+            preload
+            loading="lazy"
+            placeholder="https://archive.org/download/placeholder-image/placeholder-image.jpg"
             :alt="item.title"
-            width="150px"
-            height="150px"
+            width="150"
+            height="150"
             class="h-auto w-auto object-cover transition-all hover:scale-105 aspect-square"
+            @load="isLoaded"
           />
         </div>
         <div class="space-y-1 text-sm">
@@ -40,6 +41,13 @@ const props = defineProps({
   everything: Object,
   allTheImages: Object,
 });
+
+const imageIsLoaded = ref(false);
+
+const isLoaded = () => {
+  imageIsLoaded.value = true;
+};
+
 const imageLoadError = () => {
   console.log("image error");
 };

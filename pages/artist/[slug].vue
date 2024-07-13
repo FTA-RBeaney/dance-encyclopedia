@@ -79,14 +79,23 @@ everything.value["release-groups"].forEach((item) => {
 });
 
 const filteredItems = everything.value.relations.filter((item) => {
-  return item.url.resource.includes("spotify");
+  if (item.url.resource.includes("spotify")) {
+    return item.url.resource.includes("spotify");
+  }
 });
 
-const spotifyLink =
-  "https://open.spotify.com/oembed?url=" + filteredItems[0].url.resource;
+const spotifyLink = ref();
+const spotInfoHtml = ref();
 
-const { data: spotInfo } = await useFetch(spotifyLink);
-const spotInfoHtml = spotInfo.value.html;
+if (filteredItems[0]) {
+  spotifyLink.value =
+    "https://open.spotify.com/oembed?url=" + filteredItems[0].url.resource;
+  const { data: spotInfo } = await useFetch(spotifyLink.value);
+  spotInfoHtml.value = spotInfo.value.html;
+}
+
+var mediaUrl = `https://en.wikipedia.org/api/rest_v1/page/media-list/${key}`;
+const { data: wikiMedia } = await useFetch(mediaUrl);
 </script>
 
 <template>
@@ -118,6 +127,35 @@ const spotInfoHtml = spotInfo.value.html;
           </div>
         </div>
       </section>
+
+      <div class="flex items-center justify-between">
+        <div class="space-y-1">
+          <h2 class="text-2xl font-semibold tracking-tight">Images</h2>
+          <p class="text-sm text-muted-foreground">Various images</p>
+        </div>
+      </div>
+      <Separator class="my-4" />
+      <!-- <pre>{{ wikiMedia }}</pre> -->
+      <ul class="flex">
+        <li v-for="(media, index) in wikiMedia.items" :key="index">
+          <img
+            v-if="media.srcset"
+            :src="media.srcset[0].src"
+            width="300"
+            height="300"
+          />
+          <!-- <NuxtImg
+            v-if="media.srcset"
+            format="webp"
+            width="300"
+            height="300"
+            preload
+            loading="lazy"
+            :placeholder="[50, 25, 75, 5]"
+            :src="media.srcset[0].src"
+          /> -->
+        </li>
+      </ul>
 
       <div class="flex items-center justify-between">
         <div class="space-y-1">
