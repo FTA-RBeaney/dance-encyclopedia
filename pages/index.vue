@@ -17,6 +17,26 @@
               Chillwave portland ugh, knausgaard fam polaroid iPhone. Man braid
               swag typewriter affogato, hella selvage wolf narwhal dreamcatcher.
             </p>
+            <div class="flex items-center justify-between">
+              <div class="space-y-1">
+                <h2 class="text-2xl font-semibold tracking-tight">
+                  Latest video
+                </h2>
+                <p class="text-sm text-muted-foreground">
+                  The latest inspirational video
+                </p>
+              </div>
+            </div>
+            <Separator class="my-4" />
+            <div
+              class="relative flex w-full shrink-0 overflow-hidden rounded-2xl pt-[56.25%] shadow-[0_0_30px_0_rgba(0,0,0,1)]"
+            >
+              <iframe
+                class="absolute inset-0 z-50 h-full w-full"
+                :src="videoUrl"
+              ></iframe>
+            </div>
+
             <!-- <div class="flex w-full md:justify-start justify-center items-end">
               <div class="relative mr-4 md:w-full lg:w-full xl:w-1/2 w-2/4">
                 <label for="hero-field" class="leading-7 text-sm text-gray-600"
@@ -91,6 +111,8 @@
 <script setup>
 const supabaseUser = useSupabaseUser();
 const fullName = computed(() => supabaseUser?.value?.user_metadata?.full_name);
+
+const videoUrl = await getLatestVideo();
 </script>
 
 <style scoped>

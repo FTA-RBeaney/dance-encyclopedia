@@ -44,6 +44,8 @@ export default defineNuxtConfig({
     public: {
       GOOGLE_API_KEY: "AIzaSyC9kNzY_EqckULIwSmij1ztvzWjKyvcHso",
       SPREAD_SHEET_ID: "1CVkFzZB8Eg6Ig8GvvvWgSC_uHjzRYp31DRnKV-sfxzQ",
+      YOUTUBE_API_KEY: process.env.NUXT_YOUTUBE_API_KEY,
+      YOUTUBE_PLAYLIST_ID: process.env.NUXT_YOUTUBE_PLAYLIST_ID,
     },
   },
 
