@@ -1,25 +1,11 @@
 <script setup>
-const client = useSupabaseClient();
-const user = useSupabaseUser();
-const supabase = useSupabaseClient();
-
 const isLoaded = ref(false);
-
-const allMusicians = ref([]);
-
-const { data: allTheMusic } = await useFetch(
-  "https://musicbrainz.org/ws/2/artist?query=tag:swing&limit=20&fmt=json"
-);
-
-const { data: musicianId, error } = await supabase
-  .from("musicians")
-  .select("*");
-
 const isToggled = ref(false);
+
+const allTheMusic = await useArtists();
 
 const toggleListView = () => {
   isToggled.value = !isToggled.value;
-  console.log(isToggled.value);
 };
 
 // change loaded state on mount
@@ -34,7 +20,7 @@ onMounted(async () => {
     <div class="px-4 py-6">
       <Heading
         title="Musicians"
-        :description="`${musicianId?.length} records`"
+        :description="`${allTheMusic?.artists?.length} records`"
       />
       <div class="text-right">
         <ToggleListButton
@@ -44,7 +30,7 @@ onMounted(async () => {
       </div>
       <ul v-if="!isToggled" class="flex">
         <li
-          v-for="musician in allTheMusic.artists"
+          v-for="musician in allTheMusic?.artists"
           :key="musician"
           class="flex"
         >
@@ -56,28 +42,16 @@ onMounted(async () => {
           <TableRow>
             <TableHead class="font-bold"> Name </TableHead>
             <TableHead class="font-bold"> Description </TableHead>
-            <!-- <TableHead class="font-bold"> Born </TableHead>
-            <TableHead class="font-bold"> Died </TableHead> -->
             <TableHead class="font-bold text-right"> Action </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           <ArtistRow
-            v-for="musician in musicianId"
+            v-for="musician in allTheMusic.artists"
             :key="musician"
             :artistId="musician.id"
             :musician="musician"
           />
-          <!-- <TableRow v-for="musician in allMusicians" :key="musician">
-          <TableCell class="font-medium">
-            {{ musician }}
-          </TableCell>
-          <TableCell>{{ musician }} </TableCell>
-
-          <TableCell class="font-bold text-right">
-            <NuxtLink :to="`/artist/${musician}`">View</NuxtLink>
-          </TableCell>
-        </TableRow> -->
         </TableBody>
       </Table>
     </div>

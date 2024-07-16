@@ -20,39 +20,33 @@ const favourites = ref([]);
 //   isUserLoggedIn.value = true;
 // }
 
-const getUser = async () => {
-  const user = await supabase.auth.getUser();
-  if (user) {
-    const fetchedUserId = user.data.user?.id;
-    userId.value = fetchedUserId;
-  }
-};
+if (supabaseUser.value) {
+  const getUserInfo = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("profiles")
+        .select()
+        .eq("id", supabaseUser.value.id);
 
-const getUserInfo = async () => {
-  try {
-    const { data, error } = await supabase
-      .from("profiles")
-      .select()
-      .eq("id", supabaseUser.value.id);
+      user.value = data;
+      if (error) throw error;
+    } catch (error) {
+      console.log("error: ", error);
+    }
+  };
 
-    user.value = data;
-    if (error) throw error;
-  } catch (error) {
-    console.log("error: ", error);
-  }
-};
+  const getFavourites = async () => {
+    // check favourites table
+    const { data } = await supabase
+      .from("favourites")
+      .select("*")
+      .eq("user_id", supabaseUser.value.id);
 
-const getFavourites = async () => {
-  // check favourites table
-  const { data } = await supabase
-    .from("favourites")
-    .select("*")
-    .eq("user_id", supabaseUser.value.id);
+    console.log("data", data);
 
-  console.log("data", data);
-
-  favourites.value = data;
-};
+    favourites.value = data;
+  };
+}
 
 const channel = supabase
   .channel("public:favourites")
@@ -67,14 +61,6 @@ const channel = supabase
     (payload) => getFavourites()
   )
   .subscribe();
-
-onMounted(() => {
-  if (supabaseUser) {
-    getUser();
-    getUserInfo();
-    getFavourites();
-  }
-});
 
 onUnmounted(() => {
   supabase.removeChannel(channel);

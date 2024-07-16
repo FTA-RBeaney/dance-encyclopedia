@@ -2,7 +2,7 @@
   <div
     class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 relative"
   >
-    <div class="absolute top-1 right-1">
+    <div v-if="supabaseUser" class="absolute top-1 right-1">
       <FavouriteButton
         v-if="isFavourite"
         @click="removeFavourite(artistId)"
@@ -90,19 +90,21 @@ var url = `https://en.wikipedia.org/api/rest_v1/page/summary/${key}`;
 const { data: wikiInfo } = await useFetch(url);
 
 const isFavourite = ref(false);
-const user = useSupabaseUser();
+const supabaseUser = useSupabaseUser();
 const supabase = useSupabaseClient();
 const route = useRoute();
 
 // check favourites table to see if current page is a favourite
-const { data, error } = await supabase
-  .from("favourites")
-  .select("favourite_id")
-  .eq("favourite_id", user.value.id + props.artistId);
-console.log(data);
+if (supabaseUser.value) {
+  const { data, error } = await supabase
+    .from("favourites")
+    .select("favourite_id")
+    .eq("favourite_id", supabaseUser.value.id + props.artistId);
+  console.log(data);
 
-if (data.length > 0) {
-  isFavourite.value = true;
+  if (data.length > 0) {
+    isFavourite.value = true;
+  }
 }
 
 // add favourite functionality
@@ -113,8 +115,8 @@ async function addFavourite(id) {
     const { data } = await supabase
       .from("favourites")
       .upsert({
-        favourite_id: user.value.id + id,
-        user_id: user.value.id,
+        favourite_id: supabaseUser.value.id + id,
+        user_id: supabaseUser.value.id,
         post_id: id,
       })
       .select();
@@ -134,7 +136,7 @@ async function removeFavourite(id) {
     const { data } = await supabase
       .from("favourites")
       .delete()
-      .eq("favourite_id", user.value.id + id);
+      .eq("favourite_id", supabaseUser.value.id + id);
 
     if (error) throw error;
   } catch (error) {
