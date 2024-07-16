@@ -1,15 +1,8 @@
 <script setup>
-import { playlists } from "../data/playlists";
-import { RealtimeChannel } from "@supabase/supabase-js";
 const supabaseUser = useSupabaseUser();
 const supabase = useSupabaseClient();
 
-let realtimeChannel = RealtimeChannel;
-
 const isUserLoggedIn = ref(false);
-const user = ref([]);
-const userId = ref();
-const favourites = ref([]);
 
 // const { data: loggedInUser, error } = await supabase
 //   .from("profiles")
@@ -19,54 +12,6 @@ const favourites = ref([]);
 // if (loggedInUser) {
 //   isUserLoggedIn.value = true;
 // }
-
-if (supabaseUser.value) {
-  const getUserInfo = async () => {
-    try {
-      const { data, error } = await supabase
-        .from("profiles")
-        .select()
-        .eq("id", supabaseUser.value.id);
-
-      user.value = data;
-      if (error) throw error;
-    } catch (error) {
-      console.log("error: ", error);
-    }
-  };
-
-  const getFavourites = async () => {
-    // check favourites table
-    const { data } = await supabase
-      .from("favourites")
-      .select("*")
-      .eq("user_id", supabaseUser.value.id);
-
-    console.log("data", data);
-
-    favourites.value = data;
-  };
-}
-
-const channel = supabase
-  .channel("public:favourites")
-  .on(
-    "postgres_changes",
-    {
-      event: "*",
-      schema: "public",
-      table: "favourites",
-    },
-
-    (payload) => getFavourites()
-  )
-  .subscribe();
-
-onUnmounted(() => {
-  supabase.removeChannel(channel);
-});
-
-const inputLength = computed(() => favourites.value.length);
 </script>
 
 <template>
@@ -214,21 +159,7 @@ const inputLength = computed(() => favourites.value.length);
           </NuxtLink>
         </div>
       </div>
-      <div v-if="supabaseUser && inputLength" class="py-2">
-        <h2 class="relative px-7 text-lg font-semibold tracking-tight">
-          Favourites
-        </h2>
-        <ScrollArea class="h-[300px] px-1">
-          <div class="space-y-1 p-2">
-            <SideBarFavourite
-              v-for="(favourite, i) in favourites"
-              :favourite="favourite"
-              :key="`${favourite}-${i}`"
-            >
-            </SideBarFavourite>
-          </div>
-        </ScrollArea>
-      </div>
+      <SidebarFavourites v-if="supabaseUser" />
     </div>
   </div>
 </template>
