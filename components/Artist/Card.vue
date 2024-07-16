@@ -100,7 +100,6 @@ if (supabaseUser.value) {
     .from("favourites")
     .select("favourite_id")
     .eq("favourite_id", supabaseUser.value.id + props.artistId);
-  console.log(data);
 
   if (data.length > 0) {
     isFavourite.value = true;

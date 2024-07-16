@@ -2,11 +2,45 @@
 const isLoaded = ref(false);
 const isToggled = ref(false);
 
-const allTheMusic = await useArtists();
+const supabase = useSupabaseClient();
+const allTheMusic = ref([]);
+
+// get musicians
+const getMusicians = async () => {
+  const { data, error } = await supabase.from("musicians").select("*");
+
+  allTheMusic.value = data;
+};
+
+// const allTheMusic = await useArtists();
 
 const toggleListView = () => {
   isToggled.value = !isToggled.value;
 };
+
+import { RealtimeChannel } from "@supabase/supabase-js";
+let realtimeChannel = RealtimeChannel;
+const channel = supabase
+  .channel("public:musicians")
+  .on(
+    "postgres_changes",
+    {
+      event: "*",
+      schema: "public",
+      table: "musicians",
+    },
+
+    (payload) => getMusicians()
+  )
+  .subscribe();
+
+onMounted(() => {
+  getMusicians();
+});
+
+onUnmounted(() => {
+  supabase.removeChannel(channel);
+});
 
 // change loaded state on mount
 onMounted(async () => {
@@ -20,8 +54,9 @@ onMounted(async () => {
     <div class="px-4 py-6">
       <Heading
         title="Musicians"
-        :description="`${allTheMusic?.artists?.length} records`"
+        :description="`${allTheMusic.length} records`"
       />
+      <MusiciansAddMusician />
       <div class="text-right">
         <ToggleListButton
           @toggle-list-view="toggleListView"
@@ -29,11 +64,7 @@ onMounted(async () => {
         />
       </div>
       <ul v-if="!isToggled" class="flex">
-        <li
-          v-for="musician in allTheMusic?.artists"
-          :key="musician"
-          class="flex"
-        >
+        <li v-for="musician in allTheMusic" :key="musician" class="flex">
           <ArtistCard :artistId="musician.id" :musician="musician" />
         </li>
       </ul>
@@ -47,13 +78,19 @@ onMounted(async () => {
         </TableHeader>
         <TableBody>
           <ArtistRow
-            v-for="musician in allTheMusic.artists"
+            v-for="musician in allTheMusic"
             :key="musician"
             :artistId="musician.id"
             :musician="musician"
           />
         </TableBody>
       </Table>
+
+      <ul class="flex justify-between mt-6">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+      </ul>
     </div>
   </div>
 </template>
