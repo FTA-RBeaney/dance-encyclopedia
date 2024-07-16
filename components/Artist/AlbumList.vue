@@ -1,37 +1,11 @@
 <template>
   <div class="relative">
-    <div class="grid-container" :class="imageIsLoaded ? 'block' : 'invisible'">
-      <a
+    <div class="grid-container">
+      <ArtistAlbum
         v-for="(item, index) in everything['release-groups']"
-        :key="`${item}+${index}`"
-        href="google"
-        class="space-y-3 mb-4"
-        aspect-ratio="square"
-        target="_blank"
-      >
-        <div class="overflow-hidden rounded-md">
-          <NuxtImg
-            :src="allTheImages[index]"
-            format="webp"
-            preload
-            loading="lazy"
-            placeholder="https://archive.org/download/placeholder-image/placeholder-image.jpg"
-            :alt="item.title"
-            width="300"
-            height="300"
-            class="h-full w-full object-cover transition-all hover:scale-105 aspect-square"
-            @load="isLoaded"
-          />
-        </div>
-        <div class="space-y-1 text-sm">
-          <h3 class="font-medium leading-none">
-            {{ item.title }}
-          </h3>
-          <p class="text-xs text-muted-foreground">
-            {{ item["first-release-date"] }}
-          </p>
-        </div>
-      </a>
+        :item="item"
+        :key="`${item.name}-${index}`"
+      />
     </div>
   </div>
 </template>
@@ -41,16 +15,6 @@ const props = defineProps({
   everything: Object,
   allTheImages: Object,
 });
-
-const imageIsLoaded = ref(false);
-
-const isLoaded = () => {
-  imageIsLoaded.value = true;
-};
-
-const imageLoadError = () => {
-  console.log("image error");
-};
 </script>
 
 <style scoped>

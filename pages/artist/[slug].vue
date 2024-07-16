@@ -3,7 +3,10 @@ const user = useSupabaseUser();
 const supabase = useSupabaseClient();
 const route = useRoute();
 
-const allTheImages = [];
+const isFavourite = ref(false);
+const isLoaded = ref(false);
+const spotifyLink = ref();
+const spotInfoHtml = ref();
 
 const artistId = route.params.slug;
 
@@ -15,10 +18,6 @@ const artistName = everything.value.name;
 const key = artistName.trim().replace(/'/g, "%27").replace(/ /g, "_");
 var wikiUrl = `https://en.wikipedia.org/api/rest_v1/page/summary/${key}`;
 const { data: wikiInfo } = await useFetch(wikiUrl);
-
-const artistSpotify = ref("");
-const isFavourite = ref(false);
-const isLoaded = ref(false);
 
 // check favourites table to see if current page is a favourite
 const { data, error } = await supabase
@@ -73,19 +72,11 @@ onMounted(async () => {
   return (isLoaded.value = true);
 });
 
-everything.value["release-groups"].forEach((item) => {
-  const img = `https://coverartarchive.org/release-group/${item.id}/front`;
-  allTheImages.push(img);
-});
-
 const filteredItems = everything.value.relations.filter((item) => {
   if (item.url.resource.includes("spotify")) {
     return item.url.resource.includes("spotify");
   }
 });
-
-const spotifyLink = ref();
-const spotInfoHtml = ref();
 
 if (filteredItems[0]) {
   spotifyLink.value =
@@ -161,7 +152,7 @@ const { data: wikiMedia } = await useFetch(mediaUrl);
         </div>
       </div>
       <Separator class="my-4" />
-      <ArtistAlbumList :everything="everything" :allTheImages="allTheImages" />
+      <ArtistAlbumList :everything="everything" />
 
       <div class="bottom-drawer">
         <div class="h-2 bg-red-light"></div>
