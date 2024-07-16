@@ -1,11 +1,13 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 import { createReusableTemplate, useMediaQuery } from "@vueuse/core";
+import { Toaster } from "@/components/ui/toast";
+import { useToast } from "@/components/ui/toast/use-toast";
 
 // Reuse `form` section
 const [UseTemplate, GridForm] = createReusableTemplate();
 const isDesktop = useMediaQuery("(min-width: 768px)");
-
+const { toast } = useToast();
 const isOpen = ref(false);
 const mbid = ref("15ab8bb8-7348-4377-ab73-b7acdad1459c");
 const newArtistName = ref();
@@ -38,10 +40,12 @@ const addArtist = async (mbid) => {
       .select();
 
     if (data === null) {
-      alertMessage.value =
-        "I'm sorry but  that artist exists. Please try again.";
-      artistExists.value = true;
-      await delay(1000);
+      toast({
+        title: "This artist already exists!",
+        description: "Please try again with another Artist MBID",
+        variant: "destructive",
+      });
+
       isOpen.value = false;
       await delay(1000);
       alertMessage.value = "";
@@ -49,7 +53,16 @@ const addArtist = async (mbid) => {
       newArtistName.value = null;
       artistExists.value = false;
     } else {
+      toast({
+        title: "Success!",
+        description: "Artist successfully added.",
+        variant: "success",
+      });
       isOpen.value = false;
+      await delay(1000);
+      alertMessage.value = "";
+      mbid = null;
+      newArtistName.value = null;
     }
   } catch (error) {
     console.log("EXISTS", error);
@@ -59,6 +72,7 @@ const addArtist = async (mbid) => {
 
 <template>
   <div>
+    <Toaster />
     <UseTemplate>
       <form
         @submit.prevent="addArtist(mbid)"

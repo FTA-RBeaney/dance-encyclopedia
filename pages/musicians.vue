@@ -7,7 +7,10 @@ const allTheMusic = ref([]);
 
 // get musicians
 const getMusicians = async () => {
-  const { data, error } = await supabase.from("musicians").select("*");
+  const { data, error } = await supabase
+    .from("musicians")
+    .select("*")
+    .order("name", { ascending: true });
 
   allTheMusic.value = data;
 };
@@ -86,11 +89,11 @@ onMounted(async () => {
         </TableBody>
       </Table>
 
-      <ul class="flex justify-between mt-6">
+      <!-- <ul class="flex justify-between mt-6">
         <li>1</li>
         <li>2</li>
         <li>3</li>
-      </ul>
+      </ul> -->
     </div>
   </div>
 </template>
