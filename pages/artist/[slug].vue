@@ -135,27 +135,24 @@ const { data: wikiMedia } = await useFetch(mediaUrl);
         </div>
       </div>
       <Separator class="my-4" />
-      <!-- <pre>{{ wikiMedia }}</pre> -->
-      <ul class="flex">
-        <li v-for="(media, index) in wikiMedia.items" :key="index">
-          <img
-            v-if="media.srcset"
-            :src="media.srcset[0].src"
-            width="300"
-            height="300"
-          />
-          <!-- <NuxtImg
-            v-if="media.srcset"
-            format="webp"
-            width="300"
-            height="300"
-            preload
-            loading="lazy"
-            :placeholder="[50, 25, 75, 5]"
-            :src="media.srcset[0].src"
-          /> -->
-        </li>
-      </ul>
+      <ScrollArea class="w-[100%] whitespace-nowrap mb-4">
+        <div class="flex space-x-4 pb-4">
+          <figure
+            v-for="(media, index) in wikiMedia.items"
+            :key="index"
+            className="shrink-0"
+          >
+            <div class="overflow-hidden rounded-md">
+              <img
+                v-if="media.srcset"
+                :src="media.srcset[0].src"
+                class="aspect-square h-36 w-fit object-cover"
+              />
+            </div>
+          </figure>
+        </div>
+        <ScrollBar orientation="horizontal" />
+      </ScrollArea>
 
       <div class="flex items-center justify-between">
         <div class="space-y-1">
@@ -184,8 +181,19 @@ const { data: wikiMedia } = await useFetch(mediaUrl);
   </div>
 </template>
 
-<style scoped>
+<style>
 a:hover {
   cursor: pointer;
+}
+iframe {
+  height: 82px;
+  width: 300px;
+}
+.bottom-drawer {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: auto;
+  height: auto;
 }
 </style>

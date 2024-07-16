@@ -111,7 +111,7 @@ async function addFavourite(id) {
   isFavourite.value = true;
 
   try {
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from("favourites")
       .upsert({
         favourite_id: supabaseUser.value.id + id,
