@@ -17,9 +17,9 @@
             loading="lazy"
             placeholder="https://archive.org/download/placeholder-image/placeholder-image.jpg"
             :alt="item.title"
-            width="150"
-            height="150"
-            class="h-auto w-auto object-cover transition-all hover:scale-105 aspect-square"
+            width="300"
+            height="300"
+            class="h-full w-full object-cover transition-all hover:scale-105 aspect-square"
             @load="isLoaded"
           />
         </div>

@@ -172,12 +172,6 @@ const { data: wikiMedia } = await useFetch(mediaUrl);
         </div>
       </div>
     </div>
-    <Script
-      async
-      rel="alternate"
-      type="application/json+oembed"
-      href="https://open.spotify.com/oembed?url=https%3A%2F%2Fopen.spotify.com%2Fshow%2F5eXZwvvxt3K2dxha3BSaAe"
-    ></Script>
   </div>
 </template>
 

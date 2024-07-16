@@ -17,6 +17,9 @@ export default defineNuxtConfig({
         {
           src: "https://unpkg.com/cloudinary-video-player@1.5.9/dist/cld-video-player.min.js",
         },
+        {
+          src: "https://open.spotify.com/oembed?url=https%3A%2F%2Fopen.spotify.com%2Fshow%2F5eXZwvvxt3K2dxha3BSaAe",
+        },
       ],
     },
   },
