@@ -81,6 +81,7 @@ onMounted(async () => {
       <MusiciansAddMusician />
       <div class="text-right">
         <ToggleListButton
+          v-if="noResults"
           @toggle-list-view="toggleListView"
           :isToggled="isToggled"
         />
@@ -126,41 +127,12 @@ onMounted(async () => {
 
 <style scoped lang="scss">
 ul {
-  // /**
-  //  * User input values.
-  //  */
-  // --grid-layout-gap: 10px;
-  // --grid-column-count: 6;
-  // --grid-item--min-width: 100px;
-
-  // /**
-  //  * Calculated values.
-  //  */
-  // --gap-count: calc(var(--grid-column-count) - 1);
-  // --total-gap-width: calc(var(--gap-count) * var(--grid-layout-gap));
-  // --grid-item--max-width: calc(
-  //   (100% - var(--total-gap-width)) / var(--grid-column-count)
-  // );
-
-  // display: grid;
-  // grid-template-columns: repeat(
-  //   auto-fill,
-  //   minmax(max(var(--grid-item--min-width), var(--grid-item--max-width)), 1fr)
-  // );
-  // grid-gap: var(--grid-layout-gap);
   display: grid;
   gap: 0.2em;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-
-  @media (min-width: 35em) {
-    // grid-auto-columns: 1fr;
-  }
 }
 
 li {
-  // flex: 1 1 0px;
-
-  // max-width: 260px;
   margin-right: 1rem;
   margin-bottom: 1rem;
 
