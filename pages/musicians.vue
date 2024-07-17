@@ -66,7 +66,7 @@ onMounted(async () => {
           :isToggled="isToggled"
         />
       </div>
-      <ul v-if="!isToggled" class="flex">
+      <ul v-if="!isToggled" class="flex flex-wrap">
         <li v-for="musician in allTheMusic" :key="musician" class="flex">
           <ArtistCard :artistId="musician.id" :musician="musician" />
         </li>
@@ -100,44 +100,47 @@ onMounted(async () => {
 
 <style scoped lang="scss">
 ul {
-  /**
-   * User input values.
-   */
-  --grid-layout-gap: 10px;
-  --grid-column-count: 6;
-  --grid-item--min-width: 100px;
+  // /**
+  //  * User input values.
+  //  */
+  // --grid-layout-gap: 10px;
+  // --grid-column-count: 6;
+  // --grid-item--min-width: 100px;
 
-  /**
-   * Calculated values.
-   */
-  --gap-count: calc(var(--grid-column-count) - 1);
-  --total-gap-width: calc(var(--gap-count) * var(--grid-layout-gap));
-  --grid-item--max-width: calc(
-    (100% - var(--total-gap-width)) / var(--grid-column-count)
-  );
+  // /**
+  //  * Calculated values.
+  //  */
+  // --gap-count: calc(var(--grid-column-count) - 1);
+  // --total-gap-width: calc(var(--gap-count) * var(--grid-layout-gap));
+  // --grid-item--max-width: calc(
+  //   (100% - var(--total-gap-width)) / var(--grid-column-count)
+  // );
 
-  display: grid;
-  grid-template-columns: repeat(
-    auto-fill,
-    minmax(max(var(--grid-item--min-width), var(--grid-item--max-width)), 1fr)
-  );
-  grid-gap: var(--grid-layout-gap);
+  // display: grid;
+  // grid-template-columns: repeat(
+  //   auto-fill,
+  //   minmax(max(var(--grid-item--min-width), var(--grid-item--max-width)), 1fr)
+  // );
+  // grid-gap: var(--grid-layout-gap);
 }
 
 li {
-  flex: 0 0 calc(25% - 30px);
+  flex: 0 0 100%;
+  max-width: 180px;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
 
   > div > a {
     max-height: 150px;
     overflow: hidden;
     position: relative;
     width: 100%;
-    padding-bottom: 200px;
+    padding-bottom: 220px;
     display: block;
     object-fit: cover;
 
     @media (width >= 600px) {
-      max-height: 260px;
+      max-height: 280px;
     }
 
     img {

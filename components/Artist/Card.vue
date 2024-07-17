@@ -1,6 +1,6 @@
 <template>
   <div
-    class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 relative"
+    class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 relative w-full h-full flex flex-col overflow-hidden"
   >
     <div v-if="supabaseUser" class="absolute top-1 right-1">
       <FavouriteButton
@@ -13,7 +13,7 @@
         ><IconsHeartOutline
       /></FavouriteButton>
     </div>
-    <NuxtLink :to="`/artist/${artistId}`">
+    <NuxtLink :to="`/artist/${artistId}`" class="">
       <NuxtImg
         v-if="wikiInfo?.thumbnail?.source"
         class="w-full card-image"
@@ -32,6 +32,8 @@
       />
       <NuxtImg
         v-else
+        width="300"
+        height="300"
         class="w-full card-image"
         src="https://archive.org/download/placeholder-image/placeholder-image.jpg"
         alt=""
@@ -150,10 +152,12 @@ async function removeFavourite(id) {
   width: 200px;
   height: 100%;
   max-height: 160px;
+  min-height: 160px;
   object-fit: cover;
 
   @media (width >= 600px) {
-    max-height: 140px;
+    max-height: 160px;
+    min-height: 160px;
   }
 }
 </style>
