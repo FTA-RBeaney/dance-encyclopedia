@@ -10,11 +10,22 @@ const spotInfoHtml = ref();
 
 const artistId = route.params.slug;
 
-const megaList = `https://musicbrainz.org/ws/2/artist/${artistId}?inc=release-groups%2Burl-rels&fmt=json`;
-const { data: everything } = await useFetch(megaList);
+const artistUrl = `https://musicbrainz.org/ws/2/artist/${artistId}?inc=url-rels&fmt=json`;
+const albumsUrl = `https://musicbrainz.org/ws/2/release-group?artist=${artistId}&fmt=json&type=album&limit=100`;
+
+// transform: (response) => {
+//     const res = response["release-groups"][0]["artist-credit"][0]["name"].value;
+
+//     return res;
+//   },
+
+const { data: artistData } = await useFetch(artistUrl);
+const { data: albumData } = await useFetch(albumsUrl, {
+  pick: ["release-groups"],
+});
 
 // get the musician name and change it to a format that we can use in Wikipedia's rest API
-const artistName = everything.value.name;
+const artistName = artistData.value.name;
 const key = artistName.trim().replace(/'/g, "%27").replace(/ /g, "_");
 var wikiUrl = `https://en.wikipedia.org/api/rest_v1/page/summary/${key}`;
 const { data: wikiInfo } = await useFetch(wikiUrl);
@@ -67,7 +78,7 @@ async function removeFavourite(id) {
   }
 }
 
-const filteredItems = everything.value.relations.filter((item) => {
+const filteredItems = artistData.value.relations.filter((item) => {
   if (item.url.resource.includes("spotify")) {
     return item.url.resource.includes("spotify");
   }
@@ -92,7 +103,7 @@ onMounted(async () => {
     <div v-else class="px-4 py-6">
       <div class="flex justify-between items-center">
         <Heading
-          :title="everything?.name"
+          :title="artistData?.name"
           :description="wikiInfo.description"
         />
         <div class="px-4 py-4">
@@ -111,21 +122,14 @@ onMounted(async () => {
       <section class="text-gray-600 body-font">
         <div class="container flex flex-col">
           <div class="lg:w-5/6">
-            <ArtistDetail :musician="everything" :wikiInfo="wikiInfo" />
+            <ArtistDetail :musician="artistData" :wikiInfo="wikiInfo" />
           </div>
         </div>
       </section>
 
       <ArtistImageList :artistName="artistName" />
 
-      <div class="flex items-center justify-between">
-        <div class="space-y-1">
-          <h2 class="text-2xl font-semibold tracking-tight">Albums</h2>
-          <p class="text-sm text-muted-foreground">A list of all the albums</p>
-        </div>
-      </div>
-      <Separator class="my-4" />
-      <ArtistAlbumList :everything="everything" />
+      <ArtistAlbumList :everything="albumData" />
 
       <div class="bottom-drawer">
         <div class="h-2 bg-red-light"></div>

@@ -1,12 +1,17 @@
 <template>
-  <a href="google" class="space-y-3 mb-4" aspect-ratio="square" target="_blank">
+  <a
+    :href="`https://musicbrainz.org/release-group/${item.id}`"
+    class="space-y-3 mb-4"
+    aspect-ratio="square"
+    target="_blank"
+  >
     <div class="overflow-hidden rounded-md">
       <NuxtImg
         :src="albumImg"
         format="webp"
         preload
         loading="lazy"
-        placeholder="https://archive.org/download/placeholder-image/placeholder-image.jpg"
+        placeholder="https://sternbergclinic.com.au/wp-content/uploads/2020/03/placeholder.png"
         :alt="item.title"
         width="300"
         height="300"
@@ -42,4 +47,6 @@ const imageLoadError = () => {
 };
 
 const albumImg = `https://coverartarchive.org/release-group/${item.id}/front`;
+
+console.log(item);
 </script>

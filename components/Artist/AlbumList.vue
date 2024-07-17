@@ -1,11 +1,20 @@
 <template>
-  <div class="relative">
-    <div class="grid-container">
-      <ArtistAlbum
-        v-for="(item, index) in everything['release-groups']"
-        :item="item"
-        :key="`${item.name}-${index}`"
-      />
+  <div class="mt-8">
+    <div class="flex items-center justify-between">
+      <div class="space-y-1">
+        <h2 class="text-2xl font-semibold tracking-tight">Albums</h2>
+        <p class="text-sm text-muted-foreground">A list of all the albums</p>
+      </div>
+    </div>
+    <Separator class="my-4" />
+    <div class="relative">
+      <div class="grid-container">
+        <ArtistAlbum
+          v-for="(item, index) in everything['release-groups']"
+          :item="item"
+          :key="`${item.name}-${index}`"
+        />
+      </div>
     </div>
   </div>
 </template>
