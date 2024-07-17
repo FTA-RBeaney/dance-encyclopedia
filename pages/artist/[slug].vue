@@ -67,11 +67,6 @@ async function removeFavourite(id) {
   }
 }
 
-// change loaded state on mount
-onMounted(async () => {
-  return (isLoaded.value = true);
-});
-
 const filteredItems = everything.value.relations.filter((item) => {
   if (item.url.resource.includes("spotify")) {
     return item.url.resource.includes("spotify");
@@ -85,8 +80,10 @@ if (filteredItems[0]) {
   spotInfoHtml.value = spotInfo.value.html;
 }
 
-var mediaUrl = `https://en.wikipedia.org/api/rest_v1/page/media-list/${key}`;
-const { data: wikiMedia } = await useFetch(mediaUrl);
+// change loaded state on mount
+onMounted(async () => {
+  return (isLoaded.value = true);
+});
 </script>
 
 <template>
@@ -119,31 +116,7 @@ const { data: wikiMedia } = await useFetch(mediaUrl);
         </div>
       </section>
 
-      <div class="flex items-center justify-between">
-        <div class="space-y-1">
-          <h2 class="text-2xl font-semibold tracking-tight">Images</h2>
-          <p class="text-sm text-muted-foreground">Various images</p>
-        </div>
-      </div>
-      <Separator class="my-4" />
-      <ScrollArea class="w-[100%] whitespace-nowrap mb-4">
-        <div class="flex space-x-4 pb-4">
-          <figure
-            v-for="(media, index) in wikiMedia.items"
-            :key="index"
-            className="shrink-0"
-          >
-            <div class="overflow-hidden rounded-md">
-              <img
-                v-if="media.srcset"
-                :src="media.srcset[0].src"
-                class="aspect-square h-36 w-fit object-cover"
-              />
-            </div>
-          </figure>
-        </div>
-        <ScrollBar orientation="horizontal" />
-      </ScrollArea>
+      <ArtistImageList :artistName="artistName" />
 
       <div class="flex items-center justify-between">
         <div class="space-y-1">
