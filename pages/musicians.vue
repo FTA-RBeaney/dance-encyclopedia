@@ -37,9 +37,27 @@ const channel = supabase
   )
   .subscribe();
 
-onMounted(() => {
-  getMusicians();
-});
+// search functionality
+const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+const results = ref([]);
+const searching = ref(false);
+
+const noResults = computed(
+  () => results?.value?.length === 0 || results.value === null
+);
+
+console.log("results", results.value.length);
+
+const search = async (searchString = "") => {
+  searching.value = true;
+  // await delay(1000);
+  const res = await supabase
+    .from("musicians")
+    .select()
+    .textSearch("name", `${searchString}:*`);
+  results.value = res.data;
+  searching.value = false;
+};
 
 onUnmounted(() => {
   supabase.removeChannel(channel);
@@ -47,6 +65,7 @@ onUnmounted(() => {
 
 // change loaded state on mount
 onMounted(async () => {
+  getMusicians();
   return (isLoaded.value = true);
 });
 </script>
@@ -54,7 +73,7 @@ onMounted(async () => {
 <template>
   <div class="w-full h-full">
     <LoadingCircle v-if="!isLoaded" />
-    <div class="px-4 py-6">
+    <div class="px-4 py-6 mx-auto">
       <Heading
         title="Musicians"
         :description="`${allTheMusic.length} records`"
@@ -66,12 +85,19 @@ onMounted(async () => {
           :isToggled="isToggled"
         />
       </div>
-      <ul v-if="!isToggled" class="flex flex-wrap">
+      <Search @search="search" />
+
+      <MusiciansTable v-if="!noResults" :musicians="results" />
+
+      <ul v-if="!isToggled && noResults" class="">
         <li v-for="musician in allTheMusic" :key="musician" class="flex">
           <ArtistCard :artistId="musician.id" :musician="musician" />
         </li>
       </ul>
-      <Table v-else>
+
+      <MusiciansTable v-if="isToggled && noResults" :musicians="allTheMusic" />
+
+      <Table v-if="isToggled && noResults">
         <TableHeader>
           <TableRow>
             <TableHead class="font-bold"> Name </TableHead>
@@ -122,11 +148,19 @@ ul {
   //   minmax(max(var(--grid-item--min-width), var(--grid-item--max-width)), 1fr)
   // );
   // grid-gap: var(--grid-layout-gap);
+  display: grid;
+  gap: 0.2em;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+
+  @media (min-width: 35em) {
+    // grid-auto-columns: 1fr;
+  }
 }
 
 li {
-  flex: 0 0 100%;
-  max-width: 180px;
+  // flex: 1 1 0px;
+
+  // max-width: 260px;
   margin-right: 1rem;
   margin-bottom: 1rem;
 

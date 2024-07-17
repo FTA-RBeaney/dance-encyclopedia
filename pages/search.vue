@@ -31,14 +31,17 @@
         />
       </div>
     </div>
+
     <div class="w-screen mx-auto">
-      <Articles :results="results" />
+      <!-- <Articles :results="results" /> -->
 
-      <div v-for="result in results.data" :key="result">
-        {{ result.name }}
-      </div>
+      <ul class="flex flex-wrap">
+        <li v-for="musician in results.data" :key="musician" class="flex">
+          <ArtistCard :artistId="musician.id" :musician="musician" />
+        </li>
+      </ul>
 
-      <Table>
+      <!-- <Table>
         <TableCaption>A list of moves.</TableCaption>
         <TableHeader>
           <TableRow>
@@ -62,7 +65,7 @@
               <span
                 v-for="tag in move.tags"
                 :key="tag"
-                class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded text-indigo-600 bg-indigo-200 uppercase last:mr-0 mr-1"
+                class="text-xs font-semibold inline-block py-1 px-2 rounded text-indigo-600 bg-indigo-200 uppercase last:mr-0 mr-1"
               >
                 {{ tag }}
               </span>
@@ -78,24 +81,25 @@
             </TableCell>
           </TableRow>
         </TableBody>
-      </Table>
+      </Table> -->
     </div>
   </section>
 </template>
 
 <script setup>
-const searchString = ref("");
 const results = ref([]);
 const searching = ref(false);
 const supabase = useSupabaseClient();
+const searchString = ref();
 
 const search = async () => {
   searching.value = true;
   const res = await supabase
-    .from("moves")
+    .from("musicians")
     .select()
     .textSearch("name", searchString.value | "");
   results.value = res;
+  console.log(results.value);
   searching.value = false;
 };
 </script>

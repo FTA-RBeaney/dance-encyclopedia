@@ -16,7 +16,7 @@
     <NuxtLink :to="`/artist/${artistId}`" class="">
       <NuxtImg
         v-if="wikiInfo?.thumbnail?.source"
-        class="w-full card-image"
+        class="w-full card-image aspect-[3/4]"
         :src="wikiInfo?.thumbnail?.source"
         format="webp"
         width="300"
@@ -34,7 +34,7 @@
         v-else
         width="300"
         height="300"
-        class="w-full card-image"
+        class="w-full card-image aspect-[3/4]"
         src="https://archive.org/download/placeholder-image/placeholder-image.jpg"
         alt=""
       />
@@ -149,15 +149,15 @@ async function removeFavourite(id) {
 
 <style scoped lang="scss">
 .card-image {
-  width: 200px;
+  // width: 200px;
   height: 100%;
-  max-height: 160px;
-  min-height: 160px;
+  // max-height: 160px;
+  // min-height: 160px;
   object-fit: cover;
 
   @media (width >= 600px) {
-    max-height: 160px;
-    min-height: 160px;
+    // max-height: 160px;
+    // min-height: 160px;
   }
 }
 </style>
