@@ -16,26 +16,6 @@
         <p class="text-base">
           {{ wikiInfo.description }}
         </p>
-        <div class="mt-4 w-full">
-          <!-- <a
-          v-if="musician.wikipedia_link"
-          :href="musician.wikipedia_link"
-          target="_blank"
-          class="text-white bg-[#24292F] hover:bg-[#24292F]/90 focus:ring-4 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-3 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 dark:hover:bg-[#050708]/30 me-2 w-full justify-center"
-        >
-          View on Wikipedia
-          <IconsWikipedia />>
-        </a>
-        <a
-          v-if="musician.spotify_link"
-          :href="musician.spotify_link"
-          target="_blank"
-          class="text-white bg-[#24292F] bg-green-500 hover:bg-green-500/90 focus:ring-4 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-3 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 dark:hover:bg-[#050708]/30 me-2 mt-2 w-full justify-center"
-        >
-          View on Spotify
-          <IconsSpotify />
-        </a> -->
-        </div>
       </div>
     </div>
     <div

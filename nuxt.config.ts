@@ -45,7 +45,10 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
+      spotifyClientID: process.env.SPOTIFY_CLIENT_ID,
+      spotifyRefreshToken: process.env.SPOTIFY_RT,
       GOOGLE_API_KEY: "AIzaSyC9kNzY_EqckULIwSmij1ztvzWjKyvcHso",
+      spotifyClientSecret: process.env.SPOTIFY_CLIENT_SECRET,
       SPREAD_SHEET_ID: "1CVkFzZB8Eg6Ig8GvvvWgSC_uHjzRYp31DRnKV-sfxzQ",
       YOUTUBE_API_KEY: process.env.NUXT_YOUTUBE_API_KEY,
       YOUTUBE_PLAYLIST_ID: process.env.NUXT_YOUTUBE_PLAYLIST_ID,

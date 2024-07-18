@@ -1,17 +1,9 @@
 <script setup>
+import { playlists } from "~/data/playlists";
 const supabaseUser = useSupabaseUser();
 const supabase = useSupabaseClient();
 
 const isUserLoggedIn = ref(false);
-
-// const { data: loggedInUser, error } = await supabase
-//   .from("profiles")
-//   .select()
-//   .eq("id", supabaseUser.value.id);
-
-// if (loggedInUser) {
-//   isUserLoggedIn.value = true;
-// }
 </script>
 
 <template>
@@ -59,16 +51,28 @@ const isUserLoggedIn = ref(false);
               Watch
             </Button>
           </NuxtLink>
+          <NuxtLink to="/dancers">
+            <Button variant="ghost" class="w-full justify-start">
+              <IconsPerson />
+              Dancers
+            </Button>
+          </NuxtLink>
+          <NuxtLink to="/musicians">
+            <Button variant="ghost" class="w-full justify-start">
+              <IconsMicrophone />
+              Musicians
+            </Button>
+          </NuxtLink>
         </div>
       </div>
-      <div class="px-3 py-2">
+      <!-- <div class="px-3 py-2">
         <h2 class="mb-2 px-4 text-lg font-semibold tracking-tight">Library</h2>
         <div class="space-y-1">
-          <!-- <Button variant="ghost" class="w-full justify-start">
+          <Button variant="ghost" class="w-full justify-start">
             <IconsPlaylist />
             Playlists
           </Button> -->
-          <!-- <Button variant="ghost" class="w-full justify-start">
+      <!-- <Button variant="ghost" class="w-full justify-start">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -84,19 +88,8 @@ const isUserLoggedIn = ref(false);
             </svg>
             Songs
           </Button> -->
-          <NuxtLink to="/dancers">
-            <Button variant="ghost" class="w-full justify-start">
-              <IconsPerson />
-              Dancers
-            </Button>
-          </NuxtLink>
-          <NuxtLink to="/musicians">
-            <Button variant="ghost" class="w-full justify-start">
-              <IconsMicrophone />
-              Musicians
-            </Button>
-          </NuxtLink>
-          <!-- <Button variant="ghost" class="w-full justify-start">
+
+      <!-- <Button variant="ghost" class="w-full justify-start">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -114,8 +107,8 @@ const isUserLoggedIn = ref(false);
             </svg>
             Albums
           </Button> -->
-        </div>
-      </div>
+      <!-- </div>
+      </div> -->
       <div v-if="supabaseUser" class="px-3 py-2">
         <h2 class="mb-2 px-4 text-lg font-semibold tracking-tight">
           Sunshine Swing
@@ -157,6 +150,24 @@ const isUserLoggedIn = ref(false);
               Workshop
             </Button>
           </NuxtLink>
+        </div>
+      </div>
+      <div class="px-3 py-2">
+        <h2 class="mb-2 px-4 text-lg font-semibold tracking-tight">
+          Playlists
+        </h2>
+        <div class="space-y-1">
+          <div
+            v-for="(playlist, index) in playlists"
+            :key="`playlist-${index}`"
+          >
+            <NuxtLink :to="`/playlist/${playlist.id}`">
+              <Button variant="ghost" class="w-full justify-start">
+                <IconsPlaylist />
+                {{ playlist.name }}
+              </Button>
+            </NuxtLink>
+          </div>
         </div>
       </div>
       <SidebarFavourites v-if="supabaseUser" />

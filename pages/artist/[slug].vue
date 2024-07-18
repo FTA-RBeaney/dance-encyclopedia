@@ -13,12 +13,6 @@ const artistId = route.params.slug;
 const artistUrl = `https://musicbrainz.org/ws/2/artist/${artistId}?inc=url-rels&fmt=json`;
 const albumsUrl = `https://musicbrainz.org/ws/2/release-group?artist=${artistId}&fmt=json&type=album&limit=100`;
 
-// transform: (response) => {
-//     const res = response["release-groups"][0]["artist-credit"][0]["name"].value;
-
-//     return res;
-//   },
-
 const { data: artistData } = await useFetch(artistUrl);
 const { data: albumData } = await useFetch(albumsUrl, {
   pick: ["release-groups"],
@@ -78,6 +72,7 @@ async function removeFavourite(id) {
   }
 }
 
+// get spotify embed link
 const filteredItems = artistData.value.relations.filter((item) => {
   if (item.url.resource.includes("spotify")) {
     return item.url.resource.includes("spotify");

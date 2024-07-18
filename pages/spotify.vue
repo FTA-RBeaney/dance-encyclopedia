@@ -1,102 +1,111 @@
 <template>
-  <div class="px-4 py-6">
-    <div class="flex justify-between">
+  <section id="profile">
+    <div class="px-4 py-6 mx-auto">
       <Heading
-        :title="everything.name"
-        :description="everything.disambiguation"
+        v-if="response?.name"
+        :title="response.name"
+        description="A playlist"
       />
-    </div>
 
-    <Separator class="my-4" />
-    <section class="text-gray-600 body-font">
-      <div class="container flex flex-col">
-        <div class="lg:w-5/6">
-          <ArtistDetail :wikiInfo="wikiInfo" />
-        </div>
-      </div>
-    </section>
+      <NuxtLink :to="response?.tracks?.next">Next</NuxtLink>
+      <Table v-if="response?.tracks?.items">
+        <TableHeader>
+          <TableRow>
+            <TableHead class="font-bold"> Album </TableHead>
+            <TableHead class="font-bold"> Song </TableHead>
+            <TableHead class="font-bold"> Artists </TableHead>
+            <TableHead />
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          <TableRow
+            v-for="(item, index) in response.tracks.items"
+            :key="`item${index}`"
+          >
+            <TableCell>
+              <NuxtImg
+                v-if="item?.track?.album?.images"
+                class="aspect-square object-cover"
+                :src="item?.track?.album?.images[0]?.url"
+                format="webp"
+                width="60"
+                height="60"
+                preload
+                loading="lazy"
+                placeholder="https://sternbergclinic.com.au/wp-content/uploads/2020/03/placeholder.png"
+                @error="
+                  $event.target.src =
+                    'https://archive.org/download/placeholder-image/placeholder-image.jpg'
+                "
+                alt=""
+              />
+            </TableCell>
+            <TableCell class="font-medium">
+              {{ item.track.name }}
+            </TableCell>
+            <TableCell>
+              <span
+                v-for="(artist, index) in item?.track?.artists"
+                :key="`artist-${index}`"
+                >{{ artist.name }}</span
+              >
+            </TableCell>
+            <TableCell>
+              <a
+                v-if="item.track?.external_urls?.spotify"
+                :href="item.track?.external_urls?.spotify"
+                target="_blank"
+                class="text-white w-60 bg-green-500 hover:bg-green-500/90 focus:ring-4 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-3 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 dark:hover:bg-[#050708]/30 me-2 mt-2 justify-center"
+              >
+                Listen on Spotify
+                <IconsSpotify />
+              </a>
 
-    <div class="flex items-center justify-between">
-      <div class="space-y-1">
-        <h2 class="text-2xl font-semibold tracking-tight">Albums</h2>
-        <p class="text-sm text-muted-foreground">A list of all the albums</p>
-      </div>
+              <!-- response.tracks.items[0].track.artists[]  -->
+              <!-- response.tracks.items[0].track.external_urls.spotify  -->
+            </TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+      <pre>{{ response }}</pre>
     </div>
-    <Separator class="my-4" />
-    <ArtistAlbumList :everything="everything" :allTheImages="allTheImages" />
-
-    <div class="bottom-drawer">
-      <div class="h-2 bg-red-light"></div>
-      <div class="inline-flex items-center justify-center bg-red-lightest">
-        <div class="shadow-lg rounded-lg">
-          <div v-html="spotInfoHtml"></div>
-        </div>
-      </div>
-    </div>
-  </div>
+  </section>
 </template>
 
 <script setup>
-const mbid = "f28c755a-bb60-4251-8f4f-693c950cbd1e"; //this is hard coded value for now - DELETE THIS
+// tracks.items[0].track.preview_url = preview clip
+const nuxtApp = useNuxtApp();
+const getNowPlaying = nuxtApp.getNowPlaying;
+console.log("getNowPlaying");
 
-// inject the MBID into the fetch URL
-const url = `https://musicbrainz.org/ws/2/release/${mbid}?inc=aliases%2Bartist-credits%2Brecordings&fmt=json`;
-// use the same MBID to get the album images
-const img = `https://coverartarchive.org/release/${mbid}/front `;
+const currentTrackStr = ref("nope");
+const response = ref();
+const currentTrack = async () => {
+  try {
+    response.value = await getNowPlaying();
 
-const allTheAlbums = [];
-const allTheImages = [];
-const albums = ref([]);
+    console.log("yay", response.value);
+  } catch (e) {
+    currentTrackStr.value = "Couldn't fetch data :(";
+  }
+};
 
-// duke link: https://musicbrainz.org/ws/2/artist/3af06bc4-68ad-4cae-bb7a-7eeeb45e411f?inc=release-groups%2Burl-rels&fmt=json
-
-const dukeEllington = "3af06bc4-68ad-4cae-bb7a-7eeeb45e411f";
-
-const megaList = `https://musicbrainz.org/ws/2/artist/${dukeEllington}?inc=release-groups%2Burl-rels&fmt=json`;
-const { data: everything } = await useFetch(megaList);
-
-const key = everything.value.name
-  .trim()
-  .replace(/'/g, "%27")
-  .replace(/ /g, "_");
-var wikiUrl = `https://en.wikipedia.org/api/rest_v1/page/summary/${key}`;
-const { data: wikiInfo } = await useFetch(wikiUrl);
-
-everything.value["release-groups"].forEach((item) => {
-  const img = `https://coverartarchive.org/release-group/${item.id}/front`;
-  allTheImages.push(img);
+onBeforeMount(async () => {
+  currentTrack();
 });
 
-// Promise.all(
-//   allTheAlbums.map((url) => fetch(url).then((r) => console.log(r.json())))
-// )
-//   .then(([...stats]) => {
-//     albums.value = stats;
-//   })
-//   .catch((error) => console.log(error));
-
-const filteredItems = everything.value.relations.filter((item) => {
-  return item.url.resource.includes("spotify");
-});
-
-const spotifyLink =
-  "https://open.spotify.com/oembed?url=" + filteredItems[0].url.resource;
-
-const { data: spotInfo } = await useFetch(spotifyLink);
-const spotInfoHtml = spotInfo.value.html;
+// const { data } = await useFetch(`https://api.spotify.com/v1/playlists`, {
+//         method: 'GET',
+//         watch: false,
+//         headers: {
+//             authorization: `Bearer ${authToken.value}`,
+//         },
+//         params: params,
+//         onResponse({response}) {
+//             busStops.value = [];
+//             // @ts-ignore
+//             busStops.value = response._data.data;
+//             isLoading.value = true;
+//         },
+//     });
 </script>
-
-<style>
-iframe {
-  height: 82px;
-  width: 300px;
-}
-
-.bottom-drawer {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: auto;
-  height: auto;
-}
-</style>

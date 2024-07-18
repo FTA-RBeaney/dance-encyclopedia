@@ -2,7 +2,7 @@
   <div
     class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 relative w-full h-full flex flex-col overflow-hidden"
   >
-    <div v-if="supabaseUser" class="absolute top-1 right-1">
+    <div v-if="supabaseUser" class="absolute top-1 right-1 z-10">
       <FavouriteButton
         v-if="isFavourite"
         @click="removeFavourite(artistId)"
@@ -15,27 +15,24 @@
     </div>
     <NuxtLink :to="`/artist/${artistId}`" class="">
       <NuxtImg
-        v-if="wikiInfo?.thumbnail?.source"
         class="w-full card-image aspect-[3/4]"
+        :class="
+          cn(
+            'h-auto w-auto object-cover transition-all hover:scale-105',
+            aspectRatio === 'portrait' ? 'aspect-[3/4]' : 'aspect-square'
+          )
+        "
         :src="wikiInfo?.thumbnail?.source"
         format="webp"
         width="300"
         height="300"
         preload
         loading="lazy"
-        :placeholder="[50, 25, 75, 5]"
+        placeholder="https://sternbergclinic.com.au/wp-content/uploads/2020/03/placeholder.png"
         @error="
           $event.target.src =
             'https://archive.org/download/placeholder-image/placeholder-image.jpg'
         "
-        alt=""
-      />
-      <NuxtImg
-        v-else
-        width="300"
-        height="300"
-        class="w-full card-image aspect-[3/4]"
-        src="https://archive.org/download/placeholder-image/placeholder-image.jpg"
         alt=""
       />
     </NuxtLink>
@@ -81,6 +78,7 @@
 </template>
 
 <script setup>
+import { cn } from "@/lib/utils";
 const img = useImage();
 const props = defineProps({
   artistId: String,

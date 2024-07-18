@@ -4,7 +4,7 @@
       Favourites
     </h2>
     <ScrollArea v-if="inputLength > 0" class="h-[300px] px-1">
-      <div class="space-y-1 p-2">
+      <div class="space-y-1 p-2 w-11/12">
         <SideBarFavourite
           v-for="(favourite, i) in favourites"
           :favourite="favourite"

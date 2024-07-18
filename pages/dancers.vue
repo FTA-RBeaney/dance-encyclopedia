@@ -27,13 +27,13 @@ const { data: dancers } = await client
     <Separator class="my-4" />
     <div class="relative">
       <div class="grid-container">
-        <a
+        <NuxtLink
           v-for="dancer in dancers"
           :key="dancer"
           href="google"
           class="space-y-3 mb-4"
           aspect-ratio="square"
-          target="_blank"
+          :to="`/dancer/${dancer.name}`"
         >
           <div class="overflow-hidden rounded-md">
             <img
@@ -52,7 +52,7 @@ const { data: dancers } = await client
               {{ dancer.profiles.first_name }} {{ dancer.profiles.last_name }}
             </p>
           </div>
-        </a>
+        </NuxtLink>
       </div>
     </div>
   </div>

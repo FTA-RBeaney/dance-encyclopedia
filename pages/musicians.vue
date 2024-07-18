@@ -46,8 +46,6 @@ const noResults = computed(
   () => results?.value?.length === 0 || results.value === null
 );
 
-console.log("results", results.value.length);
-
 const search = async (searchString = "") => {
   searching.value = true;
   // await delay(1000);

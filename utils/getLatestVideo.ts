@@ -21,3 +21,21 @@ export const getLatestVideo = async () => {
 
   return "https://www.youtube.com/embed/tHYDP9DuPwk?si=bikNxKfor0irJSet";
 };
+
+export const getDancerPlaylist = async (dancerPlaylistId: String) => {
+  const runtimeConfig = useRuntimeConfig();
+  const API_KEY = runtimeConfig.public.YOUTUBE_API_KEY;
+
+  try {
+    const response = await fetch(
+      `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=100&playlistId=${dancerPlaylistId}&key=${API_KEY}`
+    );
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    console.error("Error fetching the latest video: ", error);
+  }
+
+  return "https://www.youtube.com/embed/tHYDP9DuPwk?si=bikNxKfor0irJSet";
+};
