@@ -1,7 +1,8 @@
 <template>
   <div>
     <Heading title="Account" description="Your account" />
-    <Account v-if="user" />
+    <!-- <Account v-if="user" /> -->
+    <Profile />
   </div>
 </template>
 

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-gray-200 text-sm text-gray-500 leading-none border-2 border-gray-200 rounded-full inline-flex mb-6"
+    class="bg-gray-200 text-sm h-10 text-gray-500 leading-none border-2 border-gray-200 rounded-full inline-flex"
   >
     <button
       v-if="props.isToggled"
@@ -61,6 +61,4 @@
 const props = defineProps({
   isToggled: Boolean,
 });
-
-console.log(props.isToggled);
 </script>

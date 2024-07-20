@@ -99,7 +99,6 @@ const search = async () => {
     .select()
     .textSearch("name", searchString.value | "");
   results.value = res;
-  console.log(results.value);
   searching.value = false;
 };
 </script>

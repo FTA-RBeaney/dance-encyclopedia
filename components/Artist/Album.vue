@@ -16,7 +16,6 @@
         width="300"
         height="300"
         class="h-full w-full object-cover transition-all hover:scale-105 aspect-square"
-        @load="isLoaded"
       />
     </div>
     <div class="space-y-1 text-sm">
@@ -36,17 +35,5 @@ const props = defineProps({
 });
 const { item } = props;
 
-const imageIsLoaded = ref(false);
-
-const isLoaded = () => {
-  imageIsLoaded.value = true;
-};
-
-const imageLoadError = () => {
-  console.log("image error");
-};
-
 const albumImg = `https://coverartarchive.org/release-group/${item.id}/front`;
-
-console.log(item);
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 relative w-full h-full flex flex-col overflow-hidden"
+    class="max-w-sm bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 relative w-full h-full flex flex-col overflow-hidden"
   >
     <div v-if="supabaseUser" class="absolute top-1 right-1 z-10">
       <FavouriteButton
@@ -16,19 +16,13 @@
     <NuxtLink :to="`/artist/${artistId}`" class="">
       <NuxtImg
         class="w-full card-image aspect-[3/4]"
-        :class="
-          cn(
-            'h-auto w-auto object-cover transition-all hover:scale-105',
-            aspectRatio === 'portrait' ? 'aspect-[3/4]' : 'aspect-square'
-          )
-        "
         :src="wikiInfo?.thumbnail?.source"
         format="webp"
         width="300"
         height="300"
         preload
         loading="lazy"
-        placeholder="https://sternbergclinic.com.au/wp-content/uploads/2020/03/placeholder.png"
+        placeholder="https://res.cloudinary.com/dgbn0ttzf/image/upload/v1721434977/person-placeholder_ztoak6.png"
         @error="
           $event.target.src =
             'https://archive.org/download/placeholder-image/placeholder-image.jpg'

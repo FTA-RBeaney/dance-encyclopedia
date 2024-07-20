@@ -1,5 +1,3 @@
-const today = "HELLO";
-
 export default defineNuxtPlugin(async (nuxtApp) => {
   const runtimeConfig = useRuntimeConfig();
   const clientID = runtimeConfig.public.spotifyClientID;
@@ -26,7 +24,6 @@ export default defineNuxtPlugin(async (nuxtApp) => {
   };
 
   nuxtApp.getNowPlaying = async (playlistId) => {
-    console.log("HAS EXECUTED");
     const { access_token: accessToken } = await getAccessToken();
     return fetch(`https://api.spotify.com/v1/playlists/${playlistId}`, {
       headers: {

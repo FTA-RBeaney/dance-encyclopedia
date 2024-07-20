@@ -61,9 +61,7 @@ const channel = supabase
   .subscribe();
 const inputLength = computed(() => favourites.value.length);
 
-onMounted(() => {
-  getFavourites();
-});
+await getFavourites();
 
 onUnmounted(() => {
   supabase.removeChannel(channel);

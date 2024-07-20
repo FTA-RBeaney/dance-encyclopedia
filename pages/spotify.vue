@@ -1,6 +1,6 @@
 <template>
   <section id="profile">
-    <div class="px-4 py-6 mx-auto">
+    <div>
       <Heading
         v-if="response?.name"
         :title="response.name"
@@ -76,15 +76,12 @@
 // tracks.items[0].track.preview_url = preview clip
 const nuxtApp = useNuxtApp();
 const getNowPlaying = nuxtApp.getNowPlaying;
-console.log("getNowPlaying");
 
 const currentTrackStr = ref("nope");
 const response = ref();
 const currentTrack = async () => {
   try {
     response.value = await getNowPlaying();
-
-    console.log("yay", response.value);
   } catch (e) {
     currentTrackStr.value = "Couldn't fetch data :(";
   }

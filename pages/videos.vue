@@ -1,5 +1,5 @@
 <template>
-  <div class="h-full px-4 py-6 lg:px-8">
+  <div>
     <div class="flex items-center justify-between">
       <div class="space-y-1">
         <h2 class="text-2xl font-semibold tracking-tight">Classic Strolls</h2>

@@ -6,7 +6,7 @@ const currentCategory = ref("weeks");
 </script>
 
 <template>
-  <div class="px-4 py-6">
+  <div>
     <Heading title="Classes" description="Information on class attendance" />
 
     <main>

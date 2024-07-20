@@ -10,7 +10,7 @@
     <div class="relative">
       <div class="grid-container">
         <ArtistAlbum
-          v-for="(item, index) in everything['release-groups']"
+          v-for="(item, index) in albumData['release-groups']"
           :item="item"
           :key="`${item.name}-${index}`"
         />
@@ -21,8 +21,15 @@
 
 <script setup>
 const props = defineProps({
-  everything: Object,
+  artistId: String,
   allTheImages: Object,
+});
+
+const { artistId } = props;
+
+const albumsUrl = `https://musicbrainz.org/ws/2/release-group?artist=${artistId}&fmt=json&type=album&limit=100`;
+const { data: albumData } = await useFetch(albumsUrl, {
+  pick: ["release-groups"],
 });
 </script>
 

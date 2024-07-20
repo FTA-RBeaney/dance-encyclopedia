@@ -2,7 +2,7 @@
   <div
     key=""
     to=""
-    class="article-card bg-white dark:bg-gray-800 container mx-auto grid rounded-xl bg-clip-border overflow-hidden shadow-md bg-white"
+    class="article-card dark:bg-gray-800 container mx-auto grid rounded-xl bg-clip-border overflow-hidden shadow-md bg-white"
   >
     <img
       src="https://images.squarespace-cdn.com/content/v1/56841850cbced6a015738a0a/1469554724689-6ZOS1XJUP5QP8NTC3ZIH/image-asset.jpeg?format=2500w"

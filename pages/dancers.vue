@@ -15,7 +15,7 @@ const { data: dancers } = await client
 </script>
 
 <template>
-  <div class="px-4 py-6">
+  <div>
     <Heading title="Dancers" :description="`${dancers?.length} records`" />
 
     <!-- <div class="mt-6 space-y-1">
@@ -27,32 +27,11 @@ const { data: dancers } = await client
     <Separator class="my-4" />
     <div class="relative">
       <div class="grid-container">
-        <NuxtLink
-          v-for="dancer in dancers"
-          :key="dancer"
-          href="google"
-          class="space-y-3 mb-4"
-          aspect-ratio="square"
-          :to="`/dancer/${dancer.name}`"
-        >
-          <div class="overflow-hidden rounded-md">
-            <img
-              :src="dancer.image"
-              :alt="dancer.name"
-              width="150px"
-              height="150px"
-              class="h-auto w-auto object-cover transition-all hover:scale-105 aspect-square"
-            />
-          </div>
-          <div class="space-y-1 text-sm">
-            <h3 class="font-medium leading-none">
-              {{ dancer.name }}
-            </h3>
-            <p class="text-xs text-muted-foreground">
-              {{ dancer.profiles.first_name }} {{ dancer.profiles.last_name }}
-            </p>
-          </div>
-        </NuxtLink>
+        <DancerCard
+          v-for="(dancer, index) in dancers"
+          :dancer="dancer"
+          :key="`dancer-${index}`"
+        />
       </div>
     </div>
   </div>

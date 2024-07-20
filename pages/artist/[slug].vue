@@ -11,12 +11,8 @@ const spotInfoHtml = ref();
 const artistId = route.params.slug;
 
 const artistUrl = `https://musicbrainz.org/ws/2/artist/${artistId}?inc=url-rels&fmt=json`;
-const albumsUrl = `https://musicbrainz.org/ws/2/release-group?artist=${artistId}&fmt=json&type=album&limit=100`;
 
 const { data: artistData } = await useFetch(artistUrl);
-const { data: albumData } = await useFetch(albumsUrl, {
-  pick: ["release-groups"],
-});
 
 // get the musician name and change it to a format that we can use in Wikipedia's rest API
 const artistName = artistData.value.name;
@@ -94,8 +90,7 @@ onMounted(async () => {
 
 <template>
   <div class="w-full h-full">
-    <LoadingCircle v-if="!isLoaded" />
-    <div v-else class="px-4 py-6">
+    <div>
       <div class="flex justify-between items-center">
         <Heading
           :title="artistData?.name"
@@ -114,18 +109,27 @@ onMounted(async () => {
         </div>
       </div>
 
-      <section class="text-gray-600 body-font">
-        <div class="container flex flex-col">
-          <div class="lg:w-5/6">
-            <ArtistDetail :musician="artistData" :wikiInfo="wikiInfo" />
+      <div
+        class="bg-white border p-6 border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 relative w-full h-full flex flex-col overflow-hidden mt-6"
+      >
+        <section class="text-gray-600 body-font">
+          <div class="container flex flex-col">
+            <div class="lg:w-5/6">
+              <ArtistDetail :musician="artistData" :wikiInfo="wikiInfo" />
+            </div>
           </div>
-        </div>
-      </section>
-
-      <ArtistImageList :artistName="artistName" />
-
-      <ArtistAlbumList :everything="albumData" />
-
+        </section>
+      </div>
+      <div
+        class="bg-white border p-6 border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 relative w-full h-full flex flex-col overflow-hidden mt-6"
+      >
+        <ArtistImageList :artistName="artistName" />
+      </div>
+      <div
+        class="bg-white border p-6 border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 relative w-full h-full flex flex-col overflow-hidden mt-6"
+      >
+        <ArtistAlbumList :artistId="artistId" />
+      </div>
       <div class="bottom-drawer">
         <div class="h-2 bg-red-light"></div>
         <div class="inline-flex items-center justify-center bg-red-lightest">

@@ -11,7 +11,7 @@ result.value.splice(0, 1);
 </script>
 
 <template>
-  <div class="px-4 py-6">
+  <div>
     <Heading
       title="Trisha workshop"
       :description="`${result.length} attendees`"

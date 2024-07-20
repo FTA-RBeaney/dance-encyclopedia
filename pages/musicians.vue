@@ -1,21 +1,22 @@
 <script setup>
-const isLoaded = ref(false);
 const isToggled = ref(false);
 
 const supabase = useSupabaseClient();
-const allTheMusic = ref([]);
+const allTheMusic = ref();
 
 // get musicians
 const getMusicians = async () => {
-  const { data, error } = await supabase
-    .from("musicians")
-    .select("*")
-    .order("name", { ascending: true });
+  try {
+    const { data, error } = await supabase
+      .from("musicians")
+      .select("*")
+      .order("name", { ascending: true });
 
-  allTheMusic.value = data;
+    allTheMusic.value = data;
+  } catch (e) {
+    allTheMusic.value = "Couldn't fetch data :(";
+  }
 };
-
-// const allTheMusic = await useArtists();
 
 const toggleListView = () => {
   isToggled.value = !isToggled.value;
@@ -57,69 +58,70 @@ const search = async (searchString = "") => {
   searching.value = false;
 };
 
+await getMusicians();
 onUnmounted(() => {
   supabase.removeChannel(channel);
-});
-
-// change loaded state on mount
-onMounted(async () => {
-  getMusicians();
-  return (isLoaded.value = true);
 });
 </script>
 
 <template>
   <div class="w-full h-full">
-    <LoadingCircle v-if="!isLoaded" />
-    <div class="px-4 py-6 mx-auto">
+    <div>
       <Heading
         title="Musicians"
         :description="`${allTheMusic.length} records`"
       />
-      <MusiciansAddMusician />
-      <div class="text-right">
-        <ToggleListButton
-          v-if="noResults"
-          @toggle-list-view="toggleListView"
-          :isToggled="isToggled"
-        />
-      </div>
-      <Search @search="search" />
-
-      <MusiciansTable v-if="!noResults" :musicians="results" />
-
-      <ul v-if="!isToggled && noResults" class="">
-        <li v-for="musician in allTheMusic" :key="musician" class="flex">
-          <ArtistCard :artistId="musician.id" :musician="musician" />
-        </li>
-      </ul>
-
-      <MusiciansTable v-if="isToggled && noResults" :musicians="allTheMusic" />
-
-      <Table v-if="isToggled && noResults">
-        <TableHeader>
-          <TableRow>
-            <TableHead class="font-bold"> Name </TableHead>
-            <TableHead class="font-bold"> Description </TableHead>
-            <TableHead class="font-bold text-right"> Action </TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          <ArtistRow
-            v-for="musician in allTheMusic"
-            :key="musician"
-            :artistId="musician.id"
-            :musician="musician"
+      <div class="flex w-full justify-between align-center mb-8">
+        <MusiciansAddMusician />
+        <Search @search="search" class="w-96" />
+        <div class="text-right">
+          <ToggleListButton
+            v-if="noResults"
+            @toggle-list-view="toggleListView"
+            :isToggled="isToggled"
           />
-        </TableBody>
-      </Table>
+        </div>
+      </div>
+      <div
+        class="bg-white border p-6 border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 relative w-full h-full flex flex-col overflow-hidden mt-6"
+      >
+        <MusiciansTable v-if="!noResults" :musicians="results" />
 
-      <!-- <ul class="flex justify-between mt-6">
+        <ul v-if="!isToggled && noResults" class="">
+          <li v-for="musician in allTheMusic" :key="musician" class="flex">
+            <ArtistCard :artistId="musician.id" :musician="musician" />
+          </li>
+        </ul>
+
+        <MusiciansTable
+          v-if="isToggled && noResults"
+          :musicians="allTheMusic"
+        />
+
+        <Table v-if="isToggled && noResults">
+          <TableHeader>
+            <TableRow>
+              <TableHead class="font-bold"> Name </TableHead>
+              <TableHead class="font-bold"> Description </TableHead>
+              <TableHead class="font-bold text-right"> Action </TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            <ArtistRow
+              v-for="musician in allTheMusic"
+              :key="musician"
+              :artistId="musician.id"
+              :musician="musician"
+            />
+          </TableBody>
+        </Table>
+      </div>
+    </div>
+    <!-- <ul class="flex justify-between mt-6">
         <li>1</li>
         <li>2</li>
         <li>3</li>
       </ul> -->
-    </div>
   </div>
 </template>
 

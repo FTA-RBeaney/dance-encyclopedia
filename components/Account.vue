@@ -17,7 +17,6 @@ const { data } = await supabase
 
 if (data) {
   username.value = data.username;
-  console.log(data);
 }
 
 loading.value = false;

@@ -17,7 +17,6 @@ const artistExists = ref(false);
 const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
 const checkArtist = async (id: String) => {
-  console.log("hello", id);
   try {
     const megaList = `https://musicbrainz.org/ws/2/artist/${id}?&fmt=json`;
     const { data, error } = await useFetch(megaList);
