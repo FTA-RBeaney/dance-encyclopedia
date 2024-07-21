@@ -20,8 +20,7 @@
 <script setup>
 const supabaseUser = useSupabaseUser();
 const supabase = useSupabaseClient();
-import { RealtimeChannel } from "@supabase/supabase-js";
-let realtimeChannel = RealtimeChannel;
+
 const favourites = ref([]);
 const getUserInfo = async () => {
   try {

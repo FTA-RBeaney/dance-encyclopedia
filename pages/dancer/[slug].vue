@@ -11,8 +11,8 @@
             <div class="sm:w-1/3 text-center sm:pr-8">
               <div class="overflow-hidden rounded-md">
                 <img
-                  v-if="wikiMedia"
-                  :src="wikiMedia.original.source"
+                  v-if="wikiMedia?.original"
+                  :src="wikiMedia?.original?.source"
                   :alt="wikiMedia.title"
                   width="300px"
                   height="300px"
@@ -139,14 +139,12 @@ var mediaUrl = `https://en.wikipedia.org/w/api.php?origin=*&action=query&formatv
 
 const response = ref();
 const wikiMedia = ref();
-let wikiHtml = null;
 
 const { data, error } = useFetch(mediaUrl, {
   onResponse({ response }) {
     console.log("response", response);
     isLoaded.value = true;
     wikiMedia.value = response._data.query.pages[0];
-    console.log("wikiHtml", wikiMedia.value);
   },
 });
 
