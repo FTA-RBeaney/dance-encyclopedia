@@ -72,8 +72,8 @@ const removeLike = async () => {
 };
 </script>
 <template>
-  <div class="flex-col w-full mx-auto sm:px-4 md:px-4 md:w-2/3">
-    <div class="flex flex-row pt-1 md-10 md:ml-16">
+  <div class="flex-col w-full mx-auto sm:px-4 md:px-4">
+    <div class="flex flex-row pt-1 md-10">
       <img
         class="object-cover w-12 h-12 border-1 border-gray-300 rounded-full"
         :src="comment.profiles.avatar_url"
