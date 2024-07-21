@@ -24,7 +24,7 @@
                   :alt="dancer[0].name"
                   width="150px"
                   height="150px"
-                  class="h-auto w-auto object-cover transition-all hover:scale-105 aspect-square"
+                  class="h-auto w-full md:w-auto object-cover transition-all hover:scale-105 aspect-square"
                 />
               </div>
             </div>
