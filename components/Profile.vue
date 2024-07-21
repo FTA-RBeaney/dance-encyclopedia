@@ -4,11 +4,13 @@ const userImage = computed(() => {
   const picture = superbaseUser.value.user_metadata.picture;
   return picture.replace("=s96-c", "");
 });
+
+const colorMode = useColorMode();
 </script>
 
 <template>
   <div
-    class="bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 relative w-full h-full flex flex-col overflow-hidden"
+    class="bg-card border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 relative w-full h-full flex flex-col overflow-hidden pb-4"
   >
     <div class="pt-3">
       <div class="col-span-8 overflow-hidden rounded-xl sm:px-8">
@@ -19,10 +21,9 @@ const userImage = computed(() => {
           <p class="text-gray-600">
             Your email address is <strong>{{ superbaseUser.email }}</strong>
           </p>
-          <button class="mt-4 rounded-lg bg-blue-600 px-4 py-2 text-white">
-            Change
-          </button>
+          <Button class="mt-4">Change</Button>
         </div>
+
         <hr class="mt-4 mb-8" />
         <div class="flex">
           <div class="mr-8">
@@ -77,18 +78,11 @@ const userImage = computed(() => {
                 >Recover Account</a
               >
             </p>
-            <button class="mt-4 rounded-lg bg-blue-600 px-4 py-2 text-white">
-              Save Password
-            </button>
+            <Button class="mt-4">Save Password</Button>
           </div>
         </div>
 
         <hr class="mt-4 mb-8" />
-
-        <!-- <pre>
-            {{ superbaseUser }}
-        </pre> -->
-
         <div class="mb-10">
           <p class="py-2 text-xl font-semibold">Delete Account</p>
           <p
@@ -118,6 +112,25 @@ const userImage = computed(() => {
           >
             Continue with deletion
           </button>
+        </div>
+
+        <hr class="mt-4 mb-8" />
+        <p class="py-2 text-xl font-semibold">Theme</p>
+        <div class="my-4 w-96">
+          <Select v-model="colorMode.preference">
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Select your theme" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Themes</SelectLabel>
+                <SelectItem value="system">System</SelectItem>
+                <SelectItem value="light">Default</SelectItem>
+                <SelectItem value="dark">Dark</SelectItem>
+                <SelectItem value="rose">Rose</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
         </div>
       </div>
     </div>

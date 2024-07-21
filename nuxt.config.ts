@@ -34,6 +34,7 @@ export default defineNuxtConfig({
     "@pinia/nuxt",
     "@nuxtjs/cloudinary",
     "@nuxt/icon",
+    "@nuxtjs/color-mode",
   ],
   alias: {
     pinia: "/node_modules/@pinia/nuxt/node_modules/pinia/dist/pinia.mjs",

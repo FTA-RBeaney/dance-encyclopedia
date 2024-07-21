@@ -3,7 +3,7 @@ const animate = require("tailwindcss-animate");
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class"],
-  safelist: ["dark"],
+  safelist: ["dark", "dark-mode", "rose-mode"],
   prefix: "",
 
   theme: {

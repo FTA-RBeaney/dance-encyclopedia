@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Heading title="Account" description="Your account" />
+    <Heading title="Profile" description="Your details" />
     <!-- <Account v-if="user" /> -->
     <Profile />
   </div>

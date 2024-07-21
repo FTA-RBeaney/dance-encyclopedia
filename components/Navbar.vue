@@ -11,12 +11,13 @@
           >Login</NuxtLink
         >
         <div v-else class="flex items-center">
-          <img
-            class="w-8 h-8 rounded-full mr-1"
-            alt="Default avatar"
-            :src="avatar"
-          />
-          <NuxtLink class="font-medium px-2" to="/account">Account</NuxtLink>
+          <NuxtLink class="font-medium px-2" to="/account">
+            <img
+              class="w-10 h-10 rounded-full mr-1"
+              alt="Default avatar"
+              :src="avatar"
+            />
+          </NuxtLink>
         </div>
       </nav>
     </div>

@@ -113,6 +113,8 @@
           </ul>
         </div>
       </div>
+
+      <CommentsList />
     </section>
     <!-- <pre>
         {{ videoArray.items }}

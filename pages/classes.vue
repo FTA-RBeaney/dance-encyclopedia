@@ -29,7 +29,7 @@ const currentCategory = ref("weeks");
             :data="data[category]"
             index="name"
             :categories="['total']"
-            :colors="['green']"
+            :colors="[primary]"
           />
 
           <Table class="w-10/12 mx-auto my-6">
