@@ -78,7 +78,7 @@ const fetchComments = async () => {
     .from("comments")
     .select(`*, profiles(*)`)
     .eq("post_id", route.params.slug)
-    .order("id", { ascending: false });
+    .order("created_at", { ascending: false });
 
   commentList.value = comments;
 };
