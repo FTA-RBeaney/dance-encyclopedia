@@ -33,15 +33,17 @@
       </div>
     </section>
     <section
-      class="flex bg-white border p-6 border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 relative w-full h-full flex-col overflow-hidden mx-auto max-w-screen-sm mt-6 pb-6"
+      class="flex bg-white border p-6 border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 relative w-full h-full flex-col overflow-hidden mx-auto max-w-screen-sm mt-6 pb-6 mb-10"
     >
       <div v-if="commentList.length > 0" class="container px-0 mx-auto">
         <CommentsCommentFacebook
           v-for="(comment, i) in commentList"
           :key="`comment${i}`"
           :comment="comment"
+          :isLast="i === commentList.length - 1 && true"
         />
       </div>
+      <p v-else class="text-center">No comments yet...</p>
     </section>
   </div>
 </template>

@@ -4,6 +4,7 @@ const supabase = useSupabaseClient();
 
 const props = defineProps({
   comment: Object,
+  isLast: Boolean,
 });
 
 const date = computed(() =>

@@ -4,6 +4,7 @@ const supabase = useSupabaseClient();
 
 const props = defineProps({
   comment: Object,
+  isLast: Boolean,
 });
 
 const date = computed(() =>
@@ -109,6 +110,6 @@ const removeLike = async () => {
         </button>
       </div>
     </div>
-    <hr class="my-2 ml-16 border-gray-200" />
+    <hr v-if="!isLast" class="my-2 ml-16 border-gray-200" />
   </div>
 </template>

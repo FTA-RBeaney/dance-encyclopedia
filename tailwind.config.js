@@ -5,7 +5,11 @@ module.exports = {
   darkMode: ["class"],
   safelist: ["dark", "dark-mode", "rose-mode"],
   prefix: "",
-
+  variants: {
+    extend: {
+      padding: ["last"],
+    },
+  },
   theme: {
     container: {
       center: true,
