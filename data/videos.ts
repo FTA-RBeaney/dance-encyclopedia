@@ -39,6 +39,14 @@ export const videoList = [
       "https://res.cloudinary.com/dgbn0ttzf/video/upload/so_10p,du_5/v1720218179/The_Global_Trickeration_Project_ywtbhh.mp4",
     link: "https://www.youtube.com/watch?v=obCMq4OuM-s&t=8s",
   },
+  {
+    id: 6,
+    name: "The Jitterbug Stroll",
+    artist: "Ryan Francois",
+    publicId:
+      "https://res.cloudinary.com/dgbn0ttzf/video/upload/so_10p,du_5/v1720218179/Jitterbug_Stroll_zvu9wh.mp4",
+    link: "https://www.youtube.com/watch?v=FcJbrWd1oxM",
+  },
 ];
 
 export const otherVideos: Album[] = [
