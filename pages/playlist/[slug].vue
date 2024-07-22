@@ -1,11 +1,26 @@
 <template>
-  <section id="profile">
-    <div>
-      <Heading
-        v-if="response?.name"
-        :title="response.name"
-        description="A playlist"
-      />
+  <div>
+    <div class="flex items-end justify-between">
+      <Heading v-if="response?.name" :title="response.name" />
+    </div>
+    <a
+      v-if="response?.external_urls?.spotify"
+      :href="response?.external_urls?.spotify"
+      target="_blank"
+      class="inline-flex justify-center items-center text-xs px-8 py-4 rounded-full bg-[#1ED760] font-bold text-white tracking-widest uppercase transform hover:scale-105 hover:bg-[#21e065] transition-colors duration-200 mb-4"
+      >Listen on Spotify <IconsSpotify
+    /></a>
+    <!-- <pre>
+      {{ response }}
+    </pre> -->
+    <MusicPlayer
+      v-for="(song, index) in response.tracks.items"
+      :key="`item${index}`"
+      url="https://p.scdn.co/mp3-preview/8b2afa48db299909e222eef85ccc680daf7d4285?cid=13bb1428eae64e859182a5744c991e93"
+      playerid="audio-player"
+      :song="song"
+    />
+    <section id="playlist">
       <div
         class="bg-white border p-6 border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 relative w-full h-full flex flex-col overflow-hidden"
       >
@@ -50,30 +65,24 @@
                 }}
               </TableCell>
               <TableCell>
+                <audio controls>
+                  <source :src="item.track.preview_url" type="audio/mpeg" />
+                  Your browser does not support the audio tag.
+                </audio>
                 <!-- <a
-                v-if="item.track?.external_urls?.spotify"
-                :href="item.track?.external_urls?.spotify"
-                target="_blank"
-                class="text-white w-48 bg-green-500 hover:bg-green-500/90 focus:ring-4 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-3 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 dark:hover:bg-[#050708]/30 me-2 mt-2 justify-center"
-              >
-                Listen on Spotify
-             
-              </a> -->
-                <a
                   v-if="item.track?.external_urls?.spotify"
                   :href="item.track?.external_urls?.spotify"
                   target="_blank"
-                  class="inline-flex justify-center items-center px-8 py-4 rounded-full bg-[#1ED760] font-bold text-white tracking-widest uppercase transform hover:scale-105 hover:bg-[#21e065] transition-colors duration-200"
+                  class="inline-flex justify-center items-center text-xs px-4 py-3 rounded-full bg-[#1ED760] font-bold text-white tracking-widest uppercase transform hover:scale-105 hover:bg-[#21e065] transition-colors duration-200"
                   >Listen <IconsSpotify
-                /></a>
+                /></a> -->
               </TableCell>
             </TableRow>
           </TableBody>
         </Table>
       </div>
-      <!-- <pre>{{ response }}</pre> -->
-    </div>
-  </section>
+    </section>
+  </div>
 </template>
 
 <script setup>

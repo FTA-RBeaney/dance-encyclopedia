@@ -2,9 +2,24 @@
   <div class="bg-primary-200">
     <div class="flex flex-row items-center justify-between py-6 px-4">
       <NuxtLink to="/" class="text-xl font-medium">
-        <strong>Dance Encyclopedia</strong>
+        <div class="relative z-20 flex items-center text-lg font-medium">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            class="mr-2 h-6 w-6"
+          >
+            <path
+              d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3"
+            />
+          </svg>
+          <strong>Dance Encyclopedia</strong>
+        </div>
       </NuxtLink>
-      <div v-if="supabaseUser">{{ fullName }}</div>
       <nav class="flex flex-row justify-end items-center">
         <!-- <NuxtLink class="font-medium px-2" to="/about">About Us</NuxtLink> -->
         <NuxtLink v-if="!supabaseUser" class="font-medium px-2" to="/login"

@@ -15,7 +15,7 @@
     </div>
     <NuxtLink :to="`/artist/${artistId}`" class="">
       <NuxtImg
-        class="w-full card-image aspect-[3/4]"
+        class="w-full card-image aspect-square"
         :src="wikiInfo?.thumbnail?.source"
         format="webp"
         width="300"
@@ -39,12 +39,12 @@
           {{ wikiInfo.titles.normalized }}
         </h5>
       </a>
-      <!-- <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
-        {{ artistData.country }}
-        {{ artistData["life-span"].begin }}
-        {{ artistData["life-span"].end }}
+      <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+        {{ wikiInfo }}
+        <!-- {{ artistData["life-span"].begin }}
+        {{ artistData["life-span"].end }} -->
       </p>
-      <NuxtLink :to="`/artist/${artistId}`">
+      <!-- <NuxtLink :to="`/artist/${artistId}`">
         <a
           href="#"
           class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"

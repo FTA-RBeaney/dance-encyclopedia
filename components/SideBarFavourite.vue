@@ -1,5 +1,5 @@
 <template>
-  <NuxtLink :to="`/artist/${favourite.post_id}`">
+  <NuxtLink :to="`/artist/${favourite.post_id}`" class="max-w-full">
     <Button variant="ghost" class="w-full justify-start font-normal">
       <IconsMicrophone />
       <p class="truncate">{{ artistData.name }}</p>
