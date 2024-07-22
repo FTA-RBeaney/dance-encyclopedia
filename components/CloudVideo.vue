@@ -1,7 +1,11 @@
 <template>
   <div v-if="isLoaded" :class="('space-y-3', $attrs.class ?? '')">
-    <div class="relative mr-2 overflow-hidden rounded-md">
-      <a :href="props.media.link" class="relative block w-60 h-96 space-y-3">
+    <div class="video-preview relative mr-2 overflow-hidden rounded-md">
+      <NuxtLink
+        :to="`./video/${props.media.name}`"
+        :media="props.media"
+        class="relative block w-60 h-96 space-y-3"
+      >
         <video
           class="absolute"
           height="100%"
@@ -12,7 +16,7 @@
         >
           <source :src="media.publicId" type="video/mp4" />
         </video>
-      </a>
+      </NuxtLink>
     </div>
     <div class="space-y-1 text-sm mt-3">
       <h3 class="font-medium leading-none">
@@ -78,7 +82,7 @@ const handleMouseLeave = (e) => {
   /* width: 250px; */
   border-radius: calc(var(--radius) - 2px);
 }
-video {
+.video-preview video {
   object-fit: cover;
   left: 0;
   top: 0;

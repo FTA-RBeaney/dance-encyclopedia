@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-8">
+  <div class="mt-1">
     <div class="flex items-center justify-between">
       <div class="space-y-1">
         <h2 class="text-2xl font-semibold tracking-tight">Albums</h2>

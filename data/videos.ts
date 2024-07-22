@@ -5,7 +5,12 @@ export const videoList = [
     artist: "Leonard Reed and Willie Bryant",
     publicId:
       "https://res.cloudinary.com/dgbn0ttzf/video/upload/so_10p,du_5/v1720205005/The_Big_Apple___Keep_Punching_1939_in_full_color___Colorized_with_DeOldify_tzaxla.mp4",
+    fullVideo: "https://www.youtube.com/watch?v=E37mb1QROIw",
+    thumbnail:
+      "https://res.cloudinary.com/dgbn0ttzf/video/upload/v1720205005/The_Big_Apple___Keep_Punching_1939_in_full_color___Colorized_with_DeOldify_tzaxla.jpg",
     link: "https://www.youtube.com/watch?v=H1K5M5xluZs",
+    videoId: "H1K5M5xluZs",
+    wikiLink: "Big_Apple_(dance)",
   },
   {
     id: 2,

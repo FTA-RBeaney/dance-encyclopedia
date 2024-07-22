@@ -8,8 +8,8 @@
     </div>
     <Separator class="my-4" />
     <div>
-      <ScrollArea class="w-[100%] whitespace-nowrap mb-4">
-        <div class="flex space-x-4 pb-4">
+      <ScrollArea class="w-[100%] whitespace-nowrap">
+        <div class="flex space-x-4">
           <div
             v-for="(media, index) in artistImages"
             :key="`wikimedia-${index}`"

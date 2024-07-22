@@ -8,9 +8,12 @@
     "preview": "nuxt preview"
   },
   "dependencies": {
+    "@carbon/icons-vue": "^10.93.1",
+    "@carbon/vue": "^3.0.18",
     "@nuxt/content": "^2.12.1",
     "@nuxt/icon": "^1.0.0",
     "@nuxt/image": "^1.7.0",
+    "@nuxt/scripts": "^0.6.4",
     "@nuxtjs/algolia": "^1.10.2",
     "@nuxtjs/cloudinary": "^3.0.1",
     "@pinia/nuxt": "^0.5.1",
@@ -20,9 +23,11 @@
     "@vueuse/core": "^10.11.0",
     "algoliasearch": "^4.24.0",
     "buffer": "^6.0.3",
+    "carbon-components": "^10.58.15",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "lucide-vue-next": "^0.397.0",
+    "media-chrome": "^3.2.4",
     "nuxt": "^3.12.1",
     "radix-vue": "^1.8.5",
     "sass": "^1.77.6",
@@ -30,8 +35,10 @@
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
     "vaul-vue": "^0.2.0",
+    "vidstack": "^1.11.30",
     "vue-instantsearch": "^4.17.5",
-    "wiky.js": "^0.0.1"
+    "wiky.js": "^0.0.1",
+    "youtube-video-element": "^1.1.6"
   },
   "devDependencies": {
     "@iconify-json/uil": "^1.1.8",

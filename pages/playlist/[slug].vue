@@ -1,8 +1,7 @@
 <template>
   <div>
-    <div class="flex items-end justify-between">
-      <Heading v-if="response?.name" :title="response.name" />
-    </div>
+    <Heading v-if="response?.name" :title="response.name" />
+
     <a
       v-if="response?.external_urls?.spotify"
       :href="response?.external_urls?.spotify"

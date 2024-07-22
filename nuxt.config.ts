@@ -1,4 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import { vite as vidstack } from "vidstack/plugins";
+
 export default defineNuxtConfig({
   app: {
     head: {
@@ -7,6 +9,10 @@ export default defineNuxtConfig({
         {
           rel: "stylesheet",
           href: "https://unpkg.com/cloudinary-video-player@1.5.9/dist/cld-video-player.min.css",
+        },
+        {
+          rel: "stylesheet",
+          href: "https://unpkg.com/vue-plyr/dist/vue-plyr.css",
         },
       ],
       script: [
@@ -35,6 +41,7 @@ export default defineNuxtConfig({
     "@nuxtjs/cloudinary",
     "@nuxt/icon",
     "@nuxtjs/color-mode",
+    "@nuxt/scripts",
   ],
   alias: {
     pinia: "/node_modules/@pinia/nuxt/node_modules/pinia/dist/pinia.mjs",
@@ -80,5 +87,13 @@ export default defineNuxtConfig({
     prerender: {
       ignore: ["/"],
     },
+  },
+  vue: {
+    compilerOptions: {
+      isCustomElement: (tag) => tag.startsWith("media-"),
+    },
+  },
+  vite: {
+    plugins: [vidstack()],
   },
 });

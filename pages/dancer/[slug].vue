@@ -1,9 +1,44 @@
 <template>
   <div>
-    <Heading :title="dancer[0].name" />
+    <div
+      class="relative w-full h-44 bg-white rounded-lg shadow-lg overflow-hidde mb-14"
+    >
+      <div class="absolute inset-0 rounded-lg overflow-hidden bg-red-200">
+        <img
+          :src="dancer[0].image"
+          :alt="dancer[0].name"
+          class="object-cover w-full h-full"
+        />
+        <div
+          class="absolute inset-0 backdrop backdrop-blur-10 bg-gradient-to-b from-transparent to-black"
+        ></div>
+      </div>
+      <div
+        class="absolute flex space-x-6 transform translate-x-6 translate-y-8"
+      >
+        <div class="w-44 h-44 rounded-lg shadow-lg overflow-hidden">
+          <img
+            :src="dancer[0].image"
+            :alt="dancer[0].name"
+            class="object-cover h-full w-full"
+          />
+        </div>
+        <div class="text-white pt-12">
+          <h3 class="font-bold">{{ dancer[0].name }}</h3>
+          <span
+            v-for="(style, i) in dancer[0].styles"
+            :key="`style${i}`"
+            class="text-sm opacity-60 mr-1"
+          >
+            {{ style }}
+          </span>
+        </div>
+      </div>
+    </div>
+    <!-- <Heading :title="dancer[0].name" /> -->
 
     <section class="text-gray-600 body-font">
-      <div
+      <!-- <div
         class="bg-white border p-6 border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 relative w-full h-full flex flex-col overflow-hidden"
       >
         <div class="">
@@ -35,7 +70,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <div
         class="bg-white border p-6 border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 relative w-full h-full flex flex-col overflow-hidden mt-6"

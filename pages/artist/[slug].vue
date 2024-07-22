@@ -14,6 +14,18 @@ const artistUrl = `https://musicbrainz.org/ws/2/artist/${artistId}?inc=url-rels&
 
 const { data: artistData } = await useFetch(artistUrl);
 
+const { $script } = useScriptNpm({
+  packageName: "js-confetti",
+  file: "dist/js-confetti.browser.js",
+  version: "0.12.0",
+  scriptOptions: {
+    // tell useScript how to resolve the third-party script
+    use() {
+      return { JSConfetti: window.JSConfetti };
+    },
+  },
+});
+
 // get the musician name and change it to a format that we can use in Wikipedia's rest API
 const artistName = artistData.value.name;
 const key = artistName.trim().replace(/'/g, "%27").replace(/ /g, "_");
@@ -43,6 +55,9 @@ async function addFavourite(id) {
         post_id: id,
       })
       .select();
+
+    const confetti = new JSConfetti();
+    confetti.addConfetti({ emojis: ["🎉", "❤️", "🎉", "✨"] });
 
     if (error) throw error;
   } catch (error) {
@@ -146,7 +161,7 @@ onMounted(async () => {
 a:hover {
   cursor: pointer;
 }
-iframe {
+.bottom-drawer iframe {
   height: 82px;
   width: 300px;
 }

@@ -11,6 +11,7 @@ const { data: dancers } = await client
       )
     `
   )
+  .eq("published", true)
   .order("name");
 </script>
 
