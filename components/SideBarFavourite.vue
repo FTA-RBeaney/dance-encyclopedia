@@ -1,17 +1,18 @@
 <template>
-  <NuxtLink :to="`/artist/${favourite.post_id}`" class="max-w-full">
+  <NuxtLink :to="`/artist/${postId}`" class="max-w-full">
     <Button variant="ghost" class="w-full justify-start font-normal">
       <IconsMicrophone />
-      <p class="truncate">{{ artistData.name }}</p>
+      <p class="truncate">{{ name }}</p>
     </Button>
   </NuxtLink>
 </template>
 
 <script setup>
 const props = defineProps({
-  favourite: Object,
+  postId: String,
+  name: String,
 });
 
-const artistFetchUrl = `https://musicbrainz.org/ws/2/artist/${props.favourite.post_id}?&fmt=json`;
+const artistFetchUrl = `https://musicbrainz.org/ws/2/artist/${props.postId}?&fmt=json`;
 const { data: artistData } = await useFetch(artistFetchUrl);
 </script>

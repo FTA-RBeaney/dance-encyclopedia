@@ -7,7 +7,8 @@
       <div class="space-y-1 p-2 max-w-full">
         <SideBarFavourite
           v-for="(favourite, i) in favourites"
-          :favourite="favourite"
+          :postId="favourite.post_id"
+          :name="favourite.name"
           :key="`${favourite}-${i}`"
         >
         </SideBarFavourite>
@@ -21,20 +22,7 @@
 const supabaseUser = useSupabaseUser();
 const supabase = useSupabaseClient();
 
-const favourites = ref([]);
-const getUserInfo = async () => {
-  try {
-    const { data, error } = await supabase
-      .from("profiles")
-      .select()
-      .eq("id", supabaseUser.value.id);
-
-    user.value = data;
-    if (error) throw error;
-  } catch (error) {
-    console.log("error: ", error);
-  }
-};
+const favourites = ref();
 
 const getFavourites = async () => {
   // check favourites table
@@ -45,7 +33,10 @@ const getFavourites = async () => {
 
   favourites.value = data;
 };
-const channel = supabase
+
+console.log(favourites);
+
+const favouritesChannel = supabase
   .channel("public:favourites")
   .on(
     "postgres_changes",
@@ -58,11 +49,11 @@ const channel = supabase
     (payload) => getFavourites()
   )
   .subscribe();
-const inputLength = computed(() => favourites.value.length);
 
 await getFavourites();
+const inputLength = computed(() => favourites.value.length);
 
 onUnmounted(() => {
-  supabase.removeChannel(channel);
+  supabase.removeChannel(favouritesChannel);
 });
 </script>
