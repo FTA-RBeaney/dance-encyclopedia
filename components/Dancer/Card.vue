@@ -1,6 +1,5 @@
 <template>
   <NuxtLink
-    href="google"
     class="space-y-3 mb-4"
     aspect-ratio="square"
     :to="`/dancer/${dancer.name}`"

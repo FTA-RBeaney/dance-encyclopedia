@@ -2,8 +2,7 @@
   <div v-if="isLoaded" :class="('space-y-3', $attrs.class ?? '')">
     <div class="video-preview relative mr-2 overflow-hidden rounded-md">
       <NuxtLink
-        :to="`./video/${props.media.name}`"
-        :media="props.media"
+        :to="`/video/${props.media.name}`"
         class="relative block w-60 h-96 space-y-3"
       >
         <video

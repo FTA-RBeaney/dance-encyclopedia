@@ -1,34 +1,26 @@
 <script setup>
-import { videoList, otherVideos } from "../data/videos";
+import { videoList } from "../data/videos";
 import "vidstack/bundle";
 
 const route = useRoute();
-const props = defineProps({
-  media: Array,
-});
 
 const chosenVideo = ref();
-
 chosenVideo.value = videoList.find((e) => e.name === route.params.slug);
 
-var mediaUrl = `https://en.wikipedia.org/w/api.php?action=parse&format=json&page=${chosenVideo.value.wikiLink}&prop=text`;
+var mediaUrl = `https://en.wikipedia.org/w/api.php?action=parse&format=json&page=${chosenVideo?.value?.wikiLink}&prop=text`;
 
-const response = ref();
-const wikiMedia = ref();
-
-const { data, error } = useFetch(mediaUrl);
-console.log(data);
-wikiMedia.value = data;
+const { data: wikiMedia, error } = await useFetch(mediaUrl);
+console.log(wikiMedia);
 </script>
 
 <template>
   <div>
     <Heading :title="route.params.slug" />
-    <Player :video="chosenVideo.fullVideo" />
+    <Player v-if="chosenVideo?.fullVideo" :video="chosenVideo.fullVideo" />
     <div
       class="max-w-100 mx-auto bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 relative w-full h-full flex flex-col overflow-hidden p-4 mt-4"
     >
-      <div v-html="wikiMedia?.value.parse?.text['*']"></div>
+      <div v-if="wikiMedia" v-html="wikiMedia?.parse?.text['*']"></div>
     </div>
     <!-- <div>
       <div class="">
