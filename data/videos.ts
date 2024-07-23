@@ -5,10 +5,9 @@ export const videoList = [
     artist: "Leonard Reed and Willie Bryant",
     publicId:
       "https://res.cloudinary.com/dgbn0ttzf/video/upload/so_10p,du_5/v1720205005/The_Big_Apple___Keep_Punching_1939_in_full_color___Colorized_with_DeOldify_tzaxla.mp4",
-    fullVideo: "https://www.youtube.com/watch?v=E37mb1QROIw",
+    fullVideo: "https://www.youtube.com/watch?v=H1K5M5xluZs",
     thumbnail:
       "https://res.cloudinary.com/dgbn0ttzf/video/upload/v1720205005/The_Big_Apple___Keep_Punching_1939_in_full_color___Colorized_with_DeOldify_tzaxla.jpg",
-    link: "https://www.youtube.com/watch?v=H1K5M5xluZs",
     videoId: "H1K5M5xluZs",
     wikiLink: "Big_Apple_(dance)",
   },
@@ -18,7 +17,10 @@ export const videoList = [
     artist: "Frankie Manning",
     publicId:
       "https://res.cloudinary.com/dgbn0ttzf/video/upload/so_10p,du_5/v1720207965/shim_sham_yhmrnc.mp4",
-    link: "https://www.youtube.com/watch?v=bjfM4Wrj9UI",
+    fullVideo: "https://www.youtube.com/watch?v=bjfM4Wrj9UI",
+    thumbnail:
+      "https://res.cloudinary.com/dgbn0ttzf/video/upload/so_10p,du_5/v1720207965/shim_sham_yhmrnc.jpg",
+    wikiLink: "Shim_Sham",
   },
   {
     id: 3,
@@ -26,7 +28,10 @@ export const videoList = [
     artist: "Frankie Manning",
     publicId:
       "https://res.cloudinary.com/dgbn0ttzf/video/upload/so_10p,du_5/v1720216322/Tranky_Doo_-_Harlem_Hot_Shots_bl5sth.mp4",
-    link: "https://www.youtube.com/watch?v=QnD8V6-uzbM",
+    fullVideo: "https://www.youtube.com/watch?v=QnD8V6-uzbM",
+    thumbnail:
+      "https://res.cloudinary.com/dgbn0ttzf/video/upload/so_10p,du_5/v1720216322/Tranky_Doo_-_Harlem_Hot_Shots_bl5sth.jpg",
+    wikiLink: "Tranky_Doo",
   },
   {
     id: 4,
@@ -34,7 +39,9 @@ export const videoList = [
     artist: "George Sullivan",
     publicId:
       "https://res.cloudinary.com/dgbn0ttzf/video/upload/so_10p,du_5/v1720216672/Spontaneous_Mama_Stew_-_Empire_swing_s9mwe6.mp4",
-    link: "https://www.youtube.com/watch?v=T8ChDfbgP18",
+    fullVideo: "https://www.youtube.com/watch?v=T8ChDfbgP18",
+    thumbnail:
+      "https://res.cloudinary.com/dgbn0ttzf/video/upload/so_10p,du_5/v1720216672/Spontaneous_Mama_Stew_-_Empire_swing_s9mwe6.jpg",
   },
   {
     id: 5,
@@ -42,7 +49,9 @@ export const videoList = [
     artist: "Norma Miller",
     publicId:
       "https://res.cloudinary.com/dgbn0ttzf/video/upload/so_10p,du_5/v1720218179/The_Global_Trickeration_Project_ywtbhh.mp4",
-    link: "https://www.youtube.com/watch?v=obCMq4OuM-s&t=8s",
+    fullVideo: "https://www.youtube.com/watch?v=obCMq4OuM-s&t=8s",
+    thumbnail:
+      "https://res.cloudinary.com/dgbn0ttzf/video/upload/so_10p,du_5/v1720218179/The_Global_Trickeration_Project_ywtbhh.jpg",
   },
   {
     id: 6,
@@ -50,7 +59,10 @@ export const videoList = [
     artist: "Ryan Francois",
     publicId:
       "https://res.cloudinary.com/dgbn0ttzf/video/upload/so_10p,du_5/RTSF_2016_-_Jitterbug_Stroll_with_Ryan_Francois_xfozhx.mp4",
-    link: "https://www.youtube.com/watch?v=FcJbrWd1oxM",
+    fullVideo: "https://www.youtube.com/watch?v=FcJbrWd1oxM",
+    thumbnail:
+      "https://res.cloudinary.com/dgbn0ttzf/video/upload/so_10p,du_5/RTSF_2016_-_Jitterbug_Stroll_with_Ryan_Francois_xfozhx.jpg",
+    wikiLink: "Jitterbug_Stroll",
   },
 ];
 

@@ -5,21 +5,33 @@ import "vidstack/bundle";
 const route = useRoute();
 
 const chosenVideo = ref();
+const video = ref();
+
 chosenVideo.value = videoList.find((e) => e.name === route.params.slug);
 
-var mediaUrl = `https://en.wikipedia.org/w/api.php?action=parse&format=json&page=${chosenVideo?.value?.wikiLink}&prop=text`;
+var mediaUrl = `https://en.wikipedia.org/w/api.php?action=parse&format=json&page=${chosenVideo.value.wikiLink}&prop=text&origin=*`;
 
-const { data: wikiMedia, error } = await useFetch(mediaUrl);
+const { data, error } = await useFetch(mediaUrl);
+
+video.value = data.value;
+
+if (error.value) {
+  console.log("ERROR", error.value);
+}
 </script>
 
 <template>
   <div>
     <Heading :title="route.params.slug" />
-    <Player v-if="chosenVideo?.fullVideo" :video="chosenVideo.fullVideo" />
+    <Player v-if="chosenVideo?.fullVideo" :video="chosenVideo" />
     <div
       class="max-w-100 mx-auto bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 relative w-full h-full flex flex-col overflow-hidden p-4 mt-4"
     >
-      <div v-if="wikiMedia" v-html="wikiMedia?.parse?.text['*']"></div>
+      <div
+        v-if="video.parse.title != 'Undefined'"
+        v-html="video?.parse?.text['*']"
+      ></div>
+      <div v-else><p>No information yet</p></div>
     </div>
     <!-- <div>
       <div class="">
@@ -130,7 +142,9 @@ const { data: wikiMedia, error } = await useFetch(mediaUrl);
   #External_links,
   #Notes,
   #References,
-  ul {
+  ul,
+  .mw-default-size,
+  .box-Unreferenced_section {
     display: none;
   }
 }
