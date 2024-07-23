@@ -116,7 +116,6 @@ const bgImage = ref();
 function changeBg() {
   const randIndex = Math.floor(Math.random() * backgrounds.length);
   bgImage.value = backgrounds[randIndex];
-  console.log("bgimage", bgImage.value);
 }
 changeBg();
 </script>

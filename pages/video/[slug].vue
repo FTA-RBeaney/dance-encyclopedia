@@ -10,7 +10,6 @@ chosenVideo.value = videoList.find((e) => e.name === route.params.slug);
 var mediaUrl = `https://en.wikipedia.org/w/api.php?action=parse&format=json&page=${chosenVideo?.value?.wikiLink}&prop=text`;
 
 const { data: wikiMedia, error } = await useFetch(mediaUrl);
-console.log(wikiMedia);
 </script>
 
 <template>

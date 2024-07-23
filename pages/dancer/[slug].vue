@@ -177,7 +177,6 @@ const wikiMedia = ref();
 
 const { data, error } = useFetch(mediaUrl, {
   onResponse({ response }) {
-    console.log("response", response);
     isLoaded.value = true;
     wikiMedia.value = response._data.query.pages[0];
   },
