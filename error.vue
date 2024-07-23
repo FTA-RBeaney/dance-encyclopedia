@@ -11,7 +11,7 @@ const handleError = () => clearError({ redirect: "/" });
     <div
       class="container flex flex-col md:flex-row items-center justify-center px-5 text-gray-700"
     >
-      <div class="max-w-md">
+      <div class="max-w-sm">
         <div class="text-5xl font-dark font-bold">{{ error.statusCode }}</div>
         <p class="text-2xl md:text-3xl font-light leading-normal">
           {{ error.message }} @ {{ error.url }}
@@ -26,7 +26,11 @@ const handleError = () => clearError({ redirect: "/" });
         </button>
       </div>
       <div class="max-w-lg">
-        <svg
+        <NuxtImg
+          class="rounded-xl"
+          src="https://res.cloudinary.com/dgbn0ttzf/image/upload/v1721775117/IMG_20230202_132120_368_y2tttq.jpg"
+        />
+        <!-- <svg
           id="Layer_1"
           data-name="Layer 1"
           xmlns="http://www.w3.org/2000/svg"
@@ -180,7 +184,7 @@ const handleError = () => clearError({ redirect: "/" });
             class="cls-15"
             d="M857.63,805C860.5,803.5,830.5,512.5,746.5,400.5s-104-130-104-130-2,85,34,145,78,160,90,182,56,223,56,223Z"
           />
-        </svg>
+        </svg> -->
       </div>
     </div>
   </div>

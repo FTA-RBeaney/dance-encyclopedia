@@ -1,7 +1,10 @@
 <template>
   <NuxtLink :to="`/artist/${postId}`" class="max-w-full">
-    <Button variant="ghost" class="w-full justify-start font-normal">
-      <IconsMicrophone />
+    <Button
+      variant="ghost"
+      class="w-full flex justify-start items-center font-normal"
+    >
+      <IconsMicrophone class="mr-2" />
       <p class="truncate">{{ name }}</p>
     </Button>
   </NuxtLink>

@@ -111,6 +111,8 @@ async function addFavourite(id) {
         favourite_id: supabaseUser.value.id + id,
         user_id: supabaseUser.value.id,
         post_id: id,
+        name: artistName,
+        type: "artist",
       })
       .select();
 

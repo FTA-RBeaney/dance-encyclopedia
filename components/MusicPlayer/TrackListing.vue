@@ -17,34 +17,14 @@
             </div>
 
             <div v-for="(track, index) in props.tracks" :key="`item${index}`">
-              <div
-                v-if="track.track.preview_url"
-                @click="changeTrack(track)"
-                class="flex items-center border-b py-3 cursor-pointer hover:shadow-md px-2"
-              >
-                <img
-                  class="w-10 h-10 object-cover rounded-lg mr-2"
-                  alt="User avatar"
-                  :src="track.track.album?.images[0]?.url"
+              <div>
+                <MusicPlayerTrack
+                  v-if="track.track.preview_url"
+                  @click="changeTrack(track)"
+                  :trackId="track.track.id"
+                  :track="track"
+                  class="flex items-center border-b py-3 cursor-pointer hover:shadow-md px-2"
                 />
-                <div class="flex flex-col px-2 w-full">
-                  <span
-                    class="text-sm text-red-500 capitalize font-semibold pt-1"
-                  >
-                    {{ track.track.name }}
-                  </span>
-                  <span class="text-xs text-gray-500 uppercase font-medium">
-                    {{
-                      track?.track.artists
-                        .map((artist) => artist.name)
-                        .join(", ")
-                    }}
-                  </span>
-                </div>
-                <!-- <MusicPlayerNew
-                @event-name="changeTrack"
-                :trackPreviewUrl="track.track.preview_url"
-              /> -->
               </div>
             </div>
           </div>
@@ -178,6 +158,8 @@
 
 <script setup>
 import { useMediaControls } from "@vueuse/core";
+const supabaseUser = useSupabaseUser();
+const supabase = useSupabaseClient();
 const props = defineProps({
   tracks: Object,
 });
@@ -210,7 +192,6 @@ const changeTrack = (e) => {
 const { playing, currentTime, duration, volume } = useMediaControls(video, {
   src: currentTrack.value.track.preview_url,
 });
-console.log(currentTrack.value);
 </script>
 
 <style scoped>

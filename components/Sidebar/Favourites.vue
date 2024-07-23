@@ -3,7 +3,7 @@
     <h2 class="relative px-7 text-lg font-semibold tracking-tight">
       Favourites
     </h2>
-    <ScrollArea v-if="inputLength > 0" class="h-[200px] w-[200px] px-1">
+    <ScrollArea v-if="inputLength > 0" class="h-[200px] px-1">
       <div class="space-y-1 p-2 max-w-full">
         <SideBarFavourite
           v-for="(favourite, i) in favourites"
@@ -29,12 +29,11 @@ const getFavourites = async () => {
   const { data } = await supabase
     .from("favourites")
     .select("*")
-    .eq("user_id", supabaseUser.value.id);
+    .eq("user_id", supabaseUser.value.id)
+    .eq("type", "artist");
 
   favourites.value = data;
 };
-
-console.log(favourites);
 
 const favouritesChannel = supabase
   .channel("public:favourites")

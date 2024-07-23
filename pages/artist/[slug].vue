@@ -54,6 +54,7 @@ async function addFavourite(id) {
         user_id: user.value.id,
         post_id: id,
         name: artistName,
+        type: "artist",
       })
       .select();
 
