@@ -10,7 +10,7 @@ const colorMode = useColorMode();
 
 <template>
   <div
-    class="bg-card border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 relative w-full h-full flex flex-col overflow-hidden pb-4"
+    class="bg-card border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 dark:text-white relative w-full h-full flex flex-col overflow-hidden pb-4"
   >
     <div class="pt-3">
       <div class="col-span-8 overflow-hidden rounded-xl sm:px-8">
@@ -118,7 +118,7 @@ const colorMode = useColorMode();
         <p class="py-2 text-xl font-semibold">Theme</p>
         <div class="my-4 w-96">
           <Select v-model="colorMode.preference">
-            <SelectTrigger className="w-[180px]">
+            <SelectTrigger class="w-[180px]">
               <SelectValue placeholder="Select your theme" />
             </SelectTrigger>
             <SelectContent>

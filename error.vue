@@ -14,11 +14,9 @@ const handleError = () => clearError({ redirect: "/" });
       <div class="max-w-md">
         <div class="text-5xl font-dark font-bold">{{ error.statusCode }}</div>
         <p class="text-2xl md:text-3xl font-light leading-normal">
-          Sorry we couldn't find this page.
+          {{ error.message }} @ {{ error.url }}
         </p>
-        <p class="mb-8">
-          But dont worry, you can find plenty of other things on our homepage.
-        </p>
+        <p class="mb-8" v-html="error.stack"></p>
 
         <button
           class="px-4 inline py-2 text-sm font-medium leading-5 shadow text-white transition-colors duration-150 border border-transparent rounded-lg focus:outline-none focus:shadow-outline-blue bg-blue-600 active:bg-blue-600 hover:bg-blue-700"

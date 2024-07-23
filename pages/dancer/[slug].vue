@@ -73,7 +73,7 @@
       </div> -->
 
       <div
-        class="bg-white border p-6 border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 relative w-full h-full flex flex-col overflow-hidden mt-6"
+        class="bg-white border p-6 border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 relative w-full h-full flex flex-col overflow-hidden mt-6 dark:text-white"
       >
         <p v-if="dancer[0].blurb" class="leading-relaxed text-lg">
           {{ dancer[0].blurb }}

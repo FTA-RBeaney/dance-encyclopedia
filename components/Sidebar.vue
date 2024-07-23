@@ -7,7 +7,9 @@ const isUserLoggedIn = ref(false);
 </script>
 
 <template>
-  <div class="pb-12 lg:block">
+  <div
+    class="pb-12 lg:block dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+  >
     <div class="space-y-4 py-4">
       <div class="px-3 py-2">
         <h2 class="mb-2 px-4 text-lg font-semibold tracking-tight">Discover</h2>

@@ -1,5 +1,7 @@
 <template>
-  <div class="bg-primary-200">
+  <div
+    class="bg-primary-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+  >
     <div class="flex flex-row items-center justify-between py-6 px-4">
       <NuxtLink to="/" class="text-xl font-medium">
         <div class="relative z-20 flex items-center text-lg font-medium">

@@ -43,6 +43,9 @@ export default defineNuxtConfig({
     "@nuxtjs/color-mode",
     "@nuxt/scripts",
   ],
+  colorMode: {
+    classSuffix: "",
+  },
   alias: {
     pinia: "/node_modules/@pinia/nuxt/node_modules/pinia/dist/pinia.mjs",
   },

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col sm:flex-row mt-1">
+  <div class="flex flex-col sm:flex-row mt-1 dark:text-white">
     <div class="sm:w-1/3 text-center sm:pr-8 sm:py-8">
       <img
         v-if="wikiInfo.thumbnail"
@@ -9,7 +9,9 @@
       />
 
       <div class="flex flex-col items-center text-center justify-center">
-        <h2 class="font-medium title-font mt-4 text-gray-900 text-lg">
+        <h2
+          class="font-medium title-font mt-4 text-gray-900 dark:text-white text-lg"
+        >
           {{ wikiInfo.title }}
         </h2>
         <div class="w-12 h-1 bg-indigo-500 rounded mt-2 mb-4"></div>

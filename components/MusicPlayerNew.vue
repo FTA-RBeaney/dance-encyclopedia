@@ -7,8 +7,6 @@ const props = defineProps({
 });
 const { song } = props;
 
-console.log(song);
-
 const video = ref();
 const { playing, currentTime, duration, volume } = useMediaControls(video, {
   src: props.trackPreviewUrl,
