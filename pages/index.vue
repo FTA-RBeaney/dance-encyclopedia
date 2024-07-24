@@ -1,4 +1,12 @@
 <script setup>
+definePageMeta({
+  pageTransition: {
+    name: "slide",
+    mode: "out-in",
+  },
+  layout: "homepage",
+});
+
 const supabaseUser = useSupabaseUser();
 const supabase = useSupabaseClient();
 const isOpen = ref(false);
@@ -7,20 +15,13 @@ const { data } = await supabase
   .from("profiles")
   .select()
   .eq("id", supabaseUser.value.id);
-
-definePageMeta({
-  pageTransition: {
-    name: "slide",
-    mode: "out-in",
-  },
-});
 </script>
 
 <template>
   <div>
     <header>
       <div
-        class="w-full bg-center bg-cover h-[38rem]"
+        class="w-full bg-center bg-cover h-[34rem]"
         style="
           background-image: url('http://www.rikomatic.com/wp-content/uploads/import/6a00d8341c77b053ef01bb08ad4ee9970d.jpg');
         "
@@ -46,7 +47,7 @@ definePageMeta({
       </div>
     </header>
     <div
-      class="bg-white border p-6 border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 relative w-full h-full flex flex-col overflow-hidden mt-6 dark:text-white"
+      class="bg-white border p-6 border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 relative w-full h-full flex flex-col overflow-hidden mt-6 dark:text-white mx-auto max-w-xl"
     >
       <p>
         Thanks for checking out the site. This is a work in progress, so some

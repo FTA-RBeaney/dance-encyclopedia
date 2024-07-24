@@ -14,15 +14,24 @@
       </span>
     </div>
     <div class="px-4 py-4">
-      <FavouriteButton
-        v-if="isFavourite"
-        @click="removeFavourite(track.track)"
-        extraClasses="bg-[#EF4444] hover:bg-[#EF4444]/90 focus:ring-[#EF4444]/50"
-        ><IconsHeartFull
-      /></FavouriteButton>
-      <FavouriteButton v-else @click="addFavourite(track.track)"
-        ><IconsHeartOutline
-      /></FavouriteButton>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger>
+            <FavouriteButton
+              v-if="isFavourite"
+              @click="removeFavourite(track.track)"
+              extraClasses="bg-[#EF4444] hover:bg-[#EF4444]/90 focus:ring-[#EF4444]/50"
+              ><IconsHeartFull
+            /></FavouriteButton>
+            <FavouriteButton v-else @click="addFavourite(track.track)"
+              ><IconsHeartOutline
+            /></FavouriteButton>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Add to favourites</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
     </div>
   </div>
 </template>
