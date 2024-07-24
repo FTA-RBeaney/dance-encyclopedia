@@ -1,7 +1,7 @@
 <template>
   <div class="w-full">
-    <div class="flex justify-start items-start">
-      <div class="flex bg-white shadow-md rounded-lg overflow-hidden w-6/12">
+    <div class="flex flex-col sm:flex-row justify-start items-start">
+      <div class="flex bg-white shadow-md rounded-lg overflow-hidden sm:w-6/12">
         <div class="flex flex-col w-full start">
           <div class="flex flex-col px-5 py-3">
             <div class="border-b pb-1 flex justify-between items-center mb-2">
@@ -28,7 +28,11 @@
           </div>
         </div>
       </div>
-      <PlaylistMusicPlayer :currentTrack="currentTrack" ref="myChild" />
+      <PlaylistMusicPlayer
+        :currentTrack="currentTrack"
+        ref="myChild"
+        class="order-first sm:order-last w-full sm:w-6/12 top-0 sm:top-10"
+      />
     </div>
   </div>
 </template>
@@ -49,6 +53,5 @@ function testCall(e) {
 <style scoped>
 .sticky-div {
   position: sticky;
-  top: 100px;
 }
 </style>

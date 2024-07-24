@@ -38,7 +38,7 @@ defineExpose({
 </script>
 <template>
   <div
-    class="sticky-div bg-white shadow-md rounded-lg overflow-hidden mb-4 w-6/12 ml-6"
+    class="sticky-div bg-white shadow-md rounded-lg overflow-hidden mb-4 sm:ml-6"
   >
     <audio hidden controls ref="video" id="playerid"></audio>
     <div class="flex p-5 border-b">
