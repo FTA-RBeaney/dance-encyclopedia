@@ -24,7 +24,7 @@ const { data } = await supabase
           <div class="text-center">
             <h1 class="text-4xl font-semibold text-white lg:text-6xl">
               Welcome
-              <span class="text-primary">{{ data[0].first_name }}</span
+              <span class="text-secondary">{{ data[0].first_name }}</span
               >!
             </h1>
             <!-- <button

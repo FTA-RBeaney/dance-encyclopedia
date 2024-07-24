@@ -8,7 +8,7 @@ const isUserLoggedIn = ref(false);
 
 <template>
   <div
-    class="pb-12 lg:block dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+    class="pb-12 lg:block dark:bg-black/[.1] dark:border-gray-700 dark:text-white"
   >
     <div class="space-y-4 py-4">
       <div class="px-3 py-2">

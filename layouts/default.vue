@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="flex flex-col justify-between bg-neutral-50 text-neutral-900">
+    <div class="flex flex-col justify-between text-neutral-900">
       <Navbar />
     </div>
     <div class="border-t">
