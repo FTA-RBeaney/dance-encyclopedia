@@ -144,7 +144,8 @@ if (error.value) {
   #References,
   ul,
   .mw-default-size,
-  .box-Unreferenced_section {
+  .box-Unreferenced_section,
+  .box-More_citations_needed {
     display: none;
   }
 }

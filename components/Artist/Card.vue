@@ -111,7 +111,7 @@ async function addFavourite(id) {
         favourite_id: supabaseUser.value.id + id,
         user_id: supabaseUser.value.id,
         post_id: id,
-        name: artistName,
+        name: wikiInfo.value.titles.normalized,
         type: "artist",
       })
       .select();
