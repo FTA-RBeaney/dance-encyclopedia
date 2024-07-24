@@ -7,6 +7,13 @@ const { data } = await supabase
   .from("profiles")
   .select()
   .eq("id", supabaseUser.value.id);
+
+definePageMeta({
+  pageTransition: {
+    name: "slide",
+    mode: "out-in",
+  },
+});
 </script>
 
 <template>
@@ -24,7 +31,9 @@ const { data } = await supabase
           <div class="text-center">
             <h1 class="text-4xl font-semibold text-white lg:text-6xl">
               Welcome
-              <span class="text-secondary">{{ data[0].first_name }}</span
+              <span class="text-primary dark:text-primary">{{
+                data[0].first_name
+              }}</span
               >!
             </h1>
             <!-- <button
