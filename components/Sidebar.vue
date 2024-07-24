@@ -100,7 +100,7 @@ const isUserLoggedIn = ref(false);
       <!-- </div>
       </div> -->
 
-      <div class="px-3 py-2">
+      <div class="px-3 py-2" v-if="playlists?.length > 0">
         <h2 class="mb-2 px-4 text-lg font-semibold tracking-tight">
           Playlists
         </h2>
@@ -109,7 +109,7 @@ const isUserLoggedIn = ref(false);
             v-for="(playlist, index) in playlists"
             :key="`playlist-${index}`"
           >
-            <NuxtLink :to="`/playlist/${playlist.id}`">
+            <NuxtLink :to="`/playlist/${playlist?.id}`">
               <Button variant="ghost" class="w-full justify-start">
                 <IconsPlaylist class="mr-2" />
                 {{ playlist.name }}

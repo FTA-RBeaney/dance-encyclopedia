@@ -53,7 +53,7 @@ const supabase = useSupabaseClient();
 const { data: isAdmin, error } = await supabase
   .from("profiles")
   .select("is_admin")
-  .eq("id", supabaseUser.value.id);
+  .eq("id", supabaseUser?.value?.id);
 
 const avatar = computed(() => supabaseUser?.value.user_metadata.avatar_url);
 const fullName = computed(() => supabaseUser?.value.user_metadata.full_name);
