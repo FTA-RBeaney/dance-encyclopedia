@@ -18,6 +18,17 @@ const { data } = await supabase
   .eq("user_id", supabaseUser.value.id);
 
 favourites.value = data;
+
+async function userLogout() {
+  try {
+    const { error } = await supabase.auth.signOut();
+    if (error) throw error;
+  } catch (error) {
+    alert(error.message);
+  } finally {
+    await navigateTo("/login");
+  }
+}
 </script>
 
 <template>
@@ -34,7 +45,10 @@ favourites.value = data;
             <p class="text-gray-600">
               Your email address is <strong>{{ superbaseUser.email }}</strong>
             </p>
-            <Button class="mt-4">Change</Button>
+            <div>
+              <Button class="mt-4 mr-4">Change</Button>
+              <Button type="submit" @click="userLogout"> Sign Out </Button>
+            </div>
           </div>
 
           <hr class="mt-4 mb-8" />
