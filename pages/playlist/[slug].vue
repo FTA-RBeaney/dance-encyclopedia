@@ -10,7 +10,7 @@
       >Listen on Spotify <IconsSpotify
     /></a>
 
-    <MusicPlayerTrackListing :tracks="response.tracks.items" />
+    <PlaylistTrackListing :tracks="response.tracks.items" />
   </div>
 </template>
 

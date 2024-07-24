@@ -5,13 +5,28 @@ const props = defineProps({
 });
 
 const handleError = () => clearError({ redirect: "/" });
+
+const backgrounds = [
+  "https://res.cloudinary.com/dgbn0ttzf/image/upload/v1721777582/451636138_1856865591467589_3547137860137697654_n_ixijcz.png",
+  "https://res.cloudinary.com/dgbn0ttzf/image/upload/a_hflip/v1721777257/451958538_445659454960505_6586674871999271778_n_vsgbjk.png",
+  "https://res.cloudinary.com/dgbn0ttzf/image/upload/v1721777585/449702907_1161973848370950_1788862568352482255_n_pou5fz.png",
+  "https://res.cloudinary.com/dgbn0ttzf/image/upload/v1721777591/449980782_7952893248090691_4873418655634079320_n_stecda.png",
+];
+
+const bgImage = ref();
+
+function changeBg() {
+  const randIndex = Math.floor(Math.random() * backgrounds.length);
+  bgImage.value = backgrounds[randIndex];
+}
+changeBg();
 </script>
 <template>
-  <div class="h-screen w-screen bg-gray-100 flex items-center">
+  <div class="h-screen w-screen bg-gray-100 flex items-end justify-end">
     <div
-      class="container flex flex-col md:flex-row items-center justify-center px-5 text-gray-700"
+      class="w-8/12 flex flex-col md:flex-row items-center justify-end px-5 h-full text-gray-700"
     >
-      <div class="max-w-sm">
+      <div class="max-w-xl">
         <div class="text-5xl font-dark font-bold">{{ error.statusCode }}</div>
         <p class="text-2xl md:text-3xl font-light leading-normal">
           {{ error.message }} @ {{ error.url }}
@@ -25,11 +40,8 @@ const handleError = () => clearError({ redirect: "/" });
           back to homepage
         </button>
       </div>
-      <div class="max-w-lg">
-        <NuxtImg
-          class="rounded-xl"
-          src="https://res.cloudinary.com/dgbn0ttzf/image/upload/v1721775117/IMG_20230202_132120_368_y2tttq.jpg"
-        />
+      <div class="max-w-lg self-end">
+        <NuxtImg class="rounded-xl" :src="bgImage" />
         <!-- <svg
           id="Layer_1"
           data-name="Layer 1"

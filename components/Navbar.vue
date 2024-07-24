@@ -24,7 +24,7 @@
       </NuxtLink>
       <NuxtLink v-if="isAdmin" to="/classes">
         <Button variant="ghost" class="w-full justify-start">
-          <IconsPerson />
+          <IconsPerson class="mr-2" />
           Classes
         </Button>
       </NuxtLink>
