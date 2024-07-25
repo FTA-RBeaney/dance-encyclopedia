@@ -1,4 +1,6 @@
 <script setup>
+import { columns } from "../components/Favourites/columns.ts";
+
 const superbaseUser = useSupabaseUser();
 const userImage = computed(() => {
   const picture = superbaseUser.value.user_metadata.picture;
@@ -54,7 +56,7 @@ async function userLogout() {
           <hr class="mt-4 mb-8" />
           <div class="flex">
             <div class="mr-8">
-              <img class="w-64 rounded-md" :src="userImage" />
+              <NuxtImg class="w-64 rounded-md" :src="userImage" />
             </div>
             <div>
               <p class="py-2 text-xl font-semibold">Password</p>
@@ -167,36 +169,13 @@ async function userLogout() {
     >
       <p class="py-2 text-xl font-semibold">Your Favourites</p>
 
-      <Table v-if="favourites">
-        <TableHeader>
-          <TableRow>
-            <TableHead class="font-bold"> Name </TableHead>
-            <TableHead class="font-bold"> Type </TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          <TableRow
-            v-for="(favourite, index) in favourites"
-            :key="`item${index}`"
-          >
-            <TableCell>
-              {{ favourite.name }}
-            </TableCell>
-            <TableCell class="font-medium">
-              <div class="flex items-center">
-                <div class="mr-2">
-                  <IconsMicrophone v-if="favourite.type === 'artist'" />
-                  <IconsSong v-if="favourite.type === 'song'" />
-                </div>
-                {{
-                  favourite.type.charAt(0).toUpperCase() +
-                  favourite.type.slice(1)
-                }}
-              </div>
-            </TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
+      <FavouritesDataTable
+        v-if="favourites"
+        :columns="columns"
+        :data="favourites"
+        class="mt-4"
+      />
+      <p v-else>No favourites added yet. Come back when you've added some ;)</p>
     </div>
   </div>
 </template>
