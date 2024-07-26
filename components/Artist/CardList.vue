@@ -22,7 +22,7 @@ const props = defineProps({
 ul {
   display: grid;
   gap: 0.2em;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(180px, 180px));
 }
 
 li {

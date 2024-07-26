@@ -13,6 +13,7 @@
           v-for="(item, index) in albumData['release-groups']"
           :item="item"
           :key="`${item.name}-${index}`"
+          :albumImage="`${albumImages[index]}`"
         />
       </div>
     </div>
@@ -26,11 +27,18 @@ const props = defineProps({
 });
 
 const { artistId } = props;
+let albumImages = [];
 
 const albumsUrl = `https://musicbrainz.org/ws/2/release-group?artist=${artistId}&fmt=json&type=album&limit=100`;
 const { data: albumData } = await useFetch(albumsUrl, {
   pick: ["release-groups"],
 });
+
+for (const item in albumData.value["release-groups"]) {
+  const albumId = albumData.value["release-groups"][item].id;
+  const albumImg = `https://coverartarchive.org/release-group/${albumId}/front`;
+  albumImages.push(albumImg);
+}
 </script>
 
 <style scoped>

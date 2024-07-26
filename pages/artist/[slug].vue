@@ -8,12 +8,31 @@ const isLoaded = ref(false);
 const spotifyLink = ref();
 const spotInfoHtml = ref();
 
+// get artist data from Supabase, starting with the ID
 const artistId = route.params.slug;
-
+const { data: wikiInfo, error: wikiError } = await supabase
+  .from("musicians")
+  .select()
+  .eq("id", artistId);
+// then get the musicbrainz data
 const artistUrl = `https://musicbrainz.org/ws/2/artist/${artistId}?inc=url-rels&fmt=json`;
-
 const { data: artistData } = await useFetch(artistUrl);
 
+// get the musician name and change it to a format that we can use in Wikipedia's rest API
+const artistName = wikiInfo[0].name;
+console.log("artistName", artistName);
+
+// check favourites table to see if current page is a favourite
+const { data, error } = await supabase
+  .from("favourites")
+  .select("favourite_id")
+  .eq("favourite_id", user.value.id + route.params.slug);
+
+if (data.length > 0) {
+  isFavourite.value = true;
+}
+
+// confetti!
 const { $script } = useScriptNpm({
   packageName: "js-confetti",
   file: "dist/js-confetti.browser.js",
@@ -25,22 +44,6 @@ const { $script } = useScriptNpm({
     },
   },
 });
-
-// get the musician name and change it to a format that we can use in Wikipedia's rest API
-const artistName = artistData.value.name;
-const key = artistName.trim().replace(/'/g, "%27").replace(/ /g, "_");
-var wikiUrl = `https://en.wikipedia.org/api/rest_v1/page/summary/${key}`;
-const { data: wikiInfo } = await useFetch(wikiUrl);
-
-// check favourites table to see if current page is a favourite
-const { data, error } = await supabase
-  .from("favourites")
-  .select("favourite_id")
-  .eq("favourite_id", user.value.id + route.params.slug);
-
-if (data.length > 0) {
-  isFavourite.value = true;
-}
 
 // add favourite functionality
 async function addFavourite(id) {

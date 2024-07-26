@@ -62,7 +62,7 @@ const mediaUrl = `https://en.wikipedia.org/api/rest_v1/page/media-list/${artistN
 try {
   const { data: images, error: imageError } = useFetch(mediaUrl);
   console.log("images", images.value);
-  await new Promise((resolve) => setTimeout(resolve, 3000));
+  await new Promise((resolve) => setTimeout(resolve, 1000));
   artistImages.value = images.value.items.filter(function (obj) {
     return obj.type === "image";
   });

@@ -7,7 +7,7 @@
   >
     <div class="overflow-hidden rounded-md">
       <NuxtImg
-        :src="albumImg"
+        :src="props.albumImage"
         format="webp"
         preload
         loading="lazy"
@@ -32,8 +32,7 @@
 <script setup>
 const props = defineProps({
   item: Object,
+  albumImage: String,
 });
-const { item } = props;
-
-const albumImg = `https://coverartarchive.org/release-group/${item.id}/front`;
+const { item, albumImage } = props;
 </script>

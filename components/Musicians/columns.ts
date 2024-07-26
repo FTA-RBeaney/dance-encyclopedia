@@ -1,7 +1,7 @@
 import { h } from "vue";
 import { ColumnDef } from "@tanstack/vue-table";
 import DropdownAction from "./DataTableDropdown.vue";
-import { ArrowUpDown, ChevronDown } from "lucide-vue-next";
+import { ArrowUpDown, ChevronDown, ChevronUp } from "lucide-vue-next";
 import { Button } from "@/components/ui/button";
 
 interface Musician {
@@ -41,11 +41,10 @@ export const columns: ColumnDef<Musician>[] = [
     },
     cell: ({ row }: any) => {
       const name = row.getValue("name");
-      console.log("row", row.original.wiki_data.thumbnail.source);
       return h("div", { class: "text-left font-medium" }, [
         h("img", {
           class:
-            "w-10 h-10 mr-4 rounded-full inline-flex items-center justify-center bg-gray-200 text-gray-400 object-cover object-left-top",
+            "w-12 h-12 mr-4 rounded-md inline-flex items-center justify-center bg-gray-200 text-gray-400 object-cover object-left-top",
           src: row.original.wiki_data.thumbnail.source,
         }),
         h("span", name),
@@ -75,9 +74,10 @@ export const columns: ColumnDef<Musician>[] = [
   {
     id: "expand",
     enableHiding: false,
+    meta: {
+      className: "text-right",
+    },
     cell: ({ row }) => {
-      const name = row.original;
-
       return h(
         Button,
         {
@@ -85,24 +85,29 @@ export const columns: ColumnDef<Musician>[] = [
           variant: "link",
           onClick: () => row.toggleExpanded(),
         },
-        () => ["More info", h(ChevronDown, { class: "ml-2 h-4 w-4" })]
+        () => [
+          "More info",
+          row.getIsExpanded()
+            ? h(ChevronUp, { class: "ml-2 h-4 w-4" })
+            : h(ChevronDown, { class: "ml-2 h-4 w-4" }),
+        ]
       );
     },
   },
-  {
-    id: "actions",
-    enableHiding: false,
-    cell: ({ row }) => {
-      const name = row.original;
+  //   {
+  //     id: "actions",
+  //     enableHiding: false,
+  //     cell: ({ row }) => {
+  //       const name = row.original;
 
-      return h(
-        "div",
-        { class: "relative text-right" },
-        h(DropdownAction, {
-          name,
-          onExpand: row.toggleExpanded,
-        })
-      );
-    },
-  },
+  //       return h(
+  //         "div",
+  //         { class: "relative text-right" },
+  //         h(DropdownAction, {
+  //           name,
+  //           onExpand: row.toggleExpanded,
+  //         })
+  //       );
+  //     },
+  //   },
 ];

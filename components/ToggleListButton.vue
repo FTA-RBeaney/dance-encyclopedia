@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-gray-200 text-sm h-10 text-gray-500 leading-none border-2 border-gray-200 rounded-full inline-flex"
+    class="bg-primary text-secondary text-sm h-10 text-gray-500 leading-none border-2 border-gray-200 rounded-full inline-flex"
   >
     <button
       v-if="props.isToggled"
@@ -25,7 +25,7 @@
         <rect x="14" y="14" width="7" height="7"></rect>
         <rect x="3" y="14" width="7" height="7"></rect>
       </svg>
-      <span>Grid</span>
+      <span>View as Grid</span>
     </button>
     <button
       v-else
@@ -52,7 +52,7 @@
         <line x1="3" y1="12" x2="3.01" y2="12"></line>
         <line x1="3" y1="18" x2="3.01" y2="18"></line>
       </svg>
-      <span>List</span>
+      <span>View as List</span>
     </button>
   </div>
 </template>

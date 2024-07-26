@@ -32,7 +32,7 @@ const { data } = await supabase
           <div class="text-center">
             <h1 class="text-4xl font-semibold text-white lg:text-6xl">
               Welcome
-              <span class="text-primary dark:text-primary">{{
+              <span class="text-secondary dark:text-primary">{{
                 data[0].first_name
               }}</span
               >!
@@ -47,7 +47,7 @@ const { data } = await supabase
       </div>
     </header>
     <div
-      class="bg-white border p-6 border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 relative w-full h-full flex flex-col overflow-hidden mt-6 dark:text-white mx-auto max-w-xl"
+      class="bg-white border p-6 border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 relative w-10/12 text-center text-sm h-full flex flex-col overflow-hidden mt-6 dark:text-white mx-auto"
     >
       <p>
         Thanks for checking out the site. This is a work in progress, so some
