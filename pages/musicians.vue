@@ -96,7 +96,7 @@ const ComponentToRender = computed(() => {
 
         <Search @search="search" class="w-96" />
         <div class="text-right">
-          <ToggleListButton
+          <MusiciansToggleList
             v-if="noResults"
             @toggle-list-view="toggleListView"
             :isToggled="isToggled"

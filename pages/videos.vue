@@ -13,7 +13,7 @@
     <div class="relative">
       <ScrollArea class="w-[100%]">
         <div class="flex space-x-4 pb-4 w-max">
-          <CloudVideo
+          <HoverVideo
             v-for="media in videoList"
             :key="media.id"
             :media="media"
@@ -33,7 +33,7 @@
     <div class="relative">
       <ScrollArea class="w-[100%]">
         <div class="flex space-x-4 pb-4">
-          <AlbumArtwork
+          <ArtistAlbumArtwork
             v-for="album in otherVideos"
             :key="album.name"
             :album="album"

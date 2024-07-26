@@ -5,13 +5,13 @@
     </h2>
     <ScrollArea v-if="inputLength > 0" class="h-[200px] px-1">
       <div class="space-y-1 p-2 max-w-full">
-        <SideBarFavourite
+        <SidebarFavouriteItem
           v-for="(favourite, i) in favourites"
           :postId="favourite.post_id"
           :name="favourite.name"
           :key="`${favourite}-${i}`"
         >
-        </SideBarFavourite>
+        </SidebarFavouriteItem>
       </div>
     </ScrollArea>
     <p v-else class="h-[300px] px-7 py-2">No favourites!</p>

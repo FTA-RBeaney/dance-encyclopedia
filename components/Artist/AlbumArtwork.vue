@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { Album } from "../data/albums";
-import { playlists } from "../data/playlists";
+import type { Album } from "../../data/albums";
+import { playlists } from "../../data/playlists";
 import { cn } from "@/lib/utils";
 
 interface AlbumArtworkProps {

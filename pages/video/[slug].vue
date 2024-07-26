@@ -23,7 +23,7 @@ if (error.value) {
 <template>
   <div>
     <Heading :title="route.params.slug" />
-    <Player v-if="chosenVideo?.fullVideo" :video="chosenVideo" />
+    <VideoPlayer v-if="chosenVideo?.fullVideo" :video="chosenVideo" />
     <div
       class="max-w-100 mx-auto bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 relative w-full h-full flex flex-col overflow-hidden p-4 mt-4"
     >
