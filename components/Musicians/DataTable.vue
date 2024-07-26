@@ -182,6 +182,12 @@ defineEmits<{
         >
           Previous
         </Button>
+        <div
+          class="flex w-[100px] items-center justify-center text-sm font-medium"
+        >
+          Page {{ table.getState().pagination.pageIndex + 1 }} of
+          {{ table.getPageCount() }}
+        </div>
         <!-- <Button
           :key="pageSize"
           v-for="pageSize in pageSizes"

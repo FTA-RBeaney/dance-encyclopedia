@@ -71,22 +71,7 @@ export const columns: ColumnDef<Musician>[] = [
   //       return h("div", { class: "text-left font-medium" }, formatted);
   //     },
   //   },
-  {
-    id: "actions",
-    enableHiding: false,
-    cell: ({ row }) => {
-      const name = row.original;
 
-      return h(
-        "div",
-        { class: "relative text-right" },
-        h(DropdownAction, {
-          name,
-          onExpand: row.toggleExpanded,
-        })
-      );
-    },
-  },
   {
     id: "expand",
     enableHiding: false,
@@ -100,7 +85,23 @@ export const columns: ColumnDef<Musician>[] = [
           variant: "link",
           onClick: () => row.toggleExpanded(),
         },
-        () => ["Expand", h(ChevronDown, { class: "ml-2 h-4 w-4" })]
+        () => ["More info", h(ChevronDown, { class: "ml-2 h-4 w-4" })]
+      );
+    },
+  },
+  {
+    id: "actions",
+    enableHiding: false,
+    cell: ({ row }) => {
+      const name = row.original;
+
+      return h(
+        "div",
+        { class: "relative text-right" },
+        h(DropdownAction, {
+          name,
+          onExpand: row.toggleExpanded,
+        })
       );
     },
   },
