@@ -20,6 +20,7 @@ function copy(id: string) {
       <!-- <DropdownMenuItem @click="copy(payment.id)"> Copy link </DropdownMenuItem> -->
       <DropdownMenuSeparator />
       <DropdownMenuItem>View page</DropdownMenuItem>
+      <DropdownMenuItem> Expand </DropdownMenuItem>
       <DropdownMenuItem class="text-destructive"
         >Delete favourite</DropdownMenuItem
       >

@@ -32,16 +32,23 @@ const checkArtist = async (id: String) => {
 
 const addArtist = async (mbid) => {
   const supabase = useSupabaseClient();
+  var url = `https://en.wikipedia.org/api/rest_v1/page/summary/${newArtistName.value}`;
+  const { data: wikiInfo } = await useFetch(url);
+
   try {
     const { data, error } = await supabase
       .from("musicians")
-      .upsert({ id: mbid, name: newArtistName.value })
+      .upsert({
+        id: mbid,
+        name: newArtistName.value,
+        wiki_data: wikiInfo.value,
+      })
       .select();
 
     if (data === null) {
       toast({
         title: "This artist already exists!",
-        description: "Please try again with another Artist MBID",
+        description: "Please try again with another Artist MBID" + error,
         variant: "destructive",
       });
 
@@ -90,7 +97,7 @@ const addArtist = async (mbid) => {
           </Button>
         </div>
         <div v-else class="grid gap-2">
-          <p>{{ alertMessage }}</p>
+          <p class="text-md">{{ alertMessage }}</p>
           <Button v-if="!artistExists" type="submit" class="mt-2">
             Yes. Save changes
           </Button>

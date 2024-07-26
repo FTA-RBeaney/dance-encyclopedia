@@ -1,4 +1,5 @@
 <script setup>
+import { columns } from "../components/Musicians/columns.ts";
 const isToggled = ref(false);
 
 const supabase = useSupabaseClient();
@@ -92,7 +93,7 @@ const ComponentToRender = computed(() => {
       />
       <div class="flex w-full justify-between align-center mb-8">
         <MusiciansAddMusician />
-        <Search @search="search" class="w-96" />
+        <!-- <Search @search="search" class="w-96" /> -->
         <div class="text-right">
           <ToggleListButton
             v-if="noResults"
@@ -104,9 +105,15 @@ const ComponentToRender = computed(() => {
       <div
         class="bg-white border p-6 border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 relative w-full h-full flex flex-col overflow-hidden mt-6"
       >
-        <component
+        <!-- <component
           :is="ComponentToRender.name"
           :musicians="ComponentToRender.dataToSend"
+        /> -->
+
+        <MusiciansDataTable
+          :columns="columns"
+          :data="allTheMusic"
+          class="mt-4"
         />
       </div>
     </div>

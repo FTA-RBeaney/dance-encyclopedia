@@ -1,10 +1,15 @@
 <script setup lang="ts" generic="TData, TValue">
-import type { ColumnDef, SortingState } from "@tanstack/vue-table";
+import type {
+  ColumnDef,
+  ColumnFiltersState,
+  SortingState,
+} from "@tanstack/vue-table";
 import {
   FlexRender,
   getCoreRowModel,
   useVueTable,
   getPaginationRowModel,
+  getFilteredRowModel,
   getSortedRowModel,
 } from "@tanstack/vue-table";
 import { valueUpdater } from "@/lib/utils";
@@ -18,6 +23,7 @@ const props = defineProps<{
 }>();
 
 const sorting = ref<SortingState>([]);
+const columnFilters = ref<ColumnFiltersState>([]);
 
 const table = useVueTable({
   get data() {
@@ -30,9 +36,15 @@ const table = useVueTable({
   getPaginationRowModel: getPaginationRowModel(),
   getSortedRowModel: getSortedRowModel(),
   onSortingChange: (updaterOrValue) => valueUpdater(updaterOrValue, sorting),
+  onColumnFiltersChange: (updaterOrValue) =>
+    valueUpdater(updaterOrValue, columnFilters),
+  getFilteredRowModel: getFilteredRowModel(),
   state: {
     get sorting() {
       return sorting.value;
+    },
+    get columnFilters() {
+      return columnFilters.value;
     },
   },
 });
@@ -40,6 +52,14 @@ const table = useVueTable({
 
 <template>
   <div>
+    <div class="flex items-center py-4">
+      <Input
+        class="max-w-sm"
+        placeholder="Filter..."
+        :model-value="table.getColumn('name')?.getFilterValue() as string"
+        @update:model-value="table.getColumn('name')?.setFilterValue($event)"
+      />
+    </div>
     <Table>
       <TableHeader>
         <TableRow
@@ -79,11 +99,29 @@ const table = useVueTable({
         </template>
       </TableBody>
     </Table>
+    <div class="flex items-center justify-end py-4 space-x-2">
+      <Button
+        variant="outline"
+        size="sm"
+        :disabled="!table.getCanPreviousPage()"
+        @click="table.previousPage()"
+      >
+        Previous
+      </Button>
+      <Button
+        variant="outline"
+        size="sm"
+        :disabled="!table.getCanNextPage()"
+        @click="table.nextPage()"
+      >
+        Next
+      </Button>
+    </div>
   </div>
 </template>
 
 <style scoped>
-button {
+th button {
   padding: 0;
 }
 </style>
