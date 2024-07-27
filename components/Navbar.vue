@@ -20,6 +20,7 @@
           <strong>Dance Encyclopedia</strong>
         </div>
       </NuxtLink>
+      <Admin />
       <NuxtLink v-if="isAdmin" to="/classes">
         <Button variant="ghost" class="w-full justify-start">
           <IconsPerson class="mr-2" />

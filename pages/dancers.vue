@@ -1,16 +1,9 @@
 <script setup>
-const client = useSupabaseClient();
+const supabase = useSupabaseClient();
 
-const { data: dancers } = await client
+const { data: dancers } = await supabase
   .from("dancers")
-  .select(
-    `
-    *,
-      profiles(
-        *
-      )
-    `
-  )
+  .select()
   .eq("published", true)
   .order("name");
 </script>

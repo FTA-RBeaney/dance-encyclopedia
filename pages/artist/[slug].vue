@@ -20,7 +20,6 @@ const { data: artistData } = await useFetch(artistUrl);
 
 // get the musician name and change it to a format that we can use in Wikipedia's rest API
 const artistName = wikiInfo[0].name;
-console.log("artistName", artistName);
 
 // check favourites table to see if current page is a favourite
 const { data, error } = await supabase

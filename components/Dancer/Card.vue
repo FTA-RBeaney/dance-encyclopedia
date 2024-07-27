@@ -17,7 +17,7 @@
       <h3 class="font-medium leading-none">
         {{ dancer.name }}
       </h3>
-      <p class="text-xs text-muted-foreground">
+      <p v-if="danceStyles" class="text-xs text-muted-foreground">
         {{ danceStyles }}
       </p>
     </div>
@@ -30,6 +30,6 @@ const props = defineProps({
 });
 const { dancer } = props;
 const danceStyles = computed(() =>
-  dancer.styles.map((style) => style).join(", ")
+  dancer?.styles?.map((style) => style).join(", ")
 );
 </script>

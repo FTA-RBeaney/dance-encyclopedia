@@ -49,7 +49,7 @@
 </template>
 
 <script setup>
-const superbaseUser = useSupabaseUser();
+const supabaseUser = useSupabaseUser();
 const supabase = useSupabaseClient();
 const route = useRoute();
 
@@ -58,12 +58,10 @@ const payload = ref("");
 const commentList = ref([]);
 
 const submitComment = async () => {
-  // Define the data you want to post
   const dataToPost = {
     post_id: route.params.slug,
     payload: payload.value,
-    email: superbaseUser.value.email,
-    // Add more columns and values as needed
+    email: supabaseUser.value.email,
   };
 
   const { data, error } = await supabase.from("comments").upsert([dataToPost]);

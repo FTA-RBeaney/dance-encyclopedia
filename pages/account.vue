@@ -1,21 +1,21 @@
 <script setup>
 import { columns } from "../components/Favourites/columns.ts";
 
-const superbaseUser = useSupabaseUser();
+const supabaseUser = useSupabaseUser();
 const supabase = useSupabaseClient();
 
 const colorMode = useColorMode();
 const favourites = ref();
 
 const userImage = computed(() => {
-  const picture = superbaseUser.value.user_metadata.picture;
+  const picture = supabaseUser.value.user_metadata.picture;
   return picture.replace("=s96-c", "");
 });
 
 const { data } = await supabase
   .from("favourites")
   .select("*")
-  .eq("user_id", supabaseUser.value.id);
+  .eq("user_id", supabaseUser?.value?.id);
 
 favourites.value = data;
 
@@ -44,7 +44,7 @@ async function userLogout() {
             class="flex flex-col sm:flex-row sm:items-center sm:justify-between"
           >
             <p class="text-gray-600">
-              Your email address is <strong>{{ superbaseUser.email }}</strong>
+              Your email address is <strong>{{ supabaseUser.email }}</strong>
             </p>
             <div>
               <Button class="mt-4 mr-4">Change</Button>

@@ -21,6 +21,7 @@
     "@tanstack/vue-table": "^8.19.3",
     "@unovis/ts": "^1.4.2",
     "@unovis/vue": "^1.4.2",
+    "@vee-validate/zod": "^4.13.2",
     "@vueuse/core": "^10.11.0",
     "algoliasearch": "^4.24.0",
     "buffer": "^6.0.3",
@@ -36,10 +37,12 @@
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
     "vaul-vue": "^0.2.0",
+    "vee-validate": "^4.13.2",
     "vidstack": "^1.11.30",
     "vue-instantsearch": "^4.17.5",
     "wiky.js": "^0.0.1",
-    "youtube-video-element": "^1.1.6"
+    "youtube-video-element": "^1.1.6",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@iconify-json/uil": "^1.1.8",

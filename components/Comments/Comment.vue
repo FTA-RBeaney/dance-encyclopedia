@@ -17,9 +17,6 @@ const numberOfLikes = ref(props.comment.likes);
 const isLiked = ref(false);
 
 const likeId = computed(() => user.value.id + props.comment.id);
-console.log("haha", likeId.value);
-console.log("userid", user.value.id);
-console.log("commentid", props.comment.id);
 
 // check likes table to see if current page is a favourite
 const { data, error } = await supabase
@@ -42,8 +39,6 @@ const addLike = async () => {
       comment_id: props.comment.id,
     })
     .select();
-
-  console.log(props.comment.id);
 
   const { data, error } = await supabase
     .from("comments")
