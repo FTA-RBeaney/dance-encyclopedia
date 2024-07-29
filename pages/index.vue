@@ -52,8 +52,9 @@ const { data } = await supabase
       <p>
         Thanks for checking out the site. This is a work in progress, so some
         things may not work and ther may be bugs. If you find anything or think
-        of anything you'd like to see on this site then feel free to let me
-        know!
+        of anything you'd like to see on this site then feel free to let me know
+        by clicking on 'Add feedback/bug' in the navigation bar above and
+        leaving a note!
       </p>
     </div>
   </div>
