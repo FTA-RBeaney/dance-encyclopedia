@@ -74,11 +74,6 @@ const onSubmit = async (values) => {
   }
 };
 
-const createDate = (createdeAt) =>
-  new Date(createdeAt).toLocaleDateString("en-UK", {
-    timeZone: "GMT",
-  });
-
 const channel = supabase
   .channel("public:feedback")
   .on(
