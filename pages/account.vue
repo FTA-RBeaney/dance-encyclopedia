@@ -69,7 +69,6 @@ async function userLogout() {
                       id="login-password"
                       type="text"
                       placeholder="***********"
-                      v-model="password"
                     />
                   </div>
 
@@ -79,7 +78,6 @@ async function userLogout() {
                       id="login-password"
                       type="text"
                       placeholder="***********"
-                      v-model="password"
                     />
                   </div>
                 </div>

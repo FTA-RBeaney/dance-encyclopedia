@@ -25,6 +25,37 @@ onMounted(async () => {
 const { data: users } = await supabase.from("profiles").select();
 
 listOfUsers.value = users;
+const userIds = ref([]);
+
+const channel = supabase.channel("room1");
+channel
+  .on("presence", { event: "sync" }, () => {
+    for (const id in channel.presenceState()) {
+      userIds.value.push(channel.presenceState()[id][0].user_id);
+    }
+  })
+  .subscribe(async (status) => {
+    if (status === "SUBSCRIBED") {
+      await channel.track({
+        online_at: new Date().toISOString(),
+        user_id: supabaseUser?.value.id,
+      });
+    }
+  });
+
+const onlineUsers = computed(() => {
+  return [...new Set(userIds.value)].length;
+});
+
+const isOnline = (id) => {
+  if (userIds.value.includes(id)) {
+    return true;
+  }
+};
+
+onUnmounted(() => {
+  supabase.removeChannel(channel);
+});
 </script>
 
 <template>
@@ -72,17 +103,21 @@ listOfUsers.value = users;
       <div class="w-4/12 max-w-xs pl-4">
         <Card class="p-4">
           <p class="py-2 text-xl font-semibold">Latest legends:</p>
+          <p class="text-sm italic">
+            {{ onlineUsers }}
+            {{ onlineUsers.length > 1 ? "users" : "user" }} online
+          </p>
           <Table v-if="listOfUsers">
             <TableBody>
               <TableRow
                 v-for="(user, index) in listOfUsers"
                 :key="`item${index}`"
               >
-                <TableCell>
+                <TableCell class="px-0">
                   <div class="flex justify-start items-center">
                     <NuxtImg
                       v-if="user"
-                      class="aspect-square object-cover rounded-full mr-2"
+                      class="aspect-square object-cover rounded-full mr-3"
                       :src="user.avatar_url"
                       format="webp"
                       width="30"
@@ -93,6 +128,12 @@ listOfUsers.value = users;
                       :alt="user.first_name"
                     />
                     {{ user.first_name }}
+                  </div>
+                </TableCell>
+                <TableCell>
+                  <div v-if="isOnline(user.id)" class="flex items-center">
+                    <div class="bg-green-400 rounded-full w-2 h-2 mr-2"></div>
+                    Online
                   </div>
                 </TableCell>
               </TableRow>

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-primary text-secondary text-sm h-10 text-gray-500 leading-none border-2 border-gray-200 rounded-full inline-flex"
+    class="bg-primary text-secondary text-sm h-10 text-gray-500 leading-none border-2 border-secondary rounded-full inline-flex"
   >
     <button
       v-if="props.isToggled"
