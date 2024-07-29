@@ -131,8 +131,13 @@ onUnmounted(() => {
                   </div>
                 </TableCell>
                 <TableCell>
-                  <div v-if="isOnline(user.id)" class="flex items-center">
-                    <div class="bg-green-400 rounded-full w-2 h-2 mr-2"></div>
+                  <div
+                    v-if="isOnline(user.id)"
+                    class="flex items-center justify-end"
+                  >
+                    <div
+                      class="bg-green-400 rounded-full w-2 h-2 mr-2 animate-pulse"
+                    ></div>
                     Online
                   </div>
                 </TableCell>
