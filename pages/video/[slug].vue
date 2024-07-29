@@ -7,7 +7,7 @@ const route = useRoute();
 
 const chosenVideo = ref();
 const video = ref();
-const readMoreActive = ref(false);
+const readMoreActive = ref(true);
 
 const dancerIds = [
   "b837e540-a5a7-41d0-b957-a6d8448b003c",
@@ -53,24 +53,20 @@ const activateReadMore = () => {
           class="bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 relative w-full h-full overflow-hidden p-4 mt-4"
         >
           <p class="py-2 text-xl font-semibold">About</p>
-          <div v-if="!readMoreActive">
-            <div class="truncate">
-              <div v-html="video?.parse?.text['*'].slice(0, 1500)"></div>
-            </div>
+          <!-- <div v-if="!readMoreActive && video.parse.title != 'Undefined'">
+            <div v-html="video?.parse?.text['*'].slice(0, 1500)"></div>
             <Button
-              variant="ghost"
+              variant="link"
               class="text-primary p-0"
               @click.prevent="activateReadMore"
               >Read more...
             </Button>
-          </div>
-          <div v-else>
-            <div
-              v-if="video.parse.title != 'Undefined'"
-              v-html="video?.parse?.text['*']"
-            ></div>
-            <div v-else><p>No information yet</p></div>
-          </div>
+          </div> -->
+          <div
+            v-if="readMoreActive && video.parse.title != 'Undefined'"
+            v-html="video?.parse?.text['*']"
+          ></div>
+          <div v-else><p>No information yet</p></div>
           <!-- <Accordion type="single" collapsible>
             <AccordionItem value="item-1">
               <AccordionTrigger>History</AccordionTrigger>
