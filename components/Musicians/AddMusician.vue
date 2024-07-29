@@ -113,7 +113,23 @@ const addArtist = async (mbid) => {
         <DialogHeader>
           <DialogTitle>Add a musician</DialogTitle>
           <DialogDescription>
-            Add a new musician via their MBID
+            <div class="px-4">
+              <ol class="list-decimal">
+                <li>
+                  Go
+                  <a
+                    href="https://musicbrainz.org"
+                    target="_blank"
+                    class="underline"
+                    >here</a
+                  >
+                </li>
+                <li>Search for an artist</li>
+                <li>Click on their name</li>
+                <li>Go to the details tab and then copy the MBID</li>
+                <li>Paste it below:</li>
+              </ol>
+            </div>
           </DialogDescription>
         </DialogHeader>
         <GridForm />
