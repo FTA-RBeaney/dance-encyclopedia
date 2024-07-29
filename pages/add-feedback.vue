@@ -8,7 +8,10 @@ const supabaseUser = useSupabaseUser();
 const feedbackList = ref([]);
 
 const getFeedback = async () => {
-  const { data } = await supabase.from("feedback").select().order("created_at");
+  const { data } = await supabase
+    .from("feedback")
+    .select(`*,profiles(*)`)
+    .order("created_at");
   feedbackList.value = data;
 };
 
@@ -92,6 +95,8 @@ const channel = supabase
 
 await getFeedback();
 
+const getIsExpanded = ref(true);
+
 onUnmounted(() => {
   supabase.removeChannel(channel);
 });
@@ -114,25 +119,18 @@ onUnmounted(() => {
       </AutoForm>
     </Card>
     <Card class="w-8/12 p-6 ml-4">
-      <Table v-if="feedbackList.length > 0">
+      <Table v-if="feedbackList">
         <TableHeader>
           <TableRow>
             <TableHead class="font-bold"> Bug </TableHead>
-            <TableHead class="font-bold"> Created </TableHead>
+            <TableHead class="font-bold"> Created by </TableHead>
+            <TableHead class="font-bold"> Created at</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          <TableRow v-for="(item, index) in feedbackList" :key="`item${index}`">
-            <TableCell class="font-medium">
-              <Badge variant="outline" class="rounded-sm mr-1">
-                {{ item.type }}
-              </Badge>
-              {{ item.feedback_title }}
-            </TableCell>
-            <TableCell class="font-medium">
-              {{ createDate(item.created_at) }}
-            </TableCell>
-          </TableRow>
+          <template v-for="(item, index) in feedbackList" :key="`item${index}`">
+            <FeedbackRow :item="item" />
+          </template>
         </TableBody>
       </Table>
       <p v-else>No bugs yet!</p>
