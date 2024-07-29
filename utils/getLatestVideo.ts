@@ -39,3 +39,19 @@ export const getDancerPlaylist = async (dancerPlaylistId: String) => {
 
   return "https://www.youtube.com/embed/tHYDP9DuPwk?si=bikNxKfor0irJSet";
 };
+
+export const getVideoDetails = async (videoId: String) => {
+  const runtimeConfig = useRuntimeConfig();
+  const API_KEY = runtimeConfig.public.YOUTUBE_API_KEY;
+
+  try {
+    const response = await fetch(
+      `https://www.googleapis.com/youtube/v3/videos?part=id%2C+snippet&id=${videoId}&key=${API_KEY}`
+    );
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    console.error("Error loading video data: ", error);
+  }
+};
