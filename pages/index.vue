@@ -11,10 +11,15 @@ const supabaseUser = useSupabaseUser();
 const supabase = useSupabaseClient();
 const isOpen = ref(false);
 
-const { data } = await supabase
-  .from("profiles")
-  .select()
-  .eq("id", supabaseUser.value.id);
+const userData = ref();
+
+onMounted(async () => {
+  const { data } = await supabase
+    .from("profiles")
+    .select()
+    .eq("id", supabaseUser.value.id);
+  userData.value = data[0];
+});
 </script>
 
 <template>
@@ -33,10 +38,11 @@ const { data } = await supabase
             <h1 class="text-4xl font-semibold text-white lg:text-6xl">
               Welcome
               <span class="text-secondary dark:text-primary">{{
-                data[0].first_name
+                userData?.first_name
               }}</span
               >!
             </h1>
+
             <!-- <button
             class="w-full px-5 py-2 mt-4 text-sm font-medium text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-md lg:w-auto hover:bg-blue-500 focus:outline-none focus:bg-blue-500"
           >

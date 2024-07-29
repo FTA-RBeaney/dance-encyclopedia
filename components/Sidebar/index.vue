@@ -2,8 +2,6 @@
 import { playlists } from "~/data/playlists";
 const supabaseUser = useSupabaseUser();
 const supabase = useSupabaseClient();
-
-const isUserLoggedIn = ref(false);
 </script>
 
 <template>

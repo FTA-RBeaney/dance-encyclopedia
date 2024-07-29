@@ -20,7 +20,7 @@
           <strong>Dance Encyclopedia</strong>
         </div>
       </NuxtLink>
-      <Admin />
+      <Admin v-if="supabaseUser" />
       <div class="flex">
         <NuxtLink to="/add-feedback">
           <Button variant="ghost"
