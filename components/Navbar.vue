@@ -21,12 +21,19 @@
         </div>
       </NuxtLink>
       <Admin />
-      <NuxtLink v-if="isAdmin" to="/classes">
-        <Button variant="ghost" class="w-full justify-start">
-          <IconsPerson class="mr-2" />
-          Classes
-        </Button>
-      </NuxtLink>
+      <div class="flex">
+        <NuxtLink to="/add-feedback">
+          <Button variant="ghost"
+            ><MessageSquare class="w-4 h-4 mr-2" /> Add feedback/bug
+          </Button>
+        </NuxtLink>
+        <NuxtLink v-if="isAdmin" to="/classes">
+          <Button variant="ghost" class="w-full justify-start">
+            <IconsPerson class="mr-2" />
+            Classes
+          </Button>
+        </NuxtLink>
+      </div>
       <nav class="flex flex-row justify-end items-center">
         <!-- <NuxtLink class="font-medium px-2" to="/about">About Us</NuxtLink> -->
         <NuxtLink v-if="!supabaseUser" class="font-medium px-2" to="/login"
@@ -47,6 +54,7 @@
 </template>
 
 <script setup>
+import { MessageSquare } from "lucide-vue-next";
 const supabaseUser = useSupabaseUser();
 const supabase = useSupabaseClient();
 const { data: isAdmin, error } = await supabase
