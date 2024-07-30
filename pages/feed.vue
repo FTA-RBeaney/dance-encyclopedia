@@ -97,10 +97,10 @@ onUnmounted(() => {
   <div class="m-6 pb-8">
     <Card class="mb-6 p-4">
       <form @submit.prevent="createPost">
-        <div class="flex flex-row px-2 py-3 mx-3">
-          <div class="w-auto h-auto rounded-full mr-4">
+        <div class="flex flex-row items-center justify-center px-2 py-3">
+          <div class="w-12 h-12 min-w-12 rounded-full">
             <img
-              class="w-12 h-12 object-cover rounded-full shadow cursor-pointer"
+              class="w-full h-full object-cover rounded-full shadow cursor-pointer"
               alt="User avatar"
               :src="avatar"
             />
@@ -108,7 +108,7 @@ onUnmounted(() => {
           <textarea
             name="message"
             :placeholder="`What's on your mind, ${firstName}?`"
-            class="w-full rounded-lg p-2 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400"
+            class="w-full ml-4 rounded-lg p-2 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400"
             v-model="content"
           ></textarea>
         </div>
@@ -160,10 +160,10 @@ onUnmounted(() => {
           </div>
         </div>
 
-        <footer class="flex justify-between mt-4">
+        <footer class="flex justify-between mt-4 py-3 mx-2">
           <div class="flex gap-2">
             <label
-              class="flex items-center transition ease-out duration-300 hover:bg-blue-500 hover:text-white bg-blue-100 w-8 h-8 px-2 rounded-full text-blue-400 cursor-pointer"
+              class="flex items-center transition ease-out duration-300 hover:bg-blue-500 hover:text-white bg-blue-100 h-8 text-sm px-3 rounded-full text-blue-400 cursor-pointer"
             >
               <input type="file" class="hidden" @change="addPhotos" />
               <svg
@@ -175,14 +175,15 @@ onUnmounted(() => {
                 fill="none"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                class="css-i6dzq1"
+                class="mr-2 w-4 h-4"
               >
                 <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
                 <circle cx="8.5" cy="8.5" r="1.5"></circle>
                 <polyline points="21 15 16 10 5 21"></polyline>
               </svg>
+              Add photos
             </label>
-            <span
+            <!-- <span
               class="flex items-center transition ease-out duration-300 hover:bg-blue-500 hover:text-white bg-blue-100 w-8 h-8 px-2 rounded-full text-blue-400 cursor-pointer"
             >
               <svg
@@ -217,12 +218,10 @@ onUnmounted(() => {
                 <polyline points="4 17 10 11 4 5"></polyline>
                 <line x1="12" y1="19" x2="20" y2="19"></line>
               </svg>
-            </span>
+            </span> -->
           </div>
-          <button
-            class="flex items-center py-2 px-4 rounded-lg text-sm bg-blue-600 text-white shadow-lg"
-          >
-            Send
+          <Button class="flex items-center text-sm bg-primary text-secondary">
+            Post
             <svg
               class="ml-1"
               viewBox="0 0 24 24"
@@ -237,7 +236,7 @@ onUnmounted(() => {
               <line x1="22" y1="2" x2="11" y2="13"></line>
               <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
             </svg>
-          </button>
+          </Button>
         </footer>
       </form>
     </Card>
@@ -284,7 +283,7 @@ onUnmounted(() => {
           <div class="text-gray-500 text-sm mb-6 mx-3 px-2">
             {{ post.content }}
           </div>
-          <div class="flex justify-start mb-4 border-t border-gray-100">
+          <!-- <div class="flex justify-start mb-4 border-t border-gray-100">
             <div class="flex w-full mt-1 pt-2 pl-5">
               <span
                 class="bg-white transition ease-out duration-300 hover:text-red-500 border w-8 h-8 px-2 pt-2 text-center rounded-full text-gray-400 cursor-pointer mr-2"
@@ -362,8 +361,8 @@ onUnmounted(() => {
                 </svg>
               </span>
             </div>
-          </div>
-          <div class="flex w-full border-t border-gray-100">
+          </div> -->
+          <!-- <div class="flex w-full border-t border-gray-100">
             <div class="mt-3 mx-5 flex flex-row text-xs">
               <div
                 class="flex text-gray-700 font-normal rounded-md mb-2 mr-4 items-center"
@@ -384,7 +383,7 @@ onUnmounted(() => {
                 <div class="ml-1 text-gray-400 text-ms">120k</div>
               </div>
             </div>
-          </div>
+          </div> -->
           <!-- <div class="text-black p-4 antialiased flex">
             <img
               class="rounded-full h-8 w-8 mr-2 mt-1"
