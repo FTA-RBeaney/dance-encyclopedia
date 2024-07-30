@@ -1,3 +1,13 @@
+<script setup>
+useSeoMeta({
+  title: "Dance Encyclopedia",
+  ogTitle: "Dance Encyclopedia",
+  ogImage:
+    "http://www.rikomatic.com/wp-content/uploads/import/6a00d8341c77b053ef01bb08ad4ee9970d.jpg",
+  twitterCard: "summary_large_image",
+});
+</script>
+
 <template>
   <div class="bg-background">
     <NuxtLoadingIndicator />
