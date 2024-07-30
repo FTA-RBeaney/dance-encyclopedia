@@ -8,8 +8,11 @@ const colorMode = useColorMode();
 const favourites = ref();
 
 const userImage = computed(() => {
-  const picture = supabaseUser?.value.user_metadata.picture;
-  return picture.replace("=s96-c", "");
+  const picture = supabaseUser?.value?.user_metadata?.picture.replace(
+    "=s96-c",
+    ""
+  );
+  return picture;
 });
 
 const { data } = await supabase
@@ -172,7 +175,7 @@ async function userLogout() {
         :data="favourites"
         class="mt-4"
       />
-      <p v-else>No favourites added yet. Come back when you've added some ;)</p>
+      <p v-else>No favourites added yet. Come back when you've added some!</p>
     </div>
   </div>
 </template>
