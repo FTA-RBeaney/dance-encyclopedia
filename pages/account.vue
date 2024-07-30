@@ -58,7 +58,7 @@ async function userLogout() {
           <hr class="mt-4 mb-8" />
           <div class="flex">
             <div class="mr-8">
-              <NuxtImg class="w-64 rounded-md" :src="userImage" />
+              <img class="w-64 rounded-md" :src="userImage" />
             </div>
             <div>
               <p class="py-2 text-xl font-semibold">Password</p>
