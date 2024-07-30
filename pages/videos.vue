@@ -83,7 +83,7 @@
               <Separator class="my-4" />
               <div class="relative">
                 <div
-                  v-if="userVideoData"
+                  v-if="userVideoData.length > 1"
                   class="grid grid-cols-2 md:grid-cols-2 gap-4"
                 >
                   <div
@@ -146,7 +146,6 @@ const fetchVideoData = async () => {
     const videoArray = await getVideoDetails(videoId);
 
     userVideoData.value.push(videoArray.items[0]);
-    console.log("userVideoData", videoArray.items[0]);
   }
 };
 

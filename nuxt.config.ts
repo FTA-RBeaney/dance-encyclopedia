@@ -58,12 +58,13 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      spotifyClientID: process.env.SPOTIFY_CLIENT_ID,
-      spotifyRefreshToken: process.env.SPOTIFY_RT,
+      spotifyClientID: "13bb1428eae64e859182a5744c991e93",
+      spotifyRefreshToken:
+        "AQCzaemXxqH_N9FTdPPwNrcCdvMVcrPAVscKaeuSc6HLMwmmDlu_NpJ_Z8VPeIZKZXZVntHpK5Ridj59M4ItFxpQBpn-gQTQm4J390yLDMqSKAT8XHIXNG7K0MoPwfYhko8",
       GOOGLE_API_KEY: "AIzaSyC9kNzY_EqckULIwSmij1ztvzWjKyvcHso",
-      spotifyClientSecret: process.env.SPOTIFY_CLIENT_SECRET,
+      spotifyClientSecret: "d0df83bb2a3749f8ba4832815d8ef74c",
       SPREAD_SHEET_ID: "1CVkFzZB8Eg6Ig8GvvvWgSC_uHjzRYp31DRnKV-sfxzQ",
-      YOUTUBE_API_KEY: process.env.NUXT_YOUTUBE_API_KEY,
+      YOUTUBE_API_KEY: "AIzaSyDPwdCSsl2eQdCa-gt7zlkvIaytjiT7Uwk",
       YOUTUBE_PLAYLIST_ID: process.env.NUXT_YOUTUBE_PLAYLIST_ID,
     },
   },
