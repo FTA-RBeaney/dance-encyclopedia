@@ -8,7 +8,7 @@ const colorMode = useColorMode();
 const favourites = ref();
 
 const userImage = computed(() => {
-  const picture = supabaseUser.value.user_metadata.picture;
+  const picture = supabaseUser?.value.user_metadata.picture;
   return picture.replace("=s96-c", "");
 });
 
