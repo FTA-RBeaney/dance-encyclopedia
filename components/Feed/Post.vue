@@ -14,16 +14,16 @@ const props = defineProps({
 const { post } = props;
 const isFavourite = ref(false);
 const totalLikes = ref();
+const limit = ref(5);
+
+const computedObj = computed(() =>
+  limit.value ? totalLikes.value.slice(0, limit.value) : totalLikes.value
+);
 
 const postId = post.id;
 const favouriteId = supabaseUser.value.id + postId;
 
 const likeThisPost = async () => {
-  console.log({
-    id: favouriteId,
-    user_id: supabaseUser.id,
-    comment_id: postId,
-  });
   try {
     const { data, error } = await supabase
       .from("likes")
@@ -42,7 +42,6 @@ const likeThisPost = async () => {
     console.log("error", error);
     alert(error.message);
   } finally {
-    console.log("data");
   }
 };
 
@@ -52,7 +51,11 @@ const getLikes = async () => {
     .select(`*,profiles(*)`)
     .eq("id", favouriteId);
 
-  isFavourite.value = isLiked;
+  console.log("isLiked", isLiked);
+
+  if (isLiked.length > 0) {
+    isFavourite.value = true;
+  }
 
   const { data: numberOfLikes } = await supabase
     .from("likes")
@@ -139,7 +142,7 @@ onUnmounted(() => {
         </Button>
         <div v-if="totalLikes.length > 0">
           <img
-            v-for="(avatar, i) in totalLikes"
+            v-for="(avatar, i) in totalLikes.slice(0, limit)"
             :key="`avatar${i}`"
             class="inline-block object-cover w-8 h-8 text-white border-2 border-white rounded-full shadow-sm cursor-pointer"
             :src="avatar.profiles.avatar_url"
