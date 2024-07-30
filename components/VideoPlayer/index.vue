@@ -26,7 +26,7 @@ const props = defineProps({
         <media-provider playsinline>
           <media-poster
             class="vds-poster"
-            :src="video.thumbnail"
+            :src="video.cover"
             alt="Girl walks into campfire with gnomes surrounding her friend ready for their next meal!"
           />
         </media-provider>

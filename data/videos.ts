@@ -6,7 +6,7 @@ export const videoList = [
     publicId:
       "https://res.cloudinary.com/dgbn0ttzf/video/upload/so_10p,du_5/v1720205005/The_Big_Apple___Keep_Punching_1939_in_full_color___Colorized_with_DeOldify_tzaxla.mp4",
     fullVideo: "https://www.youtube.com/watch?v=H1K5M5xluZs",
-    thumbnail:
+    cover:
       "https://res.cloudinary.com/dgbn0ttzf/video/upload/v1720205005/The_Big_Apple___Keep_Punching_1939_in_full_color___Colorized_with_DeOldify_tzaxla.jpg",
     videoId: "H1K5M5xluZs",
     wikiLink: "Big_Apple_(dance)",
@@ -18,7 +18,7 @@ export const videoList = [
     publicId:
       "https://res.cloudinary.com/dgbn0ttzf/video/upload/so_10p,du_5/v1720207965/shim_sham_yhmrnc.mp4",
     fullVideo: "https://www.youtube.com/watch?v=bjfM4Wrj9UI",
-    thumbnail:
+    cover:
       "https://res.cloudinary.com/dgbn0ttzf/video/upload/so_10p,du_5/v1720207965/shim_sham_yhmrnc.jpg",
     wikiLink: "Shim_Sham",
   },
@@ -29,7 +29,7 @@ export const videoList = [
     publicId:
       "https://res.cloudinary.com/dgbn0ttzf/video/upload/so_10p,du_5/v1720216322/Tranky_Doo_-_Harlem_Hot_Shots_bl5sth.mp4",
     fullVideo: "https://www.youtube.com/watch?v=QnD8V6-uzbM",
-    thumbnail:
+    cover:
       "https://res.cloudinary.com/dgbn0ttzf/video/upload/so_10p,du_5/v1720216322/Tranky_Doo_-_Harlem_Hot_Shots_bl5sth.jpg",
     wikiLink: "Tranky_Doo",
   },
@@ -40,7 +40,7 @@ export const videoList = [
     publicId:
       "https://res.cloudinary.com/dgbn0ttzf/video/upload/so_10p,du_5/v1720216672/Spontaneous_Mama_Stew_-_Empire_swing_s9mwe6.mp4",
     fullVideo: "https://www.youtube.com/watch?v=T8ChDfbgP18",
-    thumbnail:
+    cover:
       "https://res.cloudinary.com/dgbn0ttzf/video/upload/so_10p,du_5/v1720216672/Spontaneous_Mama_Stew_-_Empire_swing_s9mwe6.jpg",
   },
   {
@@ -50,7 +50,7 @@ export const videoList = [
     publicId:
       "https://res.cloudinary.com/dgbn0ttzf/video/upload/so_10p,du_5/v1720218179/The_Global_Trickeration_Project_ywtbhh.mp4",
     fullVideo: "https://www.youtube.com/watch?v=obCMq4OuM-s&t=8s",
-    thumbnail:
+    cover:
       "https://res.cloudinary.com/dgbn0ttzf/video/upload/so_10p,du_5/v1720218179/The_Global_Trickeration_Project_ywtbhh.jpg",
   },
   {
@@ -60,7 +60,7 @@ export const videoList = [
     publicId:
       "https://res.cloudinary.com/dgbn0ttzf/video/upload/so_10p,du_5/RTSF_2016_-_Jitterbug_Stroll_with_Ryan_Francois_xfozhx.mp4",
     fullVideo: "https://www.youtube.com/watch?v=FcJbrWd1oxM",
-    thumbnail:
+    cover:
       "https://res.cloudinary.com/dgbn0ttzf/video/upload/so_10p,du_5/RTSF_2016_-_Jitterbug_Stroll_with_Ryan_Francois_xfozhx.jpg",
     wikiLink: "Jitterbug_Stroll",
   },
