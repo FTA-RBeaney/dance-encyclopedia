@@ -38,7 +38,7 @@ body {
 <template>
   <div class="h-full">
     <div class="md:hidden">
-      <NuxtImg
+      <img
         alt="Authentication"
         width="1280"
         height="1214"

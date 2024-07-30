@@ -96,7 +96,7 @@
                       target="_blank"
                       class="relative group block"
                     >
-                      <NuxtImg
+                      <img
                         :src="video.snippet.thumbnails.maxres.url"
                         class="h-auto max-w-full w-full object-cover transition-all hover:scale-105"
                       />

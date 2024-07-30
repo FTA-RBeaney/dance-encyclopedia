@@ -10,7 +10,7 @@
         <TableRow v-for="(user, index) in listOfUsers" :key="`item${index}`">
           <TableCell class="px-0">
             <div class="flex justify-start items-center">
-              <NuxtImg
+              <img
                 v-if="user"
                 class="aspect-square object-cover rounded-full mr-3"
                 :src="user.avatar_url"

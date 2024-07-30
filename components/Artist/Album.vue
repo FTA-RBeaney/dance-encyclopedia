@@ -6,7 +6,7 @@
     target="_blank"
   >
     <div class="overflow-hidden rounded-md">
-      <NuxtImg
+      <img
         :src="props.albumImage"
         format="webp"
         preload

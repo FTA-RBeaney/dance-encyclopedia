@@ -41,7 +41,7 @@ changeBg();
         </button>
       </div>
       <div class="max-w-lg self-end">
-        <NuxtImg class="rounded-xl" :src="bgImage" />
+        <img class="rounded-xl" :src="bgImage" />
         <!-- <svg
           id="Layer_1"
           data-name="Layer 1"

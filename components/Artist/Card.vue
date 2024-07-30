@@ -14,7 +14,7 @@
       /></FavouriteButton>
     </div>
     <NuxtLink :to="`/artist/${artistId}`" class="">
-      <NuxtImg
+      <img
         class="w-full card-image aspect-square"
         :src="wikiInfo?.thumbnail?.source"
         format="webp"
