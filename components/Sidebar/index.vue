@@ -1,5 +1,6 @@
 <script setup>
 import { playlists } from "~/data/playlists";
+import { Activity } from "lucide-vue-next";
 const supabaseUser = useSupabaseUser();
 const supabase = useSupabaseClient();
 </script>
@@ -33,6 +34,12 @@ const supabase = useSupabaseClient();
             </Button>
           </NuxtLink> -->
 
+          <NuxtLink to="/feed">
+            <Button variant="ghost" class="w-full justify-start">
+              <Activity class="mr-2 w-4 h-4" />
+              Feed
+            </Button>
+          </NuxtLink>
           <NuxtLink to="/videos">
             <Button variant="ghost" class="w-full justify-start">
               <IconsWatch class="mr-2" />
