@@ -7,11 +7,6 @@ import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { Auth } from "@nuxtbase/auth-ui-vue";
 const supabaseClient = useSupabaseClient();
 
-const supabaseUser = useSupabaseUser();
-const fullName = computed(() => supabaseUser?.value?.user_metadata?.full_name);
-
-const videoUrl = await getLatestVideo();
-
 const backgrounds = [
   "http://www.rikomatic.com/wp-content/uploads/import/6a00d8341c77b053ef01bb08ad4ee9970d.jpg",
   "http://www.rikomatic.com/wp-content/uploads/import/6a00d8341c77b053ef01b7c808a74f970b.jpg",
@@ -103,6 +98,7 @@ body {
               theme: ThemeSupa,
             }"
             :providers="['google']"
+            onlyThirdPartyProviders
           />
           <p class="px-8 text-center text-sm text-muted-foreground">
             By clicking continue, you agree to our
