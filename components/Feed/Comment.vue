@@ -11,10 +11,6 @@ const timeAgo = useTimeAgo(comment.created_at);
 <template>
   <!-- comment listing section -->
   <div class="text-black p-4 antialiased flex">
-    <!-- <pre>
-            {{ comment }}
-        </pre
-    > -->
     <img
       class="rounded-full h-8 w-8 mr-2 mt-1"
       :src="comment.profiles.avatar_url"

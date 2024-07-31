@@ -100,7 +100,11 @@ body {
             :providers="['google']"
             onlyThirdPartyProviders
           />
-          <p class="px-8 text-center text-sm text-muted-foreground">
+          <p class="text-center">
+            PLEASE NOTE: This site is currently DESKTOP ONLY. If you're viewing
+            this on mobile, then don't 🙂
+          </p>
+          <!-- <p class="px-8 text-center text-sm text-muted-foreground">
             By clicking continue, you agree to our
             <a
               href="/terms"
@@ -116,7 +120,7 @@ body {
               Privacy Policy
             </a>
             .
-          </p>
+          </p> -->
         </div>
       </div>
     </div>

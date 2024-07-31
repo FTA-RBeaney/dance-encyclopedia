@@ -13,7 +13,6 @@ const props = defineProps({
   post: Object,
 });
 
-const { post } = props;
 const isFavourite = ref(false);
 const totalLikes = ref();
 const limit = ref(5);
@@ -26,9 +25,9 @@ const computedObj = computed(() =>
   limit.value ? totalLikes.value.slice(0, limit.value) : totalLikes.value
 );
 
-const timeAgo = useTimeAgo(post.created_at);
+const timeAgo = useTimeAgo(props.post.created_at);
 
-const postId = post.id;
+const postId = props.post.id;
 const favouriteId = supabaseUser.value.id + postId;
 
 console.log("postId", postId);
@@ -110,11 +109,11 @@ onMounted(() => {
       table: "likes",
     },
 
-    (payload) => getLikes()
+    () => getLikes()
   );
   realtimeChannel.subscribe();
 
-  realtimeChannelPosts = supabase.channel("public:posts").on(
+  realtimeChannelPosts = supabase.channel("public:comments").on(
     "postgres_changes",
     {
       event: "*",
@@ -122,7 +121,7 @@ onMounted(() => {
       table: "posts",
     },
 
-    (payload) => getComments()
+    () => getComments()
   );
   realtimeChannelPosts.subscribe();
 });
@@ -137,18 +136,18 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <Card class="mb-6 p-4">
+  <Card v-if="props.post" class="mb-6 p-4">
     <div class="flex flex-row px-2 py-3 mx-3">
       <div class="w-auto h-auto rounded-full">
         <img
           class="w-12 h-12 object-cover rounded-full shadow cursor-pointer"
           alt="User avatar"
-          :src="post.profiles.avatar_url"
+          :src="props.post.profiles.avatar_url"
         />
       </div>
       <div class="flex flex-col mb-2 ml-4 mt-1">
         <div class="text-gray-600 text-sm font-semibold">
-          {{ post.profiles.first_name }}
+          {{ props.post.profiles.first_name }}
         </div>
         <div class="flex w-full mt-1">
           <div class="text-blue-700 font-base text-xs mr-1 cursor-pointer">
@@ -161,11 +160,11 @@ onUnmounted(() => {
     <div class="border-b border-gray-100"></div>
     <div class="text-gray-400 font-medium text-sm mb-7 mt-6 mx-3 px-2">
       <div class="text-black text-sm mb-6 mx-3">
-        {{ post.content }}
+        <slot />
       </div>
-      <div v-if="post.photos.length > 0" class="flex gap-2">
+      <div v-if="props.post.photos.length > 0" class="flex gap-2">
         <div
-          v-for="(photo, i) in post.photos"
+          v-for="(photo, i) in props.post.photos"
           :key="`upload${i}`"
           class="overflow-hidden rounded-xl col-span-3 max-h-[14rem]"
         >

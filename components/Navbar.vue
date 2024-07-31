@@ -71,8 +71,6 @@ const { data: feedback } = await supabase
   .from("feedback")
   .select("*", { count: "exact" });
 
-console.log(feedback);
-
 const avatar = computed(() => supabaseUser?.value.user_metadata.avatar_url);
 const fullName = computed(() => supabaseUser?.value.user_metadata.full_name);
 </script>
