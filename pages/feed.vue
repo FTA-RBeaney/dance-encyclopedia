@@ -22,15 +22,16 @@ const avatar = computed(() => supabaseUser?.value.user_metadata.avatar_url);
 const firstName = computed(() => supabaseUser?.value.user_metadata.full_name);
 
 const getPosts = async () => {
-  const { data } = await supabase.from("posts").select(`*,profiles(*)`);
-  // .order("created_at", { ascending: false });
+  const { data } = await supabase
+    .from("posts")
+    .select(`*,profiles(*)`)
+    .is("parent", null)
+    .order("created_at", { ascending: false });
 
   allPosts.value = data;
 };
 
 const createPost = async () => {
-  console.log(content);
-
   const { data } = await supabase
     .from("posts")
     .insert({
@@ -239,7 +240,7 @@ onUnmounted(() => {
     </Card>
 
     <TransitionGroup name="list" tag="ul">
-      <li v-for="(post, i) in reversedList" :key="`post${i}`">
+      <li v-for="(post, i) in allPosts" :key="`post${i}`">
         <FeedPost :post="post" />
       </li>
     </TransitionGroup>
