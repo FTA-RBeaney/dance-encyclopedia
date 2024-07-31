@@ -1,6 +1,6 @@
 <script setup>
 import { useTimeAgo } from "@vueuse/core";
-import { ThumbsUp } from "lucide-vue-next";
+import { ThumbsUp, Trash2 } from "lucide-vue-next";
 import { RealtimeChannel } from "@supabase/supabase-js";
 
 let realtimeChannel = RealtimeChannel;
@@ -137,25 +137,58 @@ onUnmounted(() => {
 
 <template>
   <Card v-if="props.post" class="mb-6 p-4">
-    <div class="flex flex-row px-2 py-3 mx-3">
-      <div class="w-auto h-auto rounded-full">
-        <img
-          class="w-12 h-12 object-cover rounded-full shadow cursor-pointer"
-          alt="User avatar"
-          :src="props.post.profiles.avatar_url"
-        />
-      </div>
-      <div class="flex flex-col mb-2 ml-4 mt-1">
-        <div class="text-gray-600 text-sm font-semibold">
-          {{ props.post.profiles.first_name }}
+    <div class="flex flex-row justify-between px-2 py-3 mx-3">
+      <div class="flex">
+        <div class="w-auto h-auto rounded-full">
+          <img
+            class="w-12 h-12 object-cover rounded-full shadow cursor-pointer"
+            alt="User avatar"
+            :src="props.post.profiles.avatar_url"
+          />
         </div>
-        <div class="flex w-full mt-1">
-          <div class="text-blue-700 font-base text-xs mr-1 cursor-pointer">
-            SEO
+        <div class="flex flex-col mb-2 ml-4 mt-1">
+          <div class="text-gray-600 text-sm font-semibold">
+            {{ props.post.profiles.first_name }}
           </div>
-          <div class="text-gray-400 font-thin text-xs">• {{ timeAgo }}</div>
+          <div class="flex w-full mt-1">
+            <div class="text-blue-700 font-base text-xs mr-1 cursor-pointer">
+              SEO
+            </div>
+            <div class="text-gray-400 font-thin text-xs">• {{ timeAgo }}</div>
+          </div>
         </div>
       </div>
+      <DropdownMenu>
+        <DropdownMenuTrigger as-child>
+          <Button variant="ghost">
+            <button className="text-gray-400 w-8">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="{1.5}"
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM18.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
+                />
+              </svg>
+            </button>
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent class="w-44">
+          <DropdownMenuLabel>Actions</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem class="text-destructive">
+            <Trash2 class="mr-2 h-4 w-4" />
+            <span>Delete</span>
+            <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
     </div>
     <div class="border-b border-gray-100"></div>
     <div class="text-gray-400 font-medium text-sm mb-7 mt-6 mx-3 px-2">
