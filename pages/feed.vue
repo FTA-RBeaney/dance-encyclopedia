@@ -1,60 +1,62 @@
 <script setup>
 definePageMeta({
-  pageTransition: {
-    name: "slide",
-    mode: "out-in",
-  },
   layout: "feed",
 });
 
-const supabase = useSupabaseClient();
-let testingChannel = null;
-const allPosts = ref({});
+import { RealtimeChannel } from "@supabase/supabase-js";
+let realtimeChannel = RealtimeChannel;
 
-const getPosts = async () => {
-  console.log("GETTING POSTS");
+const supabase = useSupabaseClient();
+const supabaseUser = useSupabaseUser();
+
+const content = ref();
+const uploads = ref([]);
+const refreshKey = ref(1);
+
+const createPost = async (post) => {
   const { data } = await supabase
     .from("posts")
-    .select(`*,profiles(*)`)
-    .is("parent", null)
-    .order("created_at", { ascending: false });
+    .insert({
+      user_id: supabaseUser.value.id,
+      content: post.content.value,
+      photos: post.uploads.value,
+    })
+    .select();
 
-  allPosts.value = data;
+  content.value = "";
+  uploads.value = [];
+
+  refreshKey.value += 1;
+  // reloadNuxtApp();
 };
 
-await getPosts();
-
 onMounted(() => {
-  testingChannel = supabase
-    .channel("testingChannel")
+  // Real time listener for new workouts
+  realtimeChannel = supabase
+    .channel("public:posts")
     .on(
       "postgres_changes",
       { event: "*", schema: "public", table: "posts" },
-      (payload) => {
-        console.log("Change received!", payload);
-        getPosts();
-      }
-    )
-    .subscribe();
+      () => (refreshKey.value += 1)
+    );
+
+  realtimeChannel.subscribe();
 });
 
+// Don't forget to unsubscribe when user left the page
 onUnmounted(() => {
-  supabase.removeChannel(testingChannel);
+  supabase.removeChannel(realtimeChannel);
 });
 </script>
 
 <template>
   <div class="m-6 pb-8">
-    <Card class="mb-6 p-4">
-      <FeedAddPost />
-    </Card>
+    <FeedAddPost
+      @create-post="createPost"
+      :content="content"
+      :uploads="uploads"
+    />
 
-    <ul>
-      <li v-for="(post, i) in allPosts" :key="`post${i}`">
-        <FeedPost :post="post">
-          {{ post.content }}
-        </FeedPost>
-      </li>
-    </ul>
+    <FeedList :key="refreshKey" />
   </div>
 </template>
