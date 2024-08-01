@@ -7,7 +7,7 @@ import { useTimeAgo } from "@vueuse/core";
 import { ThumbsUp, Trash2 } from "lucide-vue-next";
 import { RealtimeChannel } from "@supabase/supabase-js";
 
-// let realtimeChannel = RealtimeChannel;
+let realtimeChannel = RealtimeChannel;
 
 const supabase = useSupabaseClient();
 const supabaseUser = useSupabaseUser();
@@ -84,7 +84,7 @@ onMounted(async () => {
     }
   });
 
-  const realtimeChannel = supabase.channel(`likes${props.post.id}`).on(
+  realtimeChannel = supabase.channel(`likes${props.post.id}`).on(
     "postgres_changes",
     {
       event: "*",

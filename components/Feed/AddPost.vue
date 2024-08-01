@@ -120,10 +120,10 @@ const addPhotos = async (e) => {
         </div>
       </div>
 
-      <footer class="flex justify-between mt-4 py-3 mx-2">
+      <footer class="flex justify-end mt-0 pt-2 pb-1 mx-2">
         <div class="flex gap-2">
           <label
-            class="flex items-center transition ease-out duration-300 hover:bg-blue-500 hover:text-white bg-blue-100 h-8 text-sm px-3 rounded-full text-blue-400 cursor-pointer"
+            class="justify-center whitespace-nowrap rounded-md font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 flex items-center text-sm mr-4 cursor-pointer hover:bg-secondary"
           >
             <input type="file" class="hidden" @change="addPhotos" />
             <svg
@@ -141,7 +141,7 @@ const addPhotos = async (e) => {
               <circle cx="8.5" cy="8.5" r="1.5"></circle>
               <polyline points="21 15 16 10 5 21"></polyline>
             </svg>
-            Add photos
+            Photos
           </label>
           <!-- <span
               class="flex items-center transition ease-out duration-300 hover:bg-blue-500 hover:text-white bg-blue-100 w-8 h-8 px-2 rounded-full text-blue-400 cursor-pointer"
@@ -183,7 +183,7 @@ const addPhotos = async (e) => {
         <Button class="flex items-center text-sm bg-primary text-secondary">
           Post
           <svg
-            class="ml-1"
+            class="ml-2"
             viewBox="0 0 24 24"
             width="16"
             height="16"

@@ -157,6 +157,7 @@ async function userLogout() {
                   <SelectItem value="light">Default</SelectItem>
                   <SelectItem value="dark">Dark</SelectItem>
                   <SelectItem value="rose">Rose</SelectItem>
+                  <SelectItem value="blue">Blue</SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
