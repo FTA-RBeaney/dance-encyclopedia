@@ -30,13 +30,13 @@
             <div class="relative">
               <ScrollArea class="w-[100%]">
                 <div class="flex space-x-4 pb-4 w-max">
-                  <!-- <HoverVideo
+                  <HoverVideo
                     v-for="media in videoList"
                     :key="media.id"
                     :media="media"
                     class="w-[250px]"
-                  /> -->
-                  <NuxtLink
+                  />
+                  <!-- <NuxtLink
                     :to="`/video/${album.name}`"
                     class="relative block w-60 h-96 space-y-3"
                     v-for="album in videoList"
@@ -48,7 +48,7 @@
                       aspect-ratio="portrait"
                       :width="250"
                     />
-                  </NuxtLink>
+                  </NuxtLink> -->
                 </div>
                 <ScrollBar orientation="horizontal" />
               </ScrollArea>
