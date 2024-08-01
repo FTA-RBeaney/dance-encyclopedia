@@ -21,23 +21,14 @@
         </div>
       </NuxtLink>
       <Admin v-if="supabaseUser" />
+
       <div class="flex">
-        <NuxtLink to="/add-feedback">
+        <FeedbackAdd class="mr-4" />
+        <NuxtLink v-if="isAdmin" to="/add-feedback">
           <Button class="relative"
-            ><MessageSquare class="w-4 h-4 mr-2" /> Add feedback/bug
-            <div
-              class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -end-2 dark:border-gray-900"
-            >
-              {{ feedback.length }}
-            </div>
+            ><Bug class="w-4 h-4 mr-2" /> View feedback
           </Button>
         </NuxtLink>
-        <!-- <NuxtLink v-if="isAdmin" to="/classes">
-          <Button variant="ghost" class="w-full justify-start">
-            <IconsPerson class="mr-2" />
-            Classes
-          </Button>
-        </NuxtLink> -->
       </div>
       <nav class="flex flex-row justify-end items-center">
         <!-- <NuxtLink class="font-medium px-2" to="/about">About Us</NuxtLink> -->
@@ -59,17 +50,13 @@
 </template>
 
 <script setup>
-import { MessageSquare } from "lucide-vue-next";
+import { Bug } from "lucide-vue-next";
 const supabaseUser = useSupabaseUser();
 const supabase = useSupabaseClient();
 const { data: isAdmin, error } = await supabase
   .from("profiles")
   .select("is_admin")
   .eq("id", supabaseUser?.value?.id);
-
-const { data: feedback } = await supabase
-  .from("feedback")
-  .select("*", { count: "exact" });
 
 const avatar = computed(() => supabaseUser?.value.user_metadata.avatar_url);
 const fullName = computed(() => supabaseUser?.value.user_metadata.full_name);
