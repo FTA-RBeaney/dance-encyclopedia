@@ -11,4 +11,12 @@ export const playlists = [
     name: "McCormack's Jazz",
     id: "6umhPpXFg0osa8MnXO89Ps",
   },
+  {
+    name: "Slow Lindy",
+    id: "5NhVmCHGJpONEIPy1UfzYf",
+  },
+  {
+    name: "Uptempo Blues",
+    id: "5Oc9EapG6FZZdfjMyAiv2Q",
+  },
 ];
