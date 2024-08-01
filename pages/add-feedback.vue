@@ -98,8 +98,9 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="flex">
-    <Card class="w-4/12 p-6 flex justify-center">
+  <div class="">
+    <Heading title="Feedback" description="Add your feedback below" />
+    <Card class="w-6/12 mx-auto p-6 mt-6 mb-6 flex justify-center">
       <AutoForm
         class="w-full space-y-6"
         :schema="schema"
@@ -113,7 +114,7 @@ onUnmounted(() => {
         <Button type="submit"> Submit </Button>
       </AutoForm>
     </Card>
-    <Card class="w-8/12 p-6 ml-4">
+    <Card class="w-12/12 p-6">
       <Table v-if="feedbackList">
         <TableHeader>
           <TableRow>
