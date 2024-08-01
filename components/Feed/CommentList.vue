@@ -1,6 +1,8 @@
 <script setup>
 const props = defineProps({
-  post: Object,
+  comments: Object,
+  profiles: Object,
+  postId: String,
 });
 
 import { useTimeAgo } from "@vueuse/core";
@@ -12,37 +14,37 @@ const supabaseUser = useSupabaseUser();
 const content = ref();
 const uploads = ref([]);
 const isUploading = ref(false);
-const comments = ref([]);
+const comments = ref(props.comments);
 
 let realtimeChannel = RealtimeChannel;
 
 // Fetch collaborators and get the refresh method provided by useAsyncData
-const { data, refresh: refreshComments } = await useAsyncData(
-  "comments",
-  async () => {
-    try {
-      const { data, error } = await supabase
-        .from("posts")
-        .select(`*,profiles(*)`)
-        .eq("parent", props.post.id)
-        .order("created_at", { ascending: true });
-      comments.value = data;
-      if (error) throw error;
-    } catch (error) {
-      alert(error.message);
-    } finally {
-    }
-  }
-);
+// const { data, refresh: refreshComments } = await useAsyncData(
+//   "comments",
+//   async () => {
+//     try {
+//       const { data, error } = await supabase
+//         .from("post_comments")
+//         .select(`*,profiles(*)`)
+//         .eq("parent", props.post.id)
+//         .order("created_at", { ascending: true });
+//       comments.value = data;
+//       if (error) throw error;
+//     } catch (error) {
+//       alert(error.message);
+//     } finally {
+//     }
+//   }
+// );
 
 const postComment = async () => {
   const { data } = await supabase
-    .from("posts")
+    .from("post_comments")
     .insert({
       user_id: supabaseUser.value.id,
       content: content.value,
       photos: uploads.value,
-      parent: props.post.id,
+      parent: props.postId,
     })
     .select();
 
@@ -70,7 +72,7 @@ const postComment = async () => {
 </script>
 <template>
   <div>
-    <div v-if="comments.length > 0">
+    <div v-if="props.comments.length > 0">
       <div class="flex w-full border-t border-gray-100">
         <div class="mt-3 mx-5 flex flex-row text-xs">
           <div
@@ -95,8 +97,8 @@ const postComment = async () => {
     /> -->
 
       <!-- comment listing section -->
-      <div v-for="(comment, i) in comments" :key="`comment${i}`">
-        <FeedComment :comment="comment" />
+      <div v-for="(comment, i) in props.comments" :key="`comment${i}`">
+        <FeedComment :comment="comment" :profiles="profiles" />
       </div>
     </div>
     <div v-else></div>

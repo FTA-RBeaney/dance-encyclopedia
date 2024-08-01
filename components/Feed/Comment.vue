@@ -2,6 +2,7 @@
 import { useTimeAgo } from "@vueuse/core";
 const props = defineProps({
   comment: Object,
+  profiles: Object,
 });
 
 const timeAgo = useTimeAgo(props.comment.created_at);
@@ -11,12 +12,12 @@ const timeAgo = useTimeAgo(props.comment.created_at);
   <div class="text-black p-4 antialiased flex">
     <img
       class="rounded-full h-8 w-8 mr-2 mt-1"
-      :src="props.comment.profiles.avatar_url"
+      :src="props.profiles.avatar_url"
     />
     <div>
       <div class="bg-gray-100 rounded-lg px-4 pt-2 pb-2.5">
         <div class="font-semibold text-sm leading-relaxed">
-          {{ props.comment.profiles.first_name }}
+          {{ props.profiles.first_name }}
         </div>
         <div class="text-xs leading-snug md:leading-normal">
           {{ props.comment.content }}

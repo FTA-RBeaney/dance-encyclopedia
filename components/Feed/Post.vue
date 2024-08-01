@@ -7,7 +7,7 @@ import { useTimeAgo } from "@vueuse/core";
 import { ThumbsUp, Trash2 } from "lucide-vue-next";
 import { RealtimeChannel } from "@supabase/supabase-js";
 
-let realtimeChannel = RealtimeChannel;
+// let realtimeChannel = RealtimeChannel;
 
 const supabase = useSupabaseClient();
 const supabaseUser = useSupabaseUser();
@@ -17,6 +17,8 @@ const totalLikes = ref();
 const limit = ref(5);
 const likes = ref([]);
 
+const numberOfLikes = computed(() => likes.value.length);
+
 const computedObj = computed(() =>
   limit.value ? totalLikes.value.slice(0, limit.value) : totalLikes.value
 );
@@ -25,6 +27,8 @@ const timeAgo = useTimeAgo(props.post.created_at);
 
 const postId = props.post.id;
 const favouriteId = supabaseUser.value.id + postId;
+
+const isLikedByMe = ref(false);
 
 const likeThisPost = async () => {
   try {
@@ -36,7 +40,7 @@ const likeThisPost = async () => {
         post_id: postId,
       })
       .select();
-
+    isLikedByMe.value = true;
     if (error) {
       console.log(`${error.details} ${error.message}`);
       throw error;
@@ -44,32 +48,8 @@ const likeThisPost = async () => {
   } catch (error) {
     console.log("error", error);
     alert(error.message);
-  } finally {
   }
 };
-
-const {
-  data: numberOfLikes,
-  status,
-  refresh: refreshLikes,
-} = await useAsyncData("likes", async () => {
-  try {
-    const { data, error } = await supabase
-      .from("likes")
-      .select(`*,profiles(*)`)
-      .eq("post_id", postId);
-
-    likes.value = data;
-    if (error) throw error;
-  } catch (error) {
-    alert(error.message);
-  } finally {
-  }
-});
-
-const isLikedByMe = !!likes.value.find(
-  (like) => like.user_id === supabaseUser.value.id
-);
 
 const deletePost = async (id) => {
   try {
@@ -78,12 +58,33 @@ const deletePost = async (id) => {
     if (error) throw error;
   } catch (error) {
     alert(error.message);
-  } finally {
   }
 };
 
-onMounted(() => {
-  realtimeChannel = supabase.channel("public:likes").on(
+onMounted(async () => {
+  const { data, refresh } = await useAsyncData("likes", async () => {
+    console.log("we refresh");
+    try {
+      console.log("now we trye");
+      const { data, error } = await supabase
+        .from("likes")
+        .select(`*,profiles(*)`)
+        .eq("post_id", props.post.id);
+
+      console.log("data", data);
+      likes.value = data;
+
+      console.log("num likes", likes.value);
+      isLikedByMe.value = !!likes.value.find(
+        (like) => like.user_id === supabaseUser.value.id
+      );
+      if (error) throw error;
+    } catch (error) {
+      alert(error.message);
+    }
+  });
+
+  const realtimeChannel = supabase.channel(`likes${props.post.id}`).on(
     "postgres_changes",
     {
       event: "*",
@@ -91,8 +92,10 @@ onMounted(() => {
       table: "likes",
     },
 
-    () => {
-      refreshLikes();
+    (payload) => {
+      console.log("new", payload.new);
+      console.log("old", payload.old);
+      refresh();
     }
   );
   realtimeChannel.subscribe();
@@ -164,7 +167,7 @@ onUnmounted(() => {
     <div class="border-b border-gray-100"></div>
     <div class="text-gray-400 font-medium text-sm mb-7 mt-6 mx-3 px-2">
       <div class="text-black text-sm mb-6 mx-3">
-        <slot />
+        {{ props.post.content }}
       </div>
       <div v-if="props?.post?.photos?.length > 0" class="flex gap-2">
         <div
@@ -188,7 +191,7 @@ onUnmounted(() => {
             class="w-4 h-4 mr-2"
             :class="isLikedByMe && 'stroke-black fill-black'"
           />
-          {{ likes?.length }}
+          {{ numberOfLikes }}
         </Button>
         <div v-if="likes?.length > 0">
           <img
@@ -201,6 +204,10 @@ onUnmounted(() => {
         </div>
       </div>
     </div>
-    <FeedCommentList :post="props.post" />
+    <FeedCommentList
+      :profiles="props.post.profiles"
+      :comments="props.post.post_comments"
+      :postId="props.post.id"
+    />
   </Card>
 </template>

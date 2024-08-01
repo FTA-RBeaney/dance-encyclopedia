@@ -26,26 +26,17 @@ const createPost = async (post) => {
   content.value = "";
   uploads.value = [];
 
-  refreshKey.value += 1;
+  // refreshKey.value += 1;
   // reloadNuxtApp();
 };
 
-onMounted(() => {
-  // Real time listener for new workouts
-  realtimeChannel = supabase
-    .channel("public:posts")
-    .on(
-      "postgres_changes",
-      { event: "*", schema: "public", table: "posts" },
-      () => (refreshKey.value += 1)
-    );
+const showHideSpinner = ref(true);
 
-  realtimeChannel.subscribe();
+onBeforeMount(() => {
+  showHideSpinner.value = true;
 });
-
-// Don't forget to unsubscribe when user left the page
-onUnmounted(() => {
-  supabase.removeChannel(realtimeChannel);
+onMounted(() => {
+  showHideSpinner.value = false;
 });
 </script>
 
@@ -57,6 +48,7 @@ onUnmounted(() => {
       :uploads="uploads"
     />
 
-    <FeedList :key="refreshKey" />
+    <LoadingCircle v-if="showHideSpinner" />
+    <FeedList v-else :key="refreshKey" />
   </div>
 </template>

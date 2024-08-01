@@ -6,15 +6,11 @@ const supabase = useSupabaseClient();
 const posts = ref([]);
 
 // Fetch collaborators and get the refresh method provided by useAsyncData
-const {
-  data,
-  status,
-  refresh: refreshPosts,
-} = await useAsyncData("posts", async () => {
+const { data, refresh } = await useAsyncData("posts", async () => {
   try {
     const { data, error } = await supabase
       .from("posts")
-      .select(`*,profiles(*)`)
+      .select(`*,profiles(*),post_comments(*)`)
       .is("parent", null)
       .order("created_at", { ascending: false });
     posts.value = data;
@@ -44,19 +40,42 @@ const {
 // onUnmounted(() => {
 //   supabase.removeChannel(realtimeChannel);
 // });
+
+onMounted(() => {
+  // Real time listener for new workouts
+  realtimeChannel = supabase
+    .channel("public:posts")
+    .on(
+      "postgres_changes",
+      { event: "*", schema: "public", table: "posts" },
+      () => reloadNuxtApp()
+    )
+    .on(
+      "postgres_changes",
+      {
+        event: "*",
+        schema: "public",
+        table: "post_comments",
+      },
+
+      () => refresh()
+    );
+
+  realtimeChannel.subscribe();
+});
+
+// Don't forget to unsubscribe when user left the page
+onUnmounted(() => {
+  supabase.removeChannel(realtimeChannel);
+});
 </script>
 
 <template>
-  <div v-if="status === 'pending'">
-    {{ status }}
+  <div>
+    <div v-for="(post, i) in posts" :key="`post${i}`">
+      <FeedPost :post="post" />
+    </div>
   </div>
-  <TransitionGroup name="list" tag="ul" v-else>
-    <li v-for="(post, i) in posts" :key="`post${i}`">
-      <FeedPost :post="post">
-        {{ post.content }}
-      </FeedPost>
-    </li>
-  </TransitionGroup>
 </template>
 
 <style scoped>
