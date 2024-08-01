@@ -18,6 +18,15 @@
     <TableCell class="font-medium">
       {{ createDate(item.created_at) }}
     </TableCell>
+    <TableCell>
+      <div class="flex items-center">
+        <div
+          class="bg-green-400 rounded-full w-2 h-2 animate-pulse mr-2"
+          :class="statusClass"
+        ></div>
+        {{ item.status }}
+      </div>
+    </TableCell>
   </TableRow>
   <Transition>
     <TableRow v-if="isExpanded">
@@ -46,6 +55,50 @@ const createDate = (createdeAt) =>
 const toggleExpanded = () => {
   isExpanded.value = !isExpanded.value;
 };
+
+const statuses = [
+  {
+    value: "backlog",
+    label: "Backlog",
+    class: "bg-green-400",
+    // icon: h(QuestionMarkCircledIcon),
+  },
+  {
+    value: "not started",
+    label: "Not started",
+    class: "bg-red-400",
+  },
+  {
+    value: "todo",
+    label: "Todo",
+    class: "bg-green-400",
+    // icon: h(CircleIcon),
+  },
+  {
+    value: "in progress",
+    label: "In progress",
+    class: "bg-yellow-400",
+    // icon: h(StopwatchIcon),
+  },
+  {
+    value: "done",
+    label: "Done",
+    class: "bg-green-400",
+    // icon: h(CheckCircledIcon),
+  },
+  {
+    value: "canceled",
+    label: "Canceled",
+    class: "bg-green-400",
+    // icon: h(CrossCircledIcon),
+  },
+];
+
+const status = statuses.find((status) => status.label === item.status);
+const statusIcon = status.class;
+const statusClass = status.class;
+
+console.log(status);
 </script>
 
 <style scoped>

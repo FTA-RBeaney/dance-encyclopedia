@@ -100,37 +100,45 @@ onUnmounted(() => {
 <template>
   <div class="">
     <Heading title="Feedback" description="Add your feedback below" />
-    <Card class="w-6/12 mx-auto p-6 mt-6 mb-6 flex justify-center">
-      <AutoForm
-        class="w-full space-y-6"
-        :schema="schema"
-        :field-config="{
-          feedbackDescription: {
-            component: 'textarea',
-          },
-        }"
-        @submit="onSubmit"
+    <div class="xl:flex xl:items-start mt-6">
+      <Card
+        class="xl:w-4/12 mx-auto xl:mx-0 xl:mr-6 xl:mb-0 p-6 mb-6 flex justify-center"
       >
-        <Button type="submit"> Submit </Button>
-      </AutoForm>
-    </Card>
-    <Card class="w-12/12 p-6">
-      <Table v-if="feedbackList">
-        <TableHeader>
-          <TableRow>
-            <TableHead class="font-bold"> Bug </TableHead>
-            <TableHead class="font-bold"> Created by </TableHead>
-            <TableHead class="font-bold"> Created at</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          <template v-for="(item, index) in feedbackList" :key="`item${index}`">
-            <FeedbackRow :item="item" />
-          </template>
-        </TableBody>
-      </Table>
-      <p v-else>No bugs yet!</p>
-    </Card>
-    <Toaster />
+        <AutoForm
+          class="w-full space-y-6"
+          :schema="schema"
+          :field-config="{
+            feedbackDescription: {
+              component: 'textarea',
+            },
+          }"
+          @submit="onSubmit"
+        >
+          <Button type="submit"> Submit </Button>
+        </AutoForm>
+      </Card>
+      <Card class="xl:w-8/12 max-w-screen-lg mx-auto xl:mx-0 p-6">
+        <Table v-if="feedbackList">
+          <TableHeader>
+            <TableRow>
+              <TableHead class="font-bold"> Bug </TableHead>
+              <TableHead class="font-bold"> Created by </TableHead>
+              <TableHead class="font-bold"> Created at</TableHead>
+              <TableHead class="font-bold"> Status</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            <template
+              v-for="(item, index) in feedbackList"
+              :key="`item${index}`"
+            >
+              <FeedbackRow :item="item" />
+            </template>
+          </TableBody>
+        </Table>
+        <p v-else>No bugs yet!</p>
+      </Card>
+      <Toaster />
+    </div>
   </div>
 </template>
