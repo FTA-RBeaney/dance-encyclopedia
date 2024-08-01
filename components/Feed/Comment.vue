@@ -1,4 +1,6 @@
 <script setup>
+const supabaseUser = useSupabaseUser();
+const supabase = useSupabaseClient();
 import { useTimeAgo } from "@vueuse/core";
 const props = defineProps({
   comment: Object,
@@ -6,21 +8,28 @@ const props = defineProps({
 });
 
 const timeAgo = useTimeAgo(props.comment.created_at);
+
+const { data, error } = await supabase
+  .from("post_comments")
+  .select(`*,profiles(*)`)
+  .eq("id", props.comment.id);
+
+console.log(data);
 </script>
 <template>
   <!-- comment listing section -->
   <div class="text-black p-4 antialiased flex">
     <img
       class="rounded-full h-8 w-8 mr-2 mt-1"
-      :src="props.profiles.avatar_url"
+      :src="data[0].profiles.avatar_url"
     />
     <div>
       <div class="bg-gray-100 rounded-lg px-4 pt-2 pb-2.5">
         <div class="font-semibold text-sm leading-relaxed">
-          {{ props.profiles.first_name }}
+          {{ data[0].profiles.first_name }}
         </div>
         <div class="text-xs leading-snug md:leading-normal">
-          {{ props.comment.content }}
+          {{ data[0].content }}
         </div>
       </div>
       <div class="text-xs mt-1 text-gray-500">
