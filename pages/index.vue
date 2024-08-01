@@ -7,6 +7,8 @@ definePageMeta({
   layout: "homepage",
 });
 
+import { Coffee } from "lucide-vue-next";
+
 const supabaseUser = useSupabaseUser();
 const supabase = useSupabaseClient();
 
@@ -45,15 +47,27 @@ onMounted(async () => {
               class="flex container justify-between mt-8 max-w-screen-md mx-auto"
             >
               <div>
-                <Card class="p-4">
-                  <p>
+                <Card class="p-4 flex flex-col justify-center">
+                  <p class="mb-4">
                     Thanks for checking out the site. This is a work in
                     progress, so some things may not work and there may be bugs.
                     If you find anything or think of anything you'd like to see
                     on this site then feel free to let me know by clicking on
                     'Add feedback/bug' in the navigation bar above and leaving a
-                    note!
+                    note.
                   </p>
+                  <p>
+                    And if you like what I'm doing here and want to support me,
+                    then feel free to buy me a coffee!
+                  </p>
+                  <Button as-child>
+                    <a
+                      class="mx-auto flex-inline text-center mt-4"
+                      href="https://www.buymeacoffee.com/ftarob"
+                      target="_blank"
+                      ><Coffee class="w-4 h-4 mr-2" />Buy me a coffee</a
+                    >
+                  </Button>
                 </Card>
               </div>
             </div>
