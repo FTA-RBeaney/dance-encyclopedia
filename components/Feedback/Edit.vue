@@ -70,9 +70,9 @@ const onSubmit = async (username) => {
       </DialogTrigger>
       <DialogContent class="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Edit profile</DialogTitle>
+          <DialogTitle>Edit feedback</DialogTitle>
           <DialogDescription>
-            Make changes to your profile here. Click save when you're done.
+            Make changes to your feedback here. Click save when you're done.
           </DialogDescription>
         </DialogHeader>
 
@@ -91,15 +91,12 @@ const onSubmit = async (username) => {
                   v-model="username"
                 />
               </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
               <FormMessage />
             </FormItem>
           </FormField>
 
           <DialogFooter>
-            <Button type="submit"> Save changes </Button>
+            <Button type="submit" class="mt-4"> Save changes </Button>
           </DialogFooter>
         </form>
       </DialogContent>

@@ -9,13 +9,6 @@ const supabaseUser = useSupabaseUser();
 const feedbackList = ref([]);
 const isOpen = ref(false);
 
-const getFeedback = async () => {
-  const { data: feedback } = await supabase
-    .from("feedback")
-    .select("*", { count: "exact" });
-
-  feedbackList.value = feedback;
-};
 const schema = z.object({
   typeOfFeedback: z.nativeEnum([
     "🐛 Bug",
@@ -73,28 +66,6 @@ const onSubmit = async (values) => {
     console.log("EXISTS", error);
   }
 };
-
-const channel = supabase
-  .channel("public:feedback")
-  .on(
-    "postgres_changes",
-    {
-      event: "*",
-      schema: "public",
-      table: "feedback",
-    },
-
-    (payload) => getFeedback()
-  )
-  .subscribe();
-
-await getFeedback();
-
-const getIsExpanded = ref(true);
-
-onUnmounted(() => {
-  supabase.removeChannel(channel);
-});
 </script>
 
 <template>
@@ -103,11 +74,6 @@ onUnmounted(() => {
       <DialogTrigger as-child>
         <Button class="relative"
           ><MessageSquare class="w-4 h-4 mr-2" /> Add feedback/bug
-          <div
-            class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -end-2 dark:border-gray-900"
-          >
-            {{ feedbackList.length }}
-          </div>
         </Button>
       </DialogTrigger>
       <DialogContent class="sm:max-w-[425px]">

@@ -27,6 +27,11 @@
         <NuxtLink v-if="isAdmin" to="/add-feedback">
           <Button class="relative"
             ><Bug class="w-4 h-4 mr-2" /> View feedback
+            <div
+              class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -end-2 dark:border-gray-900"
+            >
+              {{ feedbackList.length }}
+            </div>
           </Button>
         </NuxtLink>
       </div>
@@ -53,6 +58,9 @@
 import { Bug } from "lucide-vue-next";
 const supabaseUser = useSupabaseUser();
 const supabase = useSupabaseClient();
+
+const feedbackList = ref([]);
+
 const { data: isAdmin, error } = await supabase
   .from("profiles")
   .select("is_admin")
@@ -60,4 +68,32 @@ const { data: isAdmin, error } = await supabase
 
 const avatar = computed(() => supabaseUser?.value.user_metadata.avatar_url);
 const fullName = computed(() => supabaseUser?.value.user_metadata.full_name);
+
+const getFeedback = async () => {
+  const { data: feedback } = await supabase
+    .from("feedback")
+    .select("*", { count: "exact" });
+
+  feedbackList.value = feedback;
+};
+
+const channel = supabase
+  .channel("public:feedback")
+  .on(
+    "postgres_changes",
+    {
+      event: "*",
+      schema: "public",
+      table: "feedback",
+    },
+
+    (payload) => getFeedback()
+  )
+  .subscribe();
+
+await getFeedback();
+
+onUnmounted(() => {
+  supabase.removeChannel(channel);
+});
 </script>

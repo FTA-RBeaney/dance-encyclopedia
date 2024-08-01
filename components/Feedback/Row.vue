@@ -35,7 +35,7 @@
     <TableRow v-if="isExpanded">
       <TableCell colspan="3">
         <div class="flex-1 whitespace-pre-wrap p-2 text-sm">
-          {{ item.feedback }}
+          {{ item.feedback.value }}
         </div>
       </TableCell>
     </TableRow>
