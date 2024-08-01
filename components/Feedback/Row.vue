@@ -1,22 +1,22 @@
 <template>
-  <TableRow @click="toggleExpanded">
-    <TableCell class="font-medium">
+  <TableRow>
+    <TableCell @click="toggleExpanded" class="font-medium cursor-pointer">
       <Badge variant="outline" class="rounded-sm mr-1">
-        {{ item.type }}
+        {{ item.type.value }}
       </Badge>
-      {{ item.feedback_title }}
+      {{ item.feedback_title.value }}
     </TableCell>
     <TableCell>
       <img
-        v-if="item?.profiles.avatar_url"
+        v-if="item?.profiles.value.avatar_url"
         class="w-8 h-8 mr-2 rounded-full inline-flex items-center justify-center bg-gray-200 text-gray-400 object-cover object-left-top"
-        :src="item?.profiles.avatar_url"
+        :src="item?.profiles.value.avatar_url"
         alt="Rounded avatar"
       />
-      {{ item?.profiles.first_name }}
+      {{ item?.profiles.value.first_name }}
     </TableCell>
     <TableCell class="font-medium">
-      {{ createDate(item.created_at) }}
+      {{ createDate(item.created_at.value) }}
     </TableCell>
     <TableCell>
       <div class="flex items-center">
@@ -24,8 +24,11 @@
           class="bg-green-400 rounded-full w-2 h-2 animate-pulse mr-2"
           :class="statusClass"
         ></div>
-        {{ item.status }}
+        {{ item.status.value }}
       </div>
+    </TableCell>
+    <TableCell>
+      <FeedbackEdit :feedback="item" />
     </TableCell>
   </TableRow>
   <Transition>
@@ -44,7 +47,7 @@ const props = defineProps({
   item: Object,
 });
 
-const { item } = props;
+const item = toRefs(props.item);
 const isExpanded = ref(false);
 
 const createDate = (createdeAt) =>
@@ -94,11 +97,9 @@ const statuses = [
   },
 ];
 
-const status = statuses.find((status) => status.label === item.status);
+const status = statuses.find((status) => status.label === item.status.value);
 const statusIcon = status.class;
 const statusClass = status.class;
-
-console.log(status);
 </script>
 
 <style scoped>

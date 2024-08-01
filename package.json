@@ -40,6 +40,7 @@
     "vee-validate": "^4.13.2",
     "vidstack": "^1.11.30",
     "vue-instantsearch": "^4.17.5",
+    "vue-sonner": "^1.1.4",
     "wiky.js": "^0.0.1",
     "youtube-video-element": "^1.1.6",
     "zod": "^3.23.8"

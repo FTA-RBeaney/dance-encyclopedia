@@ -44,7 +44,6 @@ const schema = z.object({
 
 const onSubmit = async (values) => {
   try {
-    console.log(values);
     const { data, error } = await supabase
       .from("feedback")
       .upsert({
