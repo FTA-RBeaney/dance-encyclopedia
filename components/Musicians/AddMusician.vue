@@ -78,7 +78,6 @@ const addArtist = async (mbid) => {
 
 <template>
   <div>
-    <Toaster />
     <UseTemplate>
       <form
         @submit.prevent="addArtist(mbid)"

@@ -60,7 +60,6 @@
         <Button type="submit"> Submit </Button>
       </div>
     </form>
-    <Toaster />
   </div>
 </template>
 

@@ -6,14 +6,31 @@ const supabase = useSupabaseClient();
 const supabaseUser = useSupabaseUser();
 
 const feedbackList = ref([]);
+const doneList = ref([]);
 
-const getFeedback = async () => {
+const route = useRoute();
+
+let channel;
+
+try {
   const { data } = await supabase
     .from("feedback")
     .select(`*,profiles(*)`)
+    .neq("feedback_status", "done")
     .order("created_at");
+
+  const { data: done } = await supabase
+    .from("feedback")
+    .select(`*,profiles(*)`)
+    .eq("feedback_status", "done")
+    .order("created_at");
+
   feedbackList.value = data;
-};
+  doneList.value = done;
+} catch (error) {
+  alert(error.message);
+} finally {
+}
 
 const schema = z.object({
   typeOfFeedback: z.nativeEnum([
@@ -66,30 +83,27 @@ const onSubmit = async (values) => {
         description: "Your feedback has been received.",
         variant: "success",
       });
-      getFeedback();
     }
   } catch (error) {
     console.log("EXISTS", error);
   }
 };
 
-const channel = supabase
-  .channel("public:feedback")
-  .on(
-    "postgres_changes",
-    {
-      event: "*",
-      schema: "public",
-      table: "feedback",
-    },
+onMounted(() => {
+  channel = supabase
+    .channel("public:feedback")
+    .on(
+      "postgres_changes",
+      {
+        event: "*",
+        schema: "public",
+        table: "feedback",
+      },
 
-    (payload) => getFeedback()
-  )
-  .subscribe();
-
-await getFeedback();
-
-const getIsExpanded = ref(true);
+      () => location.reload()
+    )
+    .subscribe();
+});
 
 onUnmounted(() => {
   supabase.removeChannel(channel);
@@ -97,7 +111,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="">
+  <div>
     <Heading title="Feedback" description="Add your feedback below" />
     <div class="xl:flex xl:items-start mt-6">
       <Card
@@ -116,28 +130,50 @@ onUnmounted(() => {
           <Button type="submit"> Submit </Button>
         </AutoForm>
       </Card>
-      <Card class="xl:w-8/12 max-w-screen-lg mx-auto xl:mx-0 p-6">
-        <Table v-if="feedbackList">
-          <TableHeader>
-            <TableRow>
-              <TableHead class="font-bold"> Bug </TableHead>
-              <TableHead class="font-bold"> Created by </TableHead>
-              <TableHead class="font-bold"> Created at</TableHead>
-              <TableHead class="font-bold"> Status</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            <template
-              v-for="(item, index) in feedbackList"
-              :key="`item${index}`"
-            >
-              <FeedbackRow :item="item" />
-            </template>
-          </TableBody>
-        </Table>
-        <p v-else>No bugs yet!</p>
-      </Card>
-      <Toaster />
+      <div class="xl:w-8/12 max-w-screen-lg mx-auto xl:mx-0">
+        <p class="py-2 text-lg font-semibold">To Do</p>
+        <Card class="p-6">
+          <Table v-if="feedbackList">
+            <TableHeader>
+              <TableRow>
+                <TableHead class="font-bold"> Bug </TableHead>
+                <TableHead class="font-bold"> Created by </TableHead>
+                <TableHead class="font-bold"> Created at</TableHead>
+                <TableHead class="font-bold"> Status</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <FeedbackRow
+                :item="item"
+                v-for="(item, index) in feedbackList"
+                :key="`item${index}`"
+              />
+            </TableBody>
+          </Table>
+          <p v-else>No bugs yet!</p>
+        </Card>
+        <p class="py-2 text-lg font-semibold mt-6">Done</p>
+        <Card class="p-6">
+          <Table v-if="feedbackList">
+            <TableHeader>
+              <TableRow>
+                <TableHead class="font-bold"> Bug </TableHead>
+                <TableHead class="font-bold"> Created by </TableHead>
+                <TableHead class="font-bold"> Created at</TableHead>
+                <TableHead class="font-bold"> Status</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <FeedbackRow
+                :item="item"
+                v-for="(item, index) in doneList"
+                :key="`item${index}`"
+              />
+            </TableBody>
+          </Table>
+          <p v-else>No bugs yet!</p>
+        </Card>
+      </div>
     </div>
   </div>
 </template>

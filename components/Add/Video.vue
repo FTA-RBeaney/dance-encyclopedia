@@ -66,7 +66,6 @@ const addVideo = async (url) => {
 
 <template>
   <div>
-    <Toaster />
     <UseTemplate>
       <form @submit.prevent="addVideo(url)" class="grid items-start gap-4 px-4">
         <div class="grid gap-2">

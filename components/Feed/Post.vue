@@ -70,11 +70,7 @@ onMounted(async () => {
         .from("likes")
         .select(`*,profiles(*)`)
         .eq("post_id", props.post.id);
-
-      console.log("data", data);
       likes.value = data;
-
-      console.log("num likes", likes.value);
       isLikedByMe.value = !!likes.value.find(
         (like) => like.user_id === supabaseUser.value.id
       );

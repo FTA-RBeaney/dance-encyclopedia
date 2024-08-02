@@ -22,8 +22,8 @@ const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
 const formSchema = toTypedSchema(
   z.object({
-    username: z.string().min(2).max(50).optional(),
-    feedback_status: z.string().optional(),
+    username: z.string().min(2).max(50).default(username.value),
+    feedback_status: z.string().default(feedback_status.value),
   })
 );
 
@@ -54,7 +54,7 @@ const onSubmit = handleSubmit(async (values) => {
       await delay(1000);
     } else {
       toast("Task has been updated", {
-        description: username,
+        description: `${props.feedback.id.value}: ${values.username} ${values.feedback_status}`,
       });
       isOpen.value = false;
       await delay(1000);
@@ -89,7 +89,6 @@ const onSubmit = handleSubmit(async (values) => {
                   placeholder="shadcn"
                   v-bind="componentField"
                   v-model="username"
-                  :defaultValue="username.value"
                 />
               </FormControl>
               <FormMessage />
@@ -99,11 +98,7 @@ const onSubmit = handleSubmit(async (values) => {
           <FormField v-slot="{ componentField }" name="feedback_status">
             <FormItem>
               <FormLabel>Status</FormLabel>
-              <Select
-                v-bind="componentField"
-                v-model="feedback_status"
-                :defaultValue="feedback_status.value"
-              >
+              <Select v-bind="componentField" v-model="feedback_status">
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue placeholder="Select status" />
