@@ -19,7 +19,12 @@ const isOpen = ref(false);
 
 const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
-const formSchema = toTypedSchema(z.object({}));
+const formSchema = toTypedSchema(
+  z.object({
+    username: z.string().min(2).max(50).optional(),
+    feedback_status: z.string().optional(),
+  })
+);
 
 const { handleSubmit } = useForm({
   validationSchema: formSchema,
@@ -79,7 +84,7 @@ const onSubmit = handleSubmit(async (values) => {
           </DialogDescription>
         </DialogHeader>
 
-        <form @submit.prevent="onSubmit" :validation-schema="formSchema">
+        <form @submit="onSubmit" :validation-schema="formSchema">
           <FormField v-slot="{ componentField }" name="username">
             <FormItem>
               <FormLabel>Username</FormLabel>
@@ -89,6 +94,7 @@ const onSubmit = handleSubmit(async (values) => {
                   placeholder="shadcn"
                   v-bind="componentField"
                   v-model="username"
+                  :defaultValue="username.value"
                 />
               </FormControl>
               <FormMessage />
@@ -98,7 +104,11 @@ const onSubmit = handleSubmit(async (values) => {
           <FormField v-slot="{ componentField }" name="feedback_status">
             <FormItem>
               <FormLabel>Status</FormLabel>
-              <Select v-bind="componentField" v-model="feedback_status">
+              <Select
+                v-bind="componentField"
+                v-model="feedback_status"
+                :defaultValue="feedback_status.value"
+              >
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue placeholder="Select status" />
@@ -110,7 +120,6 @@ const onSubmit = handleSubmit(async (values) => {
                       <div class="flex items-center">
                         <div
                           class="bg-red-400 rounded-full w-2 h-2 animate-pulse mr-2"
-                          :class="statusClass"
                         ></div>
                         To Do
                       </div></SelectItem
@@ -119,7 +128,6 @@ const onSubmit = handleSubmit(async (values) => {
                       <div class="flex items-center">
                         <div
                           class="bg-yellow-400 rounded-full w-2 h-2 animate-pulse mr-2"
-                          :class="statusClass"
                         ></div>
                         In Progress
                       </div>
@@ -128,7 +136,6 @@ const onSubmit = handleSubmit(async (values) => {
                       <div class="flex items-center">
                         <div
                           class="bg-purple-400 rounded-full w-2 h-2 animate-pulse mr-2"
-                          :class="statusClass"
                         ></div>
                         Testing
                       </div></SelectItem
@@ -137,7 +144,6 @@ const onSubmit = handleSubmit(async (values) => {
                       <div class="flex items-center">
                         <div
                           class="bg-green-400 rounded-full w-2 h-2 animate-pulse mr-2"
-                          :class="statusClass"
                         ></div>
                         Done
                       </div>

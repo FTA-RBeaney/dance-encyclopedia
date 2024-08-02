@@ -90,7 +90,6 @@ const statuses = [
 const feedbackStatus = computed(() =>
   statuses.find((status) => status.value === item.feedback_status.value)
 );
-console.log(feedbackStatus);
 // statusClass.value = feedbackStatus.class;
 </script>
 
