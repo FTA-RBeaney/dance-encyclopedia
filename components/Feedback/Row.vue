@@ -22,9 +22,9 @@
       <div class="flex items-center">
         <div
           class="bg-green-400 rounded-full w-2 h-2 animate-pulse mr-2"
-          :class="statusClass"
+          :class="feedbackStatus.class"
         ></div>
-        {{ item.status.value }}
+        {{ feedbackStatus?.label }}
       </div>
     </TableCell>
     <TableCell>
@@ -49,6 +49,7 @@ const props = defineProps({
 
 const item = toRefs(props.item);
 const isExpanded = ref(false);
+const statusClass = ref();
 
 const createDate = (createdeAt) =>
   new Date(createdeAt).toLocaleDateString("en-UK", {
@@ -61,45 +62,36 @@ const toggleExpanded = () => {
 
 const statuses = [
   {
-    value: "backlog",
-    label: "Backlog",
-    class: "bg-green-400",
+    value: "to do",
+    label: "To Do",
+    class: "bg-red-400",
     // icon: h(QuestionMarkCircledIcon),
   },
   {
-    value: "not started",
-    label: "Not started",
-    class: "bg-red-400",
-  },
-  {
-    value: "todo",
-    label: "Todo",
-    class: "bg-green-400",
-    // icon: h(CircleIcon),
-  },
-  {
     value: "in progress",
-    label: "In progress",
+    label: "In Progress",
     class: "bg-yellow-400",
     // icon: h(StopwatchIcon),
   },
+  {
+    value: "testing",
+    label: "Testing",
+    class: "bg-purple-400",
+  },
+
   {
     value: "done",
     label: "Done",
     class: "bg-green-400",
     // icon: h(CheckCircledIcon),
   },
-  {
-    value: "canceled",
-    label: "Canceled",
-    class: "bg-green-400",
-    // icon: h(CrossCircledIcon),
-  },
 ];
 
-const status = statuses.find((status) => status.label === item.status.value);
-const statusIcon = status.class;
-const statusClass = status.class;
+const feedbackStatus = computed(() =>
+  statuses.find((status) => status.value === item.feedback_status.value)
+);
+console.log(feedbackStatus);
+// statusClass.value = feedbackStatus.class;
 </script>
 
 <style scoped>
