@@ -22,6 +22,7 @@ console.log(data);
     <img
       class="rounded-md h-8 w-8 mr-2 mt-1"
       :src="data[0].profiles.avatar_url"
+      :alt="data[0].profiles.first_name"
     />
     <div>
       <div class="bg-gray-100 rounded-lg px-4 pt-2 pb-2.5">

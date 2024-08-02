@@ -18,25 +18,6 @@ const comments = ref(props.comments);
 
 let realtimeChannel = RealtimeChannel;
 
-// Fetch collaborators and get the refresh method provided by useAsyncData
-// const { data, refresh: refreshComments } = await useAsyncData(
-//   "comments",
-//   async () => {
-//     try {
-//       const { data, error } = await supabase
-//         .from("post_comments")
-//         .select(`*,profiles(*)`)
-//         .eq("parent", props.post.id)
-//         .order("created_at", { ascending: true });
-//       comments.value = data;
-//       if (error) throw error;
-//     } catch (error) {
-//       alert(error.message);
-//     } finally {
-//     }
-//   }
-// );
-
 const postComment = async () => {
   const { data } = await supabase
     .from("post_comments")
@@ -51,24 +32,6 @@ const postComment = async () => {
   content.value = "";
   uploads.value = [];
 };
-
-// onMounted(() => {
-//   realtimeChannel = supabase.channel("public:posts").on(
-//     "postgres_changes",
-//     {
-//       event: "*",
-//       schema: "public",
-//       table: "posts",
-//     },
-
-//     () => refreshComments()
-//   );
-//   realtimeChannel.subscribe();
-// });
-
-// onUnmounted(() => {
-//   supabase.removeChannel(realtimeChannel);
-// });
 </script>
 <template>
   <div>
@@ -89,20 +52,11 @@ const postComment = async () => {
         </div>
       </div> -->
       </div>
-      <!-- 
-    <FeedComment
-      v-for="(comment, i) in allComments"
-      :key="`comment${i}`"
-      :comment="comment"
-    /> -->
-
-      <!-- comment listing section -->
       <div v-for="(comment, i) in props.comments" :key="`comment${i}`">
         <FeedComment :comment="comment" :profiles="profiles" />
       </div>
     </div>
     <div v-else></div>
-    <!-- add comment section -->
     <div
       class="relative flex items-center self-center w-full max-w-xl p-4 overflow-hidden text-gray-600 focus-within:text-gray-400"
     >

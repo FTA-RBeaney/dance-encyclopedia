@@ -5,7 +5,7 @@
     </div>
     <div class="border-t">
       <div class="bg-background">
-        <div class="lg:grid lg:grid-cols-6 max-w-screen-2xl min-h-screen">
+        <div class="lg:grid lg:grid-cols-6 max-w-screen-3xl min-h-screen">
           <Sidebar class="hidden lg:block" />
           <div
             id="main-content"

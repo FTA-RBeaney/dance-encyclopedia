@@ -113,7 +113,7 @@ onUnmounted(() => {
         <div class="w-auto h-auto">
           <img
             class="w-12 h-12 object-cover rounded-md shadow cursor-pointer"
-            alt="User avatar"
+            :alt="props.post.profiles.first_name"
             :src="props.post.profiles.avatar_url"
           />
         </div>
@@ -129,7 +129,8 @@ onUnmounted(() => {
           </div>
         </div>
       </div>
-      <DropdownMenu>
+
+      <DropdownMenu v-if="props.post.user_id === supabaseUser.id">
         <DropdownMenuTrigger as-child>
           <Button variant="ghost">
             <button className="text-gray-400 w-8">
@@ -197,9 +198,10 @@ onUnmounted(() => {
           <img
             v-for="(avatar, i) in likes.slice(0, limit)"
             :key="`avatar${i}`"
-            class="inline-block object-cover w-8 h-8 -ml-2 text-white border-2 border-white rounded-full shadow-sm cursor-pointer relative z-10 hover:z-20"
+            class="inline-block object-cover w-8 h-8 text-white border-2 border-white rounded-full shadow-sm cursor-pointer relative z-10 hover:z-20"
+            :class="i > 0 && '-ml-2'"
             :src="avatar.profiles.avatar_url"
-            alt=""
+            :alt="avatar.profiles.first_name"
           />
         </div>
       </div>
