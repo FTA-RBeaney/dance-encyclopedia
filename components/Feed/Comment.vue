@@ -20,7 +20,7 @@ console.log(data);
   <!-- comment listing section -->
   <div class="text-black p-4 antialiased flex">
     <img
-      class="rounded-full h-8 w-8 mr-2 mt-1"
+      class="rounded-md h-8 w-8 mr-2 mt-1"
       :src="data[0].profiles.avatar_url"
     />
     <div>

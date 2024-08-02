@@ -60,7 +60,7 @@ const addPhotos = async (e) => {
       <div class="flex flex-row items-center justify-center px-2 py-3">
         <div class="w-12 h-12 min-w-12 rounded-full">
           <img
-            class="w-full h-full object-cover rounded-full shadow cursor-pointer"
+            class="w-full h-full object-cover rounded-md shadow cursor-pointer"
             alt="User avatar"
             :src="avatar"
           />

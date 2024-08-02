@@ -110,9 +110,9 @@ onUnmounted(() => {
   <Card class="mb-6 p-4">
     <div class="flex flex-row justify-between px-2 py-3 mx-3">
       <div class="flex">
-        <div class="w-auto h-auto rounded-full">
+        <div class="w-auto h-auto">
           <img
-            class="w-12 h-12 object-cover rounded-full shadow cursor-pointer"
+            class="w-12 h-12 object-cover rounded-md shadow cursor-pointer"
             alt="User avatar"
             :src="props.post.profiles.avatar_url"
           />
@@ -122,10 +122,10 @@ onUnmounted(() => {
             {{ props.post.profiles.first_name }}
           </div>
           <div class="flex w-full mt-1">
-            <div class="text-blue-700 font-base text-xs mr-1 cursor-pointer">
+            <!-- <div class="text-blue-700 font-base text-xs mr-1 cursor-pointer">
               SEO
-            </div>
-            <div class="text-gray-400 font-thin text-xs">• {{ timeAgo }}</div>
+            </div> -->
+            <div class="text-gray-400 font-thin text-xs">{{ timeAgo }}</div>
           </div>
         </div>
       </div>
@@ -165,8 +165,8 @@ onUnmounted(() => {
       </DropdownMenu>
     </div>
     <div class="border-b border-gray-100"></div>
-    <div class="text-gray-400 font-medium text-sm mb-7 mt-6 mx-3 px-2">
-      <div class="text-black text-sm mb-6 mx-3">
+    <div class="mb-7 mt-6 mx-3 px-2">
+      <div class="fs-6 fw-normal text-gray-700 text-sm mb-5">
         {{ props.post.content }}
       </div>
       <div v-if="props?.post?.photos?.length > 0" class="flex gap-2">

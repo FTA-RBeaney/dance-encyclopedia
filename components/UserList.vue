@@ -12,7 +12,7 @@
             <div class="flex justify-start items-center">
               <img
                 v-if="user.avatar_url"
-                class="aspect-square object-cover rounded-full w-8 h-8 mr-3"
+                class="aspect-square object-cover rounded-md w-10 h-10 mr-3"
                 :src="user.avatar_url"
                 format="webp"
                 preload
