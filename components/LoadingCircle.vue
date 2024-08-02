@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full min-h-full bg-white absolute z-20">
+  <div class="w-full min-h-full absolute z-20 left-0">
     <div
       role="status"
       class="w-full h-full text-center flex justify-center items-center"

@@ -197,7 +197,7 @@ onUnmounted(() => {
           <img
             v-for="(avatar, i) in likes.slice(0, limit)"
             :key="`avatar${i}`"
-            class="inline-block object-cover w-8 h-8 text-white border-2 border-white rounded-full shadow-sm cursor-pointer"
+            class="inline-block object-cover w-8 h-8 -ml-2 text-white border-2 border-white rounded-full shadow-sm cursor-pointer relative z-10 hover:z-20"
             :src="avatar.profiles.avatar_url"
             alt=""
           />

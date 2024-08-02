@@ -41,7 +41,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="m-6 pb-8">
+  <div class="m-6 xl:pb-8">
     <FeedAddPost
       @create-post="createPost"
       :content="content"

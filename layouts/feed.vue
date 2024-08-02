@@ -11,11 +11,11 @@
             id="main-content"
             class="main-content col-span-3 lg:col-span-3 lg:border-l relative"
           >
-            <div class="max-w-2xl mx-auto">
+            <div class="lg:max-w-2xl mx-auto">
               <slot />
             </div>
           </div>
-          <div class="pr-4 mt-6">
+          <div class="lg:pr-4 m-6 max-w-2xl lg:mx-0">
             <Card class="p-4">
               <UserList class="px-2" />
             </Card>
