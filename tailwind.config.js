@@ -3,7 +3,7 @@ const animate = require("tailwindcss-animate");
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class"],
-  safelist: ["dark", "dark-mode", "rose-mode"],
+  safelist: ["dark", "dark-mode", "rose-mode", "blue-mode"],
   prefix: "",
   variants: {
     extend: {
@@ -25,6 +25,8 @@ module.exports = {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        rose: "346.8 77.2% 49.8%",
+        blue: "221.21 83.19% 53.33%",
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",

@@ -32,6 +32,8 @@ async function userLogout() {
     await navigateTo("/login");
   }
 }
+
+const themeColors = ["default", "dark", "rose", "blue"];
 </script>
 
 <template>
@@ -51,34 +53,48 @@ async function userLogout() {
 
         <hr class="mt-4 mb-8" />
         <p class="py-2 text-lg font-semibold">Theme</p>
-        <div class="my-4 w-96">
-          <Select v-model="colorMode.preference">
-            <SelectTrigger class="w-[180px]">
-              <SelectValue placeholder="Select your theme" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectLabel>Themes</SelectLabel>
-                <SelectItem value="system">System</SelectItem>
-                <SelectItem value="light">Default</SelectItem>
-                <SelectItem value="dark">Dark</SelectItem>
-                <SelectItem value="rose">Rose</SelectItem>
-                <SelectItem value="blue">Blue</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
+        <div class="my-4 w-96 theme-selector">
+          <RadioGroup default-value="option-one" v-model="colorMode.preference">
+            <div class="flex items-center space-x-2">
+              <RadioGroupItem
+                v-for="(themeColor, i) in themeColors"
+                :key="`theme${i}`"
+                :id="themeColor"
+                :value="themeColor"
+                :class="themeColor"
+                class="w-6 h-6 fill-slate-100"
+              />
+            </div>
+          </RadioGroup>
         </div>
       </div>
     </div>
-
-    <p class="pt-2 text-lg font-semibold">Your Favourites</p>
-
-    <FavouritesDataTable
-      v-if="favourites"
-      :columns="columns"
-      :data="favourites"
-      class="mt-4"
-    />
-    <p v-else>No favourites added yet. Come back when you've added some!</p>
   </div>
 </template>
+
+<style lang="scss">
+.theme-selector {
+  .default {
+    border-color: black;
+    background: white;
+  }
+  .dark {
+    background: black;
+  }
+  .blue {
+    background-color: hsla(var(--blue));
+    svg {
+      fill: white;
+      color: white;
+    }
+  }
+  .rose {
+    background-color: hsl(var(--rose));
+
+    svg {
+      fill: white;
+      color: white;
+    }
+  }
+}
+</style>

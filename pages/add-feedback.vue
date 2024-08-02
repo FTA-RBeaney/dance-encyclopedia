@@ -6,9 +6,9 @@ const supabase = useSupabaseClient();
 const supabaseUser = useSupabaseUser();
 
 const feedbackList = ref([]);
+const inProgressList = ref([]);
+const inTestingList = ref([]);
 const doneList = ref([]);
-
-const route = useRoute();
 
 let channel;
 
@@ -16,7 +16,20 @@ try {
   const { data } = await supabase
     .from("feedback")
     .select(`*,profiles(*)`)
-    .neq("feedback_status", "done")
+    .eq("feedback_status", "to do")
+    .order("created_at");
+  feedbackList.value = data;
+
+  const { data: inProgress } = await supabase
+    .from("feedback")
+    .select(`*,profiles(*)`)
+    .eq("feedback_status", "in progress")
+    .order("created_at");
+
+  const { data: testing } = await supabase
+    .from("feedback")
+    .select(`*,profiles(*)`)
+    .eq("feedback_status", "testing")
     .order("created_at");
 
   const { data: done } = await supabase
@@ -25,7 +38,8 @@ try {
     .eq("feedback_status", "done")
     .order("created_at");
 
-  feedbackList.value = data;
+  inProgressList.value = inProgress;
+  inTestingList.value = testing;
   doneList.value = done;
 } catch (error) {
   alert(error.message);
@@ -112,9 +126,9 @@ onUnmounted(() => {
 
 <template>
   <div>
-    <Heading title="Feedback" description="Add your feedback below" />
-    <div class="xl:flex xl:items-start mt-6">
-      <Card
+    <Heading title="Feedback" description="View the feedback so far below" />
+    <div class="mt-6">
+      <!-- <Card
         class="xl:w-4/12 mx-auto xl:mx-0 xl:mr-6 xl:mb-0 p-6 mb-6 flex justify-center"
       >
         <AutoForm
@@ -129,9 +143,13 @@ onUnmounted(() => {
         >
           <Button type="submit"> Submit </Button>
         </AutoForm>
-      </Card>
-      <div class="xl:w-8/12 max-w-screen-lg mx-auto xl:mx-0">
-        <p class="py-2 text-lg font-semibold">To Do</p>
+      </Card> -->
+      <div class="max-w-screen-lg mx-auto xl:mx-0">
+        <FeedbackTable :data="feedbackList" title="To Do" />
+        <FeedbackTable :data="inProgressList" title="In Progress" />
+        <FeedbackTable :data="inTestingList" title="Testing" />
+        <FeedbackTable :data="doneList" title="Done" />
+        <!-- <p class="py-2 text-lg font-semibold">To Do</p>
         <Card class="p-6">
           <Table v-if="feedbackList">
             <TableHeader>
@@ -151,28 +169,7 @@ onUnmounted(() => {
             </TableBody>
           </Table>
           <p v-else>No bugs yet!</p>
-        </Card>
-        <p class="py-2 text-lg font-semibold mt-6">Done</p>
-        <Card class="p-6">
-          <Table v-if="feedbackList">
-            <TableHeader>
-              <TableRow>
-                <TableHead class="font-bold"> Bug </TableHead>
-                <TableHead class="font-bold"> Created by </TableHead>
-                <TableHead class="font-bold"> Created at</TableHead>
-                <TableHead class="font-bold"> Status</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              <FeedbackRow
-                :item="item"
-                v-for="(item, index) in doneList"
-                :key="`item${index}`"
-              />
-            </TableBody>
-          </Table>
-          <p v-else>No bugs yet!</p>
-        </Card>
+        </Card> -->
       </div>
     </div>
   </div>

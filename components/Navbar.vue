@@ -36,7 +36,6 @@
         </NuxtLink>
       </div>
       <nav class="flex flex-row justify-end items-center">
-        <!-- <NuxtLink class="font-medium px-2" to="/about">About Us</NuxtLink> -->
         <NuxtLink v-if="!supabaseUser" class="font-medium px-2" to="/login"
           >Login</NuxtLink
         >
@@ -51,11 +50,8 @@
         </div> -->
         <Sheet>
           <SheetTrigger>
-            <img
-              class="w-10 h-10 rounded-full mr-1"
-              alt="Default avatar"
-              :src="avatar"
-          /></SheetTrigger>
+            <Settings class="mr-2" />
+          </SheetTrigger>
           <SheetContent>
             <SheetHeader>
               <SheetTitle>Profile</SheetTitle>
@@ -64,6 +60,15 @@
             <Account />
           </SheetContent>
         </Sheet>
+        <NuxtLink class="font-medium px-2 mr-2" to="/favourites">
+          <BookHeart />
+        </NuxtLink>
+
+        <img
+          class="w-10 h-10 rounded-full mr-1"
+          alt="Default avatar"
+          :src="avatar"
+        />
       </nav>
     </div>
   </div>
@@ -71,7 +76,7 @@
 
 <script setup>
 const colorMode = useColorMode();
-import { Bug } from "lucide-vue-next";
+import { Bug, Settings, BookHeart } from "lucide-vue-next";
 const supabaseUser = useSupabaseUser();
 const supabase = useSupabaseClient();
 
