@@ -44,7 +44,7 @@ async function userLogout() {
             Your email address is <strong>{{ supabaseUser.email }}</strong>
           </p>
           <div class="flex w-100 mt-2">
-            <Button class="mr-4">Change</Button>
+            <!-- <Button class="mr-4">Change</Button> -->
             <Button type="submit" @click="userLogout"> Sign Out </Button>
           </div>
         </div>
