@@ -5,11 +5,11 @@
     </div>
     <div class="border-t">
       <div class="bg-background">
-        <div class="lg:grid lg:grid-cols-5 min-h-screen">
+        <div class="lg:grid lg:grid-cols-6 max-w-screen-2xl min-h-screen">
           <Sidebar class="hidden lg:block" />
           <div
             id="main-content"
-            class="main-content col-span-4 lg:col-span-4 lg:border-l relative"
+            class="main-content col-span-5 lg:col-span-5 lg:border-l relative"
           >
             <div class="lg:flex xl:max-w-4xl mx-auto">
               <div class="lg:w-8/12">

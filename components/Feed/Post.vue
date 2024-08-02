@@ -166,7 +166,7 @@ onUnmounted(() => {
     </div>
     <div class="border-b border-gray-100"></div>
     <div class="mb-7 mt-6 mx-3 px-2">
-      <div class="fs-6 fw-normal text-gray-700 text-sm mb-5">
+      <div class="fs-6 fw-normal text-primary-700 text-sm mb-5">
         {{ props.post.content }}
       </div>
       <div v-if="props?.post?.photos?.length > 0" class="flex gap-2">
@@ -185,11 +185,11 @@ onUnmounted(() => {
         <Button
           @click="likeThisPost"
           variant="ghost"
-          class="flex items-center bg-white transition ease-out duration-300 hover:text-red-500 px-2 pt-2 text-center cursor-pointer mr-2"
+          class="flex items-center transition ease-out duration-300 hover:text-red-500 px-2 pt-2 text-center cursor-pointer mr-2"
         >
           <ThumbsUp
             class="w-4 h-4 mr-2"
-            :class="isLikedByMe && 'stroke-black fill-black'"
+            :class="isLikedByMe && 'stroke-primary fill-primary'"
           />
           {{ numberOfLikes }}
         </Button>

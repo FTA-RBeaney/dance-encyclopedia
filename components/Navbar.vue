@@ -40,7 +40,7 @@
         <NuxtLink v-if="!supabaseUser" class="font-medium px-2" to="/login"
           >Login</NuxtLink
         >
-        <div v-else class="flex items-center">
+        <!-- <div v-else class="flex items-center">
           <NuxtLink class="font-medium px-2" to="/account">
             <img
               class="w-10 h-10 rounded-full mr-1"
@@ -48,13 +48,29 @@
               :src="avatar"
             />
           </NuxtLink>
-        </div>
+        </div> -->
+        <Sheet>
+          <SheetTrigger>
+            <img
+              class="w-10 h-10 rounded-full mr-1"
+              alt="Default avatar"
+              :src="avatar"
+          /></SheetTrigger>
+          <SheetContent>
+            <SheetHeader>
+              <SheetTitle>Profile</SheetTitle>
+              <SheetDescription> </SheetDescription>
+            </SheetHeader>
+            <Account />
+          </SheetContent>
+        </Sheet>
       </nav>
     </div>
   </div>
 </template>
 
 <script setup>
+const colorMode = useColorMode();
 import { Bug } from "lucide-vue-next";
 const supabaseUser = useSupabaseUser();
 const supabase = useSupabaseClient();

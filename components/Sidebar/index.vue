@@ -123,7 +123,6 @@ const supabase = useSupabaseClient();
           </div>
         </div>
       </div>
-      <SidebarFavourites v-if="supabaseUser" />
     </div>
   </div>
 </template>
