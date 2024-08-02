@@ -4,7 +4,7 @@ const props = defineProps({
 });
 
 import { useTimeAgo } from "@vueuse/core";
-import { ThumbsUp, Trash2 } from "lucide-vue-next";
+import { ThumbsUp, Trash2, MessageSquare } from "lucide-vue-next";
 import { RealtimeChannel } from "@supabase/supabase-js";
 
 let realtimeChannel = RealtimeChannel;
@@ -29,6 +29,11 @@ const postId = props.post.id;
 const favouriteId = supabaseUser.value.id + postId;
 
 const isLikedByMe = ref(false);
+const isOpen = ref(false);
+
+const toggleComments = () => {
+  isOpen.value = !isOpen.value;
+};
 
 const likeThisPost = async () => {
   try {
@@ -179,16 +184,23 @@ onUnmounted(() => {
 
     <div class="flex justify-start mb-4 border-t border-gray-100">
       <div class="flex items-center w-full mt-1 pt-2 pl-5">
+        <Button class="mr-2" variant="ghost" @click="toggleComments"
+          ><MessageSquare class="w-4 h-4 mr-2" />{{
+            props.post.post_comments.length
+          }}
+          Comments</Button
+        >
         <Button
           @click="likeThisPost"
           variant="ghost"
-          class="flex items-center transition ease-out duration-300 hover:text-red-500 px-2 pt-2 text-center cursor-pointer mr-2"
+          class="transition ease-out duration-300 hover:bg-red-500 hover:text-white text-center cursor-pointer mr-2"
+          :class="isLikedByMe && 'bg-red-500 text-white'"
         >
           <ThumbsUp
             class="w-4 h-4 mr-2"
-            :class="isLikedByMe && 'stroke-primary fill-primary'"
+            :class="isLikedByMe && ' stroke-white'"
           />
-          {{ numberOfLikes }}
+          {{ numberOfLikes }} Likes
         </Button>
         <div v-if="likes?.length > 0">
           <img
@@ -202,10 +214,29 @@ onUnmounted(() => {
         </div>
       </div>
     </div>
-    <FeedCommentList
-      :profiles="props.post.profiles"
-      :comments="props.post.post_comments"
-      :postId="props.post.id"
-    />
+    <Transition mode="out-in">
+      <FeedCommentList
+        v-show="isOpen"
+        :profiles="props.post.profiles"
+        :comments="props.post.post_comments"
+        :postId="props.post.id"
+      />
+    </Transition>
   </Card>
 </template>
+
+<style scoped>
+.v-enter-active,
+.v-leave-active {
+  transition: all 0.3s ease;
+  overflow: hidden;
+  max-height: 500px;
+}
+
+.v-enter-from,
+.v-leave-to {
+  max-height: 0;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+</style>
