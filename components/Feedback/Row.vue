@@ -28,7 +28,7 @@
       </div>
     </TableCell>
     <TableCell>
-      <FeedbackEdit :feedback="item" />
+      <FeedbackEdit :feedback="item" :statuses="statuses" />
     </TableCell>
   </TableRow>
   <Transition>
@@ -49,7 +49,6 @@ const props = defineProps({
 
 const item = toRefs(props.item);
 const isExpanded = ref(false);
-const statusClass = ref();
 
 const createDate = (createdeAt) =>
   new Date(createdeAt).toLocaleDateString("en-UK", {
@@ -90,7 +89,6 @@ const statuses = [
 const feedbackStatus = computed(() =>
   statuses.find((status) => status.value === item.feedback_status.value)
 );
-// statusClass.value = feedbackStatus.class;
 </script>
 
 <style scoped>

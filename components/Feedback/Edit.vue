@@ -1,6 +1,7 @@
 <script setup>
 const props = defineProps({
   feedback: Object,
+  statuses: Object,
 });
 
 import { h } from "vue";
@@ -51,18 +52,12 @@ const onSubmit = handleSubmit(async (values) => {
 
       isOpen.value = false;
       await delay(1000);
-      //   alertMessage.value = "";
-      //   newArtistName.value = null;
-      //   artistExists.value = false;
     } else {
       toast("Task has been updated", {
         description: username,
       });
       isOpen.value = false;
       await delay(1000);
-      //   alertMessage.value = "";
-      //   mbid = null;
-      //   newArtistName.value = null;
     }
   } catch (error) {
     console.log("CAUGHT ERROR", error);
@@ -116,36 +111,17 @@ const onSubmit = handleSubmit(async (values) => {
                 </FormControl>
                 <SelectContent>
                   <SelectGroup>
-                    <SelectItem value="to do">
-                      <div class="flex items-center">
-                        <div
-                          class="bg-red-400 rounded-full w-2 h-2 animate-pulse mr-2"
-                        ></div>
-                        To Do
-                      </div></SelectItem
+                    <SelectItem
+                      v-for="(status, i) in props.statuses"
+                      :key="`status${i}`"
+                      :value="status.value"
                     >
-                    <SelectItem value="in progress">
                       <div class="flex items-center">
                         <div
-                          class="bg-yellow-400 rounded-full w-2 h-2 animate-pulse mr-2"
+                          class="rounded-full w-2 h-2 animate-pulse mr-2"
+                          :class="status.class"
                         ></div>
-                        In Progress
-                      </div>
-                    </SelectItem>
-                    <SelectItem value="testing">
-                      <div class="flex items-center">
-                        <div
-                          class="bg-purple-400 rounded-full w-2 h-2 animate-pulse mr-2"
-                        ></div>
-                        Testing
-                      </div></SelectItem
-                    >
-                    <SelectItem value="done">
-                      <div class="flex items-center">
-                        <div
-                          class="bg-green-400 rounded-full w-2 h-2 animate-pulse mr-2"
-                        ></div>
-                        Done
+                        {{ status.label }}
                       </div>
                     </SelectItem>
                   </SelectGroup>
