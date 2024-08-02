@@ -22,7 +22,7 @@
       <div class="flex items-center">
         <div
           class="bg-green-400 rounded-full w-2 h-2 animate-pulse mr-2"
-          :class="feedbackStatus.class"
+          :class="feedbackStatus?.class"
         ></div>
         {{ feedbackStatus?.label }}
       </div>
