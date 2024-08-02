@@ -6,15 +6,21 @@ useSeoMeta({
     "http://www.rikomatic.com/wp-content/uploads/import/6a00d8341c77b053ef01bb08ad4ee9970d.jpg",
   twitterCard: "summary_large_image",
 });
+
+import { ConfigProvider } from "radix-vue";
+
+const useIdFunction = () => useId();
 </script>
 
 <template>
-  <div class="bg-background">
-    <NuxtLoadingIndicator />
-    <NuxtLayout>
-      <NuxtPage />
-    </NuxtLayout>
-  </div>
+  <ConfigProvider :use-id="useIdFunction">
+    <div class="bg-background">
+      <NuxtLoadingIndicator />
+      <NuxtLayout>
+        <NuxtPage />
+      </NuxtLayout>
+    </div>
+  </ConfigProvider>
 </template>
 
 <style>
