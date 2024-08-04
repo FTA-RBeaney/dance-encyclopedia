@@ -5,46 +5,69 @@ import { toast } from "@/components/ui/toast";
 const supabase = useSupabaseClient();
 const supabaseUser = useSupabaseUser();
 
-const feedbackList = ref([]);
+// const feedbackList = ref();
 const inProgressList = ref([]);
 const inTestingList = ref([]);
-const doneList = ref([]);
+const doneList = ref();
 
 let channel;
 
-try {
-  const { data } = await supabase
-    .from("feedback")
-    .select(`*,profiles(*)`)
-    .eq("feedback_status", "to do")
-    .order("created_at");
-  feedbackList.value = data;
+import tasks from "./../components/DataTable/tasks.json";
+import { columns } from "./../components/DataTable/columns";
 
-  const { data: inProgress } = await supabase
+const { data, refresh } = await useAsyncData("feedback", async () => {
+  const { data: feedback } = await supabase
     .from("feedback")
     .select(`*,profiles(*)`)
-    .eq("feedback_status", "in progress")
-    .order("created_at");
-
-  const { data: testing } = await supabase
-    .from("feedback")
-    .select(`*,profiles(*)`)
-    .eq("feedback_status", "testing")
-    .order("created_at");
+    .neq("status", "done")
+    .order("status", { ascending: false });
 
   const { data: done } = await supabase
     .from("feedback")
     .select(`*,profiles(*)`)
-    .eq("feedback_status", "done")
+    .eq("status", "done")
     .order("created_at");
 
-  inProgressList.value = inProgress;
-  inTestingList.value = testing;
-  doneList.value = done;
-} catch (error) {
-  alert(error.message);
-} finally {
-}
+  return { feedback: feedback, done: done };
+});
+
+const feedbackList = computed(() => data);
+
+console.log(feedbackList.value);
+
+// try {
+//   const { data } = await supabase
+//     .from("feedback")
+//     .select(`*,profiles(*)`)
+//     .eq("feedback_status", "to do")
+//     .order("created_at");
+//   feedbackList.value = data;
+
+//   const { data: inProgress } = await supabase
+//     .from("feedback")
+//     .select(`*,profiles(*)`)
+//     .eq("feedback_status", "in progress")
+//     .order("created_at");
+
+//   const { data: testing } = await supabase
+//     .from("feedback")
+//     .select(`*,profiles(*)`)
+//     .eq("feedback_status", "testing")
+//     .order("created_at");
+
+//   inProgressList.value = inProgress;
+//   inTestingList.value = testing;
+//   doneList.value = done;
+// } catch (error) {
+//   alert(error.message);
+// } finally {
+// }
+
+const { data: todo } = await supabase
+  .from("feedback")
+  .select(`*,profiles(*)`)
+  .eq("status", "to do")
+  .order("created_at");
 
 const schema = z.object({
   typeOfFeedback: z.nativeEnum([
@@ -103,6 +126,28 @@ const onSubmit = async (values) => {
   }
 };
 
+async function onDelete(id) {
+  alert(id);
+  // try {
+  //   const { data, error } = await supabase
+  //     .from("feedback")
+  //     .delete()
+  //     .eq("id", id);
+
+  //   toast("Task deleted", {
+  //     description: "Task deleted",
+  //   });
+
+  //   if (error) throw error;
+  // } catch (error) {
+  //   toast("There was an error", {
+  //     title: "There was an error",
+  //     description: error,
+  //   });
+  // } finally {
+  // }
+}
+
 onMounted(() => {
   channel = supabase
     .channel("public:feedback")
@@ -114,7 +159,7 @@ onMounted(() => {
         table: "feedback",
       },
 
-      () => location.reload()
+      () => refresh()
     )
     .subscribe();
 });
@@ -144,11 +189,25 @@ onUnmounted(() => {
           <Button type="submit"> Submit </Button>
         </AutoForm>
       </Card> -->
-      <div class="max-w-screen-lg mx-auto xl:mx-0">
-        <FeedbackTable :data="feedbackList" title="To Do" />
+      <div class="mx-auto xl:mx-0">
+        <Card class="p-6">
+          <DataTable
+            :data="feedbackList.value.feedback"
+            :columns="columns"
+            on-delete="onDelete"
+          />
+          <p class="py-2 text-lg font-semibold mt-8">Done</p>
+          <DataTable
+            :data="feedbackList.value.done"
+            :columns="columns"
+            class="mt-4"
+          />
+        </Card>
+
+        <!-- <FeedbackTable :data="feedbackList" title="To Do" />
         <FeedbackTable :data="inProgressList" title="In Progress" />
         <FeedbackTable :data="inTestingList" title="Testing" />
-        <FeedbackTable :data="doneList" title="Done" />
+        <FeedbackTable :data="doneList" title="Done" /> -->
         <!-- <p class="py-2 text-lg font-semibold">To Do</p>
         <Card class="p-6">
           <Table v-if="feedbackList">

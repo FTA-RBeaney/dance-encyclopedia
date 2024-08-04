@@ -9,38 +9,40 @@
       <TableBody>
         <TableRow v-for="(user, index) in listOfUsers" :key="`item${index}`">
           <TableCell class="px-0">
-            <div class="flex justify-start items-center">
-              <img
-                v-if="user.avatar_url"
-                class="aspect-square object-cover rounded-md w-10 h-10 mr-3"
-                :src="user.avatar_url"
-                format="webp"
-                preload
-                loading="lazy"
-                placeholder="https://sternbergclinic.com.au/wp-content/uploads/2020/03/placeholder.png"
-                :alt="user.first_name"
-              />
-              <div
-                v-else
-                class="relative w-8 h-8 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 mr-3"
-              >
-                <svg
-                  class="absolute w-10 h-10 text-gray-400 -left-1"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
+            <NuxtLink :to="`/profile/${user.id}`">
+              <div class="flex justify-start items-center">
+                <img
+                  v-if="user.avatar_url"
+                  class="aspect-square object-cover rounded-md w-10 h-10 mr-3"
+                  :src="user.avatar_url"
+                  format="webp"
+                  preload
+                  loading="lazy"
+                  placeholder="https://sternbergclinic.com.au/wp-content/uploads/2020/03/placeholder.png"
+                  :alt="user.first_name"
+                />
+                <div
+                  v-else
+                  class="relative w-8 h-8 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 mr-3"
                 >
-                  <path
-                    fill-rule="evenodd"
-                    d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                    clip-rule="evenodd"
-                  ></path>
-                </svg>
+                  <svg
+                    class="absolute w-10 h-10 text-gray-400 -left-1"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                      clip-rule="evenodd"
+                    ></path>
+                  </svg>
+                </div>
+                <div class="truncate max-w-[110px]">
+                  {{ user.first_name || user.email }}
+                </div>
               </div>
-              <div class="truncate max-w-[110px]">
-                {{ user.first_name || user.email }}
-              </div>
-            </div>
+            </NuxtLink>
           </TableCell>
           <TableCell>
             <div v-if="isOnline(user.id)" class="flex items-center justify-end">

@@ -93,3 +93,10 @@
 <script setup>
 import { videoList, otherVideos } from "../data/videos";
 </script>
+
+<style scoped>
+[data-media-player][data-layout="video"],
+:where(.vds-poster) {
+  background: none;
+}
+</style>

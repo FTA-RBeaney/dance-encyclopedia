@@ -10,12 +10,7 @@ const feedbackList = ref([]);
 const isOpen = ref(false);
 
 const schema = z.object({
-  typeOfFeedback: z.nativeEnum([
-    "🐛 Bug",
-    "💡 Idea",
-    "🛠️ Functionality",
-    "❓ Other",
-  ]),
+  feedbackType: z.nativeEnum(["bug", "feature"]),
 
   feedbackTitle: z
     .string()
@@ -34,6 +29,8 @@ const schema = z.object({
     .max(300, {
       message: "Description must not be longer than 300 characters.",
     }),
+
+  priority: z.nativeEnum(["low", "medium", "high"]),
 });
 
 const onSubmit = async (values) => {
@@ -42,9 +39,11 @@ const onSubmit = async (values) => {
       .from("feedback")
       .upsert({
         user_id: supabaseUser.value.id,
-        type: values.typeOfFeedback,
+        type: values.feedbackType,
         feedback: values.feedbackDescription,
-        feedback_title: values.feedbackTitle,
+        title: values.feedbackTitle,
+        status: "to do",
+        priority: values.priority,
       })
       .select();
 

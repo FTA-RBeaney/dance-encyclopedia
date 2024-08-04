@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { navigation } from "../data/navigation";
+import * as lucideIcons from "lucide-vue-next";
 import { useMagicKeys } from "@vueuse/core";
 const supabase = useSupabaseClient();
 const supabaseUser = useSupabaseUser();
@@ -47,37 +49,18 @@ const inputLength = computed(() => favourites.value.length);
         <CommandEmpty>No results found.</CommandEmpty>
         <CommandGroup heading="Suggestions">
           <CommandItem
-            value="calendar"
+            v-for="(item, i) in navigation"
+            :key="`nav${i}`"
+            :value="item.title"
             @select="
               (ev) => {
-                $router.push(`/videos`);
+                $router.push(item.path);
                 open = false;
               }
             "
           >
-            <IconsWatch class="mr-2" /> Watch
-          </CommandItem>
-          <CommandItem
-            value="search-emoji"
-            @select="
-              (ev) => {
-                $router.push(`/dancers`);
-                open = false;
-              }
-            "
-          >
-            <IconsPerson class="mr-2" /> Dancers
-          </CommandItem>
-          <CommandItem
-            value="calculator"
-            @select="
-              (ev) => {
-                $router.push(`/musicians`);
-                open = false;
-              }
-            "
-          >
-            <IconsMicrophone class="mr-2" /> Musicians
+            <component :is="lucideIcons[item.icon]" class="mr-2 w-4 h-4" />
+            {{ item.title }}
           </CommandItem>
         </CommandGroup>
         <CommandSeparator />
