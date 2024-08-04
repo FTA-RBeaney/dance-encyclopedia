@@ -3,7 +3,9 @@ import { cn } from "../../lib/utils.ts";
 import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 import { columns } from "../components/Favourites/columns.ts";
-import { CalendarIcon } from "lucide-vue-next";
+import { CalendarIcon, Globe } from "lucide-vue-next";
+import { Toaster } from "@/components/ui/sonner";
+import { toast } from "vue-sonner";
 import {
   CalendarDate,
   DateFormatter,
@@ -20,7 +22,6 @@ const route = useRoute();
 
 const supabaseUser = useSupabaseUser();
 const supabase = useSupabaseClient();
-
 const value = ref(today(getLocalTimeZone()));
 
 const { data: users } = await supabase
@@ -62,9 +63,50 @@ const placeholder = useVModel(props, "modelValue", emits, {
   passive: true,
   defaultValue: data.dob,
 });
+
+const form = ref({
+  firstName: data.first_name,
+  lastName: data.last_name,
+  country: data?.country,
+  city: data?.city,
+  address: data?.address,
+  email: data.email,
+  phone: data?.phone,
+  dob: data?.dob,
+});
+
+const handleSubmit = async (values) => {
+  console.log("form", form.value.firstName);
+  console.log("supabaseUser.value.id", supabaseUser.value.id);
+
+  try {
+    const { error } = await supabase
+      .from("profiles")
+      .update({
+        first_name: form.value.firstName,
+        last_name: form.value.lastName,
+        country: form.value.country,
+        city: form.value.city,
+        address: form.value.address,
+        email: form.value.email,
+        phone: form.value.phone.toString(),
+      })
+      .eq("id", supabaseUser.value.id);
+
+    if (error) {
+      toast("Error", error);
+    } else {
+      toast("Profile has been updated", {});
+    }
+  } catch (error) {
+    console.log("CAUGHT ERROR", error);
+  }
+};
+
+const isMe = computed(() => supabaseUser.value.id === route.params.slug);
 </script>
 <template>
-  <main>
+  <main id="profile-form">
     <div
       class="grid grid-cols-1 px-4 pt-6 xl:grid-cols-3 xl:gap-4 dark:bg-gray-900"
     >
@@ -186,7 +228,7 @@ const placeholder = useVModel(props, "modelValue", emits, {
             </div>
           </div>
         </div>
-        <div
+        <!-- <div
           class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800"
         >
           <h3 class="mb-4 text-xl font-semibold dark:text-white">
@@ -233,9 +275,9 @@ const placeholder = useVModel(props, "modelValue", emits, {
             </select>
           </div>
           <div>
-            <Button> Save all </Button>
+            <Button @click="handleSubmit"> Save all </Button>
           </div>
-        </div>
+        </div> -->
         <div
           class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800"
         >
@@ -329,72 +371,23 @@ const placeholder = useVModel(props, "modelValue", emits, {
               <li class="py-4">
                 <div class="flex items-center space-x-4">
                   <div class="flex-shrink-0">
-                    <svg
-                      class="w-5 h-5 dark:text-white"
-                      aria-hidden="true"
-                      focusable="false"
-                      data-prefix="fab"
-                      data-icon="github"
-                      role="img"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 496 512"
-                    >
-                      <path
-                        fill="currentColor"
-                        d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"
-                      ></path>
-                    </svg>
+                    <Globe :stroke-width="1.5" />
                   </div>
                   <div class="flex-1 min-w-0">
                     <span
                       class="block text-base font-semibold text-gray-900 truncate dark:text-white"
                     >
-                      Github account
+                      Website
                     </span>
                     <span
                       class="block text-sm font-normal text-gray-500 truncate dark:text-gray-400"
                     >
-                      Not connected
-                    </span>
-                  </div>
-                  <div class="inline-flex items-center">
-                    <a
-                      href="#"
-                      class="px-3 py-2 mb-3 mr-3 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-                      >Connect</a
-                    >
-                  </div>
-                </div>
-              </li>
-              <li class="pt-4 pb-6">
-                <div class="flex items-center space-x-4">
-                  <div class="flex-shrink-0">
-                    <svg
-                      class="w-5 h-5 dark:text-white"
-                      aria-hidden="true"
-                      focusable="false"
-                      data-prefix="fab"
-                      data-icon="dribbble"
-                      role="img"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 512 512"
-                    >
-                      <path
-                        fill="currentColor"
-                        d="M256 8C119.252 8 8 119.252 8 256s111.252 248 248 248 248-111.252 248-248S392.748 8 256 8zm163.97 114.366c29.503 36.046 47.369 81.957 47.835 131.955-6.984-1.477-77.018-15.682-147.502-6.818-5.752-14.041-11.181-26.393-18.617-41.614 78.321-31.977 113.818-77.482 118.284-83.523zM396.421 97.87c-3.81 5.427-35.697 48.286-111.021 76.519-34.712-63.776-73.185-116.168-79.04-124.008 67.176-16.193 137.966 1.27 190.061 47.489zm-230.48-33.25c5.585 7.659 43.438 60.116 78.537 122.509-99.087 26.313-186.36 25.934-195.834 25.809C62.38 147.205 106.678 92.573 165.941 64.62zM44.17 256.323c0-2.166.043-4.322.108-6.473 9.268.19 111.92 1.513 217.706-30.146 6.064 11.868 11.857 23.915 17.174 35.949-76.599 21.575-146.194 83.527-180.531 142.306C64.794 360.405 44.17 310.73 44.17 256.323zm81.807 167.113c22.127-45.233 82.178-103.622 167.579-132.756 29.74 77.283 42.039 142.053 45.189 160.638-68.112 29.013-150.015 21.053-212.768-27.882zm248.38 8.489c-2.171-12.886-13.446-74.897-41.152-151.033 66.38-10.626 124.7 6.768 131.947 9.055-9.442 58.941-43.273 109.844-90.795 141.978z"
-                      ></path>
-                    </svg>
-                  </div>
-                  <div class="flex-1 min-w-0">
-                    <span
-                      class="block text-base font-semibold text-gray-900 truncate dark:text-white"
-                    >
-                      Dribbble account
-                    </span>
-                    <span
-                      class="block text-sm font-normal text-gray-500 truncate dark:text-gray-400"
-                    >
-                      Not connected
+                      <a
+                        href="#"
+                        class="block text-sm font-normal truncate text-primary-700 hover:underline dark:text-primary-500"
+                      >
+                        www.website.com
+                      </a>
                     </span>
                   </div>
                   <div class="inline-flex items-center">
@@ -408,7 +401,7 @@ const placeholder = useVModel(props, "modelValue", emits, {
               </li>
             </ul>
             <div>
-              <Button> Save all </Button>
+              <Button @click="handleSubmit"> Save all </Button>
             </div>
           </div>
         </div>
@@ -474,131 +467,134 @@ const placeholder = useVModel(props, "modelValue", emits, {
           <h3 class="mb-4 text-xl font-semibold dark:text-white">
             General information
           </h3>
-          <form action="#">
-            <div class="grid grid-cols-6 gap-6">
-              <div class="col-span-6 sm:col-span-3">
-                <label
-                  for="first-name"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >First Name</label
-                >
-                <input
-                  type="text"
-                  name="first-name"
-                  id="first-name"
-                  class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                  placeholder="First name"
-                  required
-                  :value="data.first_name"
-                />
-              </div>
-              <div class="col-span-6 sm:col-span-3">
-                <label
-                  for="last-name"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >Last Name</label
-                >
-                <input
-                  type="text"
-                  name="last-name"
-                  id="last-name"
-                  class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                  placeholder="Last name"
-                  required
-                  :value="data.last_name"
-                />
-              </div>
-              <div class="col-span-6 sm:col-span-3">
-                <label
-                  for="country"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >Country</label
-                >
-                <input
-                  type="text"
-                  name="country"
-                  id="country"
-                  class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                  placeholder="Country"
-                  required
-                  :value="data.country"
-                />
-              </div>
-              <div class="col-span-6 sm:col-span-3">
-                <label
-                  for="city"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >City</label
-                >
-                <input
-                  type="text"
-                  name="city"
-                  id="city"
-                  class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                  placeholder="e.g. London"
-                  required
-                  :value="data.city"
-                />
-              </div>
-              <div class="col-span-6 sm:col-span-3">
-                <label
-                  for="address"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >Address</label
-                >
-                <input
-                  type="text"
-                  name="address"
-                  id="address"
-                  class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                  placeholder="e.g. California"
-                  required
-                />
-              </div>
-              <div class="col-span-6 sm:col-span-3">
-                <label
-                  for="email"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >Email</label
-                >
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                  placeholder="Email"
-                  required
-                  :value="data.email"
-                />
-              </div>
-              <div class="col-span-6 sm:col-span-3">
-                <label
-                  for="phone-number"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >Phone Number</label
-                >
-                <input
-                  type="number"
-                  name="phone-number"
-                  id="phone-number"
-                  class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                  placeholder="e.g. +(12)3456 789"
-                  required
-                />
-              </div>
-              <div class="col-span-6 sm:col-span-3">
-                <label
-                  for="birthday"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >Birthday</label
-                >
-                <VueDatePicker
-                  v-model="date"
-                  format="dd/MM/yyyy"
-                  :enable-time-picker="false"
-                  class="shadow-sm text-left bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                ></VueDatePicker>
-                <!-- <Popover>
+          <form @submit.prevent="handleSubmit" action="#">
+            <fieldset :disabled="!isMe">
+              <div class="grid grid-cols-6 gap-6">
+                <div class="col-span-6 sm:col-span-3">
+                  <label
+                    for="first-name"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >First Name</label
+                  >
+                  <input
+                    type="text"
+                    name="first-name"
+                    id="first-name"
+                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                    placeholder="First name"
+                    required
+                    v-model="form['firstName']"
+                  />
+                </div>
+                <div class="col-span-6 sm:col-span-3">
+                  <label
+                    for="last-name"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >Last Name</label
+                  >
+                  <input
+                    type="text"
+                    name="last-name"
+                    id="last-name"
+                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                    placeholder="Last name"
+                    required
+                    v-model="form['lastName']"
+                  />
+                </div>
+                <div class="col-span-6 sm:col-span-3">
+                  <label
+                    for="country"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >Country</label
+                  >
+                  <input
+                    type="text"
+                    name="country"
+                    id="country"
+                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                    placeholder="Country"
+                    required
+                    v-model="form['country']"
+                  />
+                </div>
+                <div class="col-span-6 sm:col-span-3">
+                  <label
+                    for="city"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >City</label
+                  >
+                  <input
+                    type="text"
+                    name="city"
+                    id="city"
+                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                    placeholder="e.g. London"
+                    required
+                    v-model="form['city']"
+                  />
+                </div>
+                <div class="col-span-6 sm:col-span-3">
+                  <label
+                    for="address"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >Address</label
+                  >
+                  <input
+                    type="text"
+                    name="address"
+                    id="address"
+                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                    placeholder="e.g. California"
+                    required
+                    v-model="form['address']"
+                  />
+                </div>
+                <div class="col-span-6 sm:col-span-3">
+                  <label
+                    for="email"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >Email</label
+                  >
+                  <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                    placeholder="Email"
+                    required
+                    v-model="form['email']"
+                  />
+                </div>
+                <div class="col-span-6 sm:col-span-3">
+                  <label
+                    for="phone-number"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >Phone Number</label
+                  >
+                  <input
+                    type="number"
+                    name="phone-number"
+                    id="phone-number"
+                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                    placeholder="e.g. +(12)3456 789"
+                    required
+                    v-model="form['phone']"
+                  />
+                </div>
+                <div class="col-span-6 sm:col-span-3">
+                  <label
+                    for="birthday"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >Birthday</label
+                  >
+                  <VueDatePicker
+                    v-model="date"
+                    format="dd/MM/yyyy"
+                    :enable-time-picker="false"
+                    class="shadow-sm text-left bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                  ></VueDatePicker>
+                  <!-- <Popover>
                   <PopoverTrigger as-child>
                     <Button
                       variant="outline"
@@ -622,71 +618,13 @@ const placeholder = useVModel(props, "modelValue", emits, {
                     />
                   </PopoverContent>
                 </Popover> -->
+                </div>
+
+                <div class="col-span-6 sm:col-full">
+                  <Button type="submit"> Save all </Button>
+                </div>
               </div>
-              <div class="col-span-6 sm:col-span-3">
-                <label
-                  for="organization"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >Organization</label
-                >
-                <input
-                  type="text"
-                  name="organization"
-                  id="organization"
-                  class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                  placeholder="Company Name"
-                  required
-                />
-              </div>
-              <div class="col-span-6 sm:col-span-3">
-                <label
-                  for="role"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >Role</label
-                >
-                <input
-                  type="text"
-                  name="role"
-                  id="role"
-                  class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                  placeholder="React Developer"
-                  required
-                />
-              </div>
-              <div class="col-span-6 sm:col-span-3">
-                <label
-                  for="department"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >Department</label
-                >
-                <input
-                  type="text"
-                  name="department"
-                  id="department"
-                  class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                  placeholder="Development"
-                  required
-                />
-              </div>
-              <div class="col-span-6 sm:col-span-3">
-                <label
-                  for="zip-code"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >Zip/postal code</label
-                >
-                <input
-                  type="number"
-                  name="zip-code"
-                  id="zip-code"
-                  class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                  placeholder="123456"
-                  required
-                />
-              </div>
-              <div class="col-span-6 sm:col-full">
-                <Button type="submit"> Save all </Button>
-              </div>
-            </div>
+            </fieldset>
           </form>
         </div>
         <div
@@ -1420,6 +1358,7 @@ const placeholder = useVModel(props, "modelValue", emits, {
         </div>
       </div>
     </div> -->
+    <Toaster />
   </main>
 </template>
 
