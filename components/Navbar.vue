@@ -50,7 +50,7 @@
         </div> -->
         <Sheet>
           <SheetTrigger>
-            <Settings class="mr-2" />
+            <Settings :stroke-width="1.5" class="mr-2" />
           </SheetTrigger>
           <SheetContent>
             <SheetHeader>
@@ -61,14 +61,15 @@
           </SheetContent>
         </Sheet>
         <NuxtLink class="font-medium px-2 mr-2" to="/favourites">
-          <BookHeart />
+          <BookHeart :stroke-width="1.5" />
         </NuxtLink>
-
-        <img
-          class="w-10 h-10 rounded-full mr-1"
-          alt="Default avatar"
-          :src="avatar"
-        />
+        <NuxtLink :to="`/profile/${supabaseUser.id}`">
+          <img
+            class="w-10 h-10 rounded-full mr-1"
+            alt="Default avatar"
+            :src="avatar"
+          />
+        </NuxtLink>
       </nav>
     </div>
   </div>

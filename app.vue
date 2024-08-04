@@ -8,6 +8,7 @@ useSeoMeta({
 });
 
 import { ConfigProvider } from "radix-vue";
+import { Toaster } from "@/components/ui/toast";
 
 const useIdFunction = () => useId();
 </script>

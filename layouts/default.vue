@@ -1,19 +1,23 @@
 <template>
   <div>
     <div class="flex flex-col justify-between text-neutral-900">
-      <Navbar />
+      <Card class="rounded-none">
+        <Navbar />
+      </Card>
     </div>
     <div class="border-t">
       <div class="bg-background">
-        <div class="lg:grid lg:grid-cols-5 min-h-screen">
-          <Sidebar class="hidden lg:block" />
+        <div class="lg:grid lg:grid-cols-6 min-h-screen">
+          <Card class="rounded-none -mt-0.5">
+            <Sidebar class="hidden lg:block" />
+          </Card>
           <div
             id="main-content"
-            class="main-content col-span-3 lg:col-span-4 lg:border-l relative"
+            class="main-content col-span-4 lg:col-span-5 relative"
           >
             <Suspense>
               <div
-                class="px-8 py-6 mx-auto bg-neutral-50 dark:bg-background h-full"
+                class="px-8 py-6 mx-auto bg-background dark:bg-background h-full"
               >
                 <slot />
               </div>

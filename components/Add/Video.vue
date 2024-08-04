@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 import { createReusableTemplate, useMediaQuery } from "@vueuse/core";
-import { Toaster } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/toast/use-toast";
 import { CirclePlus } from "lucide-vue-next";
 
@@ -9,6 +8,7 @@ import { CirclePlus } from "lucide-vue-next";
 const [UseTemplate, GridForm] = createReusableTemplate();
 const isDesktop = useMediaQuery("(min-width: 768px)");
 const { toast } = useToast();
+const open = ref();
 const isOpen = ref(false);
 const newArtistName = ref();
 const alertMessage = ref("");

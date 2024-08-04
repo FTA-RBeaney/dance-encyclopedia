@@ -116,7 +116,7 @@ const supabase = useSupabaseClient();
           >
             <NuxtLink :to="`/playlist/${playlist?.id}`">
               <Button variant="ghost" class="w-full justify-start">
-                <IconsPlaylist class="mr-2" />
+                <IconsPlaylist class="mr-2 min-w-4 min-h-4" />
                 {{ playlist.name }}
               </Button>
             </NuxtLink>

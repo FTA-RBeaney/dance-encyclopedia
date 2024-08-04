@@ -1,15 +1,19 @@
 <template>
   <div>
     <div class="flex flex-col justify-between text-neutral-900">
-      <Navbar />
+      <Card class="rounded-none">
+        <Navbar />
+      </Card>
     </div>
     <div class="border-t">
       <div class="bg-background">
         <div class="lg:grid lg:grid-cols-6 max-w-screen-3xl min-h-screen">
-          <Sidebar class="hidden lg:block" />
+          <Card class="rounded-none">
+            <Sidebar class="hidden lg:block" />
+          </Card>
           <div
             id="main-content"
-            class="main-content col-span-5 lg:col-span-5 lg:border-l relative"
+            class="main-content col-span-5 lg:col-span-5 relative"
           >
             <div class="lg:flex xl:max-w-4xl mx-auto">
               <div class="lg:w-8/12">

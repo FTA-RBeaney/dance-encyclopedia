@@ -44,13 +44,7 @@ export const columns: ColumnDef<Favourite>[] = [
     cell: ({ row }) => {
       const name = row.original;
 
-      return h(
-        "div",
-        { class: "relative" },
-        h(DropdownAction, {
-          name,
-        })
-      );
+      return h("div", { class: "relative" }, h(DropdownAction, {}));
     },
   },
 ];

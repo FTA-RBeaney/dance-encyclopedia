@@ -101,4 +101,11 @@ export const otherVideos: Album[] = [
       "https://assets.mubicdn.net/images/film/51173/image-w1280.jpg?1661806840",
     link: "https://www.youtube.com/watch?v=-WIJ_PF6Yo4",
   },
+  {
+    name: "Boy What a Girl",
+    artist: "1947",
+    cover:
+      "https://m.media-amazon.com/images/M/MV5BYmQwZjM0NjItYmZkZi00NDc0LTgxZDQtMmNjYjk4YjZlOTIyXkEyXkFqcGdeQXVyNjc2OTM5MTU@._V1_.jpg",
+    link: "https://www.youtube.com/watch?v=9RNTMqibeEM",
+  },
 ];
