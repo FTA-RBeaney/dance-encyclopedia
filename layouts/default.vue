@@ -6,7 +6,7 @@
       </Card>
     </div>
     <div class="border-t">
-      <div class="bg-background">
+      <div class="bg-[--bodybg] dark:bg-background">
         <div class="lg:grid lg:grid-cols-6 min-h-screen">
           <Card class="rounded-none -mt-0.5">
             <Sidebar class="hidden lg:block" />
@@ -16,9 +16,7 @@
             class="main-content col-span-4 lg:col-span-5 relative"
           >
             <Suspense>
-              <div
-                class="px-8 py-6 mx-auto bg-background dark:bg-background h-full"
-              >
+              <div class="px-8 py-6 mx-auto h-full">
                 <slot />
               </div>
 

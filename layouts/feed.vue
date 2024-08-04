@@ -6,7 +6,7 @@
       </Card>
     </div>
     <div class="border-t">
-      <div class="bg-background">
+      <div class="bg-[--bodybg] dark:bg-background">
         <div class="lg:grid lg:grid-cols-6 max-w-screen-3xl min-h-screen">
           <Card class="rounded-none">
             <Sidebar class="hidden lg:block" />

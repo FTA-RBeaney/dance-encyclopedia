@@ -131,6 +131,5 @@ const onSubmit = handleSubmit(async (values) => {
         </form>
       </DialogContent>
     </Dialog>
-    <Toaster />
   </div>
 </template>

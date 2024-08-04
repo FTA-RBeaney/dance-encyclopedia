@@ -1,5 +1,7 @@
 <script setup>
 import { cn } from "../../lib/utils.ts";
+import VueDatePicker from "@vuepic/vue-datepicker";
+import "@vuepic/vue-datepicker/dist/main.css";
 import { columns } from "../components/Favourites/columns.ts";
 import { CalendarIcon } from "lucide-vue-next";
 import {
@@ -42,6 +44,24 @@ const { data: posts } = await supabase
   .from("posts")
   .select("*")
   .eq("user_id", route.params.slug);
+
+const date = ref(data.dob);
+
+import { useVModel } from "@vueuse/core";
+
+const props = withDefaults(defineProps(), {
+  modelValue: undefined,
+  placeholder() {
+    return today(getLocalTimeZone());
+  },
+  weekdayFormat: "short",
+});
+const emits = defineEmits();
+
+const placeholder = useVModel(props, "modelValue", emits, {
+  passive: true,
+  defaultValue: data.dob,
+});
 </script>
 <template>
   <main>
@@ -572,7 +592,13 @@ const { data: posts } = await supabase
                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >Birthday</label
                 >
-                <Popover>
+                <VueDatePicker
+                  v-model="date"
+                  format="dd/MM/yyyy"
+                  :enable-time-picker="false"
+                  class="shadow-sm text-left bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                ></VueDatePicker>
+                <!-- <Popover>
                   <PopoverTrigger as-child>
                     <Button
                       variant="outline"
@@ -593,18 +619,9 @@ const { data: posts } = await supabase
                       initial-focus
                       :min-value="new CalendarDate(1900, 1, 1)"
                       :max-value="today(getLocalTimeZone())"
-                      @update:model-value="
-                        (v) => {
-                          if (v) {
-                            setFieldValue('dob', v.toString());
-                          } else {
-                            setFieldValue('dob', undefined);
-                          }
-                        }
-                      "
                     />
                   </PopoverContent>
-                </Popover>
+                </Popover> -->
               </div>
               <div class="col-span-6 sm:col-span-3">
                 <label
@@ -1405,3 +1422,19 @@ const { data: posts } = await supabase
     </div> -->
   </main>
 </template>
+
+<style lang="scss">
+.dp__input {
+  background: none;
+  border: none;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  margin-top: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+
+  input {
+    width: 100%;
+  }
+}
+</style>

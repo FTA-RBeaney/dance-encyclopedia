@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="col-span-3">
-      <div class="h-full px-4 py-6">
+      <div class="h-full py-6">
         <Tabs default-value="music" class="h-full space-y-6">
           <div class="space-between flex items-center">
             <TabsList>

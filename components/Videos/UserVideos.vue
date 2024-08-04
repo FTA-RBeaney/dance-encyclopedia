@@ -11,38 +11,8 @@
     <Separator class="my-4" />
     <div class="relative">
       <div class="flex">
-        <div class="w-6/12">
-          <Card class="p-4 mr-6">
-            <div
-              v-if="userVideoData.length > 1"
-              class="grid grid-cols-2 md:grid-cols-2 gap-4"
-            >
-              <div
-                v-for="(video, i) in userVideoData"
-                :key="`video${i}`"
-                class="rounded-sm overflow-hidden"
-              >
-                <div
-                  @click="changeVideo(video.id)"
-                  class="relative group block cursor-pointer"
-                >
-                  <img
-                    :src="video.snippet.thumbnails.maxres.url"
-                    class="h-auto max-w-full w-full object-cover transition-all hover:scale-105"
-                  />
-
-                  <div
-                    class="opacity-0 group-hover:opacity-100 duration-300 absolute inset-x-0 bottom-0 h-full flex justify-center items-center text-sm bg-black bg-opacity-50 py-2 px-4 text-center text-white"
-                  >
-                    {{ video.snippet.title }}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </Card>
-        </div>
-        <div class="w-6/12">
-          <Card class="p-4 mb-6">
+        <div class="w-8/12">
+          <div>
             <VideoPlayer
               v-if="chosenVideo"
               :video="chosenVideo"
@@ -51,11 +21,15 @@
             <div v-else>
               <img
                 src="https://i0.wp.com/blog.straycat.me.uk/wp-content/uploads/2024/02/Hellzapoppin-New-YT-Cover-2.png?fit=1116%2C714&ssl=1"
-                class="w-full object-cover aspect-video"
+                class="w-full object-cover aspect-video rounded-lg"
               />
             </div>
-            <div v-if="chosenVideo" class="px-2">
-              <h3 class="font-semibold leading-none tracking-tight mt-6">
+          </div>
+          <Card v-if="chosenVideo" class="p-4 mb-6 my-4">
+            <div class="px-2">
+              <h3
+                class="font-semibold text-xl leading-none tracking-tight mt-2 mb-4"
+              >
                 {{ chosenVideoDetails.snippet.title }}
               </h3>
 
@@ -78,6 +52,47 @@
               </ul>
             </div>
           </Card>
+        </div>
+        <div class="w-4/12 ml-4">
+          <div v-if="userVideoData.length > 1" class="gap-4">
+            <div
+              v-for="(video, i) in userVideoData"
+              :key="`video${i}`"
+              class="rounded-sm overflow-hidden"
+            >
+              <div
+                @click="changeVideo(video.id)"
+                class="relative group cursor-pointer flex mb-2"
+              >
+                <div
+                  class="rounded-lg overflow-hidden aspect-video h-24 max-w-36 min-w-36 mr-3"
+                >
+                  <img
+                    :src="video.snippet.thumbnails.maxres.url"
+                    class="h-full object-cover transition-all hover:scale-105"
+                  />
+                </div>
+                <div class="mt-1">
+                  <h3
+                    class="text-sm font-medium leading-none tracking-tight max-w-full"
+                  >
+                    {{ video.snippet.title.substring(0, 50) + "…" }}
+                  </h3>
+                  <p class="text-xs font-medium text-muted-foreground mt-1">
+                    {{ video.snippet.channelTitle }}
+                  </p>
+                  <p class="text-xs font-medium text-muted-foreground mt-1">
+                    8 likes
+                  </p>
+                </div>
+                <!-- <div
+                    class="opacity-0 group-hover:opacity-100 duration-300 absolute inset-x-0 bottom-0 h-full flex justify-center items-center text-sm bg-black bg-opacity-50 py-2 px-4 text-center text-white"
+                  >
+                    {{ video.snippet.title }}
+                  </div> -->
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

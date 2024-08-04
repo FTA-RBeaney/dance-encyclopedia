@@ -4,7 +4,8 @@
 
 @layer base {
   :root {
-    --background: 210, 33%, 96%;
+    --bodybg: hsl(210, 33%, 96%);
+    --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
 
     --muted: 210 40% 96.1%;
@@ -41,7 +42,7 @@
   }
 
   .rose {
-    --background: 210, 33%, 96%;
+    --background: 0 0% 100%;
     --foreground: 240 10% 3.9%;
 
     --card: 0 0% 100%;
@@ -72,7 +73,7 @@
   }
 
   .blue {
-    --background: 210, 33%, 96%;
+    --background: 0 0% 100%;
     --foreground: 240 10% 3.9%;
 
     --card: 0 0% 100%;
