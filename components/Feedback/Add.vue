@@ -29,8 +29,6 @@ const schema = z.object({
     .max(300, {
       message: "Description must not be longer than 300 characters.",
     }),
-
-  priority: z.nativeEnum(["low", "medium", "high"]),
 });
 
 const onSubmit = async (values) => {
@@ -43,7 +41,7 @@ const onSubmit = async (values) => {
         feedback: values.feedbackDescription,
         title: values.feedbackTitle,
         status: "to do",
-        priority: values.priority,
+        priority: "medium",
       })
       .select();
 
@@ -98,11 +96,6 @@ const onSubmit = async (values) => {
               inputProps: {
                 placeholder:
                   'Enter a description of the issue. Try and be as detailed as possible',
-              },
-            },
-            priority: {
-              inputProps: {
-                placeholder: 'Choose a priority',
               },
             },
           }"

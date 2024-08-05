@@ -171,9 +171,19 @@ onUnmounted(() => {
         <div
           v-for="(photo, i) in props.post.photos"
           :key="`upload${i}`"
-          class="overflow-hidden rounded-xl col-span-3 max-h-[14rem]"
+          class="overflow-hidden rounded-md col-span-3 max-h-[12rem] max-w-[12rem]"
         >
-          <img class="h-full w-full object-cover" :src="photo" alt="" />
+          <Dialog>
+            <DialogTrigger v-if="photo">
+              <img :src="photo" class="" />
+            </DialogTrigger>
+            <DialogContent class="w-auto">
+              <img
+                :src="photo"
+                class="h-94 w-fit sm:min-w-[425px] max-h-[75vh] object-cover"
+              />
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
     </div>
