@@ -1,5 +1,21 @@
 <script setup>
 const supabaseUser = useSupabaseUser();
+
+const isLoggedIn = ref();
+const isLoggedInClasses = computed(() =>
+  isLoggedIn ? "col-span-3 lg:col-span-4" : "col-span-5 lg:col-span-5"
+);
+
+const showHideSpinner = ref(true);
+
+onBeforeMount(() => {
+  showHideSpinner.value = true;
+  isLoggedIn.value = supabaseUser.value;
+});
+
+onMounted(async () => {
+  showHideSpinner.value = false;
+});
 </script>
 
 <template>
@@ -13,8 +29,8 @@ const supabaseUser = useSupabaseUser();
           <Sidebar v-if="supabaseUser" class="hidden lg:block" />
           <div
             id="main-content"
-            class="main-content col-span-3 lg:col-span-4 lg:border-l relative"
-            :class="!supabaseUser && 'col-span-5 lg:col-span-5'"
+            class="main-content lg:border-l relative"
+            :class="isLoggedInClasses"
           >
             <div class="h-screen">
               <slot />

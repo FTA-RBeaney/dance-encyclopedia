@@ -14,6 +14,12 @@ const supabase = useSupabaseClient();
 
 const userData = ref();
 
+const showHideSpinner = ref(true);
+
+onBeforeMount(() => {
+  showHideSpinner.value = true;
+});
+
 onMounted(async () => {
   const { data, error } = await supabase
     .from("profiles")
@@ -23,12 +29,15 @@ onMounted(async () => {
   if (!error) {
     userData.value = data[0];
   }
+
+  showHideSpinner.value = false;
 });
 </script>
 
 <template>
-  <div class="h-full">
-    <header class="h-full">
+  <div class="h-full" :class="!supabaseUser && 'mx-auto'">
+    <LoadingCircle v-if="showHideSpinner" />
+    <header v-else class="h-full">
       <div
         class="w-full bg-center bg-cover h-[500px]"
         style="
