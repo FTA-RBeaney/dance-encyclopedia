@@ -24,7 +24,7 @@
 
       <div class="flex">
         <FeedbackAdd v-if="supabaseUser" class="mr-4" />
-        <NuxtLink v-if="isAdmin" to="/add-feedback">
+        <NuxtLink to="/feedback">
           <Button class="relative"
             ><Bug class="w-4 h-4 mr-2" /> View feedback
             <div
@@ -87,7 +87,8 @@ const fullName = computed(() => supabaseUser?.value.user_metadata.full_name);
 const getFeedback = async () => {
   const { data: feedback } = await supabase
     .from("feedback")
-    .select("*", { count: "exact" });
+    .select("*", { count: "exact" })
+    .neq("status", "done");
 
   feedbackList.value = feedback;
 };

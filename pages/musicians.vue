@@ -1,30 +1,27 @@
 <script setup>
 import { columns } from "../components/Musicians/columns.ts";
-const isToggled = ref(false);
+import { RealtimeChannel } from "@supabase/supabase-js";
+let realtimeChannel = RealtimeChannel;
 
 const supabase = useSupabaseClient();
+
 const allTheMusic = ref();
+const isToggled = ref(false);
 
 // get musicians
-const getMusicians = async () => {
-  try {
-    const { data, error } = await supabase
-      .from("musicians")
-      .select("*")
-      .order("name", { ascending: true });
+const { data, refresh } = await useAsyncData("musicians", async () => {
+  const { data, error } = await supabase
+    .from("musicians")
+    .select("*")
+    .order("name", { ascending: true });
 
-    allTheMusic.value = data;
-  } catch (e) {
-    allTheMusic.value = "Couldn't fetch data :(";
-  }
-};
+  return data;
+});
 
 const toggleListView = () => {
   isToggled.value = !isToggled.value;
 };
 
-import { RealtimeChannel } from "@supabase/supabase-js";
-let realtimeChannel = RealtimeChannel;
 const channel = supabase
   .channel("public:musicians")
   .on(
@@ -35,7 +32,7 @@ const channel = supabase
       table: "musicians",
     },
 
-    (payload) => getMusicians()
+    () => refresh()
   )
   .subscribe();
 
@@ -59,38 +56,15 @@ const search = async (searchString = "") => {
   searching.value = false;
 };
 
-await getMusicians();
 onUnmounted(() => {
   supabase.removeChannel(channel);
-});
-
-const ComponentToRender = computed(() => {
-  if (!noResults.value) {
-    return {
-      name: resolveComponent("MusiciansTable"),
-      dataToSend: results.value,
-    };
-  } else if (!isToggled.value && noResults.value) {
-    return {
-      name: resolveComponent("ArtistCardList"),
-      dataToSend: allTheMusic.value,
-    };
-  } else {
-    return {
-      name: resolveComponent("MusiciansTable"),
-      dataToSend: allTheMusic.value,
-    };
-  }
 });
 </script>
 
 <template>
   <div class="w-full h-full">
     <div>
-      <Heading
-        title="Musicians"
-        :description="`${allTheMusic.length} records`"
-      />
+      <Heading title="Musicians" :description="`${data.length} records`" />
       <div class="flex w-full justify-between align-center mb-8">
         <MusiciansAddMusician />
 
@@ -106,24 +80,19 @@ const ComponentToRender = computed(() => {
       <div
         class="bg-white border p-6 border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 relative w-12/12 h-full flex flex-col overflow-hidden mt-6"
       >
-        <!-- <component
-          :is="ComponentToRender.name"
-          :musicians="ComponentToRender.dataToSend"
-        /> -->
-
         <div v-if="!isToggled && !noResults">
           <ArtistCardList :musicians="results" />
         </div>
 
         <MusiciansDataTable
           :columns="columns"
-          :data="allTheMusic"
+          :data="data"
           class="mt-4"
           v-else-if="isToggled"
         />
 
         <div v-else>
-          <ArtistCardList :musicians="allTheMusic" />
+          <ArtistCardList :musicians="data" />
         </div>
       </div>
     </div>

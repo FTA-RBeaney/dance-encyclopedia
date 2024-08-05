@@ -77,73 +77,94 @@ async function onUpdate(id, column, columnValue) {
 
 <template>
   <div>
-    <DropdownMenu>
-      <DropdownMenuTrigger as-child>
-        <Button
-          variant="ghost"
-          class="flex h-8 w-8 p-0 data-[state=open]:bg-muted"
-        >
-          <Ellipsis class="h-4 w-4" />
-          <span class="sr-only">Open menu</span>
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" class="w-[160px]">
-        <DropdownMenuSub>
-          <DropdownMenuSubTrigger>
-            <TrendingUp class="mr-2 h-4 w-4" />
-            <span>Status</span>
-          </DropdownMenuSubTrigger>
-          <DropdownMenuPortal>
-            <DropdownMenuSubContent>
-              <DropdownMenuRadioGroup v-model="status">
-                <DropdownMenuRadioItem
-                  @click="onUpdate(row.original.id, 'status', status)"
-                  v-for="label in statuses"
-                  :key="label.value"
-                  :value="label.value"
-                  class="pl-2"
-                >
-                  <component :is="label.icon" class="mr-2 w-4 h-4" />
-                  {{ label.label }}
-                </DropdownMenuRadioItem>
-              </DropdownMenuRadioGroup>
-            </DropdownMenuSubContent>
-          </DropdownMenuPortal>
-        </DropdownMenuSub>
-        <DropdownMenuSub>
-          <DropdownMenuSubTrigger>
-            <Signal class="mr-2 h-4 w-4" />
-            <span>Priority</span>
-          </DropdownMenuSubTrigger>
-          <DropdownMenuPortal>
-            <DropdownMenuSubContent>
-              <DropdownMenuRadioGroup v-model="priority">
-                <DropdownMenuRadioItem
-                  @click="onUpdate(row.original.id, 'priority', priority)"
-                  v-for="label in priorities"
-                  :key="label.value"
-                  :value="label.value"
-                  class="pl-2"
-                >
-                  <component :is="label.icon" class="mr-2 w-4 h-4" />
-                  {{ label.label }}
-                </DropdownMenuRadioItem>
-              </DropdownMenuRadioGroup>
-            </DropdownMenuSubContent>
-          </DropdownMenuPortal>
-        </DropdownMenuSub>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem asChild>
+    <Dialog>
+      <DropdownMenu>
+        <DropdownMenuTrigger as-child>
           <Button
             variant="ghost"
-            @click="onDelete(row.original.id)"
-            class="w-full"
+            class="flex h-8 w-8 p-0 data-[state=open]:bg-muted"
           >
-            Delete
-            <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
+            <Ellipsis class="h-4 w-4" />
+            <span class="sr-only">Open menu</span>
           </Button>
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end" class="w-[160px]">
+          <DropdownMenuGroup>
+            <DialogTrigger asChild>
+              <DropdownMenuItem>
+                <span>View details</span>
+              </DropdownMenuItem>
+            </DialogTrigger>
+          </DropdownMenuGroup>
+          <DropdownMenuSeparator />
+          <DropdownMenuSub>
+            <DropdownMenuSubTrigger>
+              <TrendingUp class="mr-2 h-4 w-4" />
+              <span>Status</span>
+            </DropdownMenuSubTrigger>
+            <DropdownMenuPortal>
+              <DropdownMenuSubContent>
+                <DropdownMenuRadioGroup v-model="status">
+                  <DropdownMenuRadioItem
+                    @click="onUpdate(row.original.id, 'status', status)"
+                    v-for="label in statuses"
+                    :key="label.value"
+                    :value="label.value"
+                    class="pl-2"
+                  >
+                    <component :is="label.icon" class="mr-2 w-4 h-4" />
+                    {{ label.label }}
+                  </DropdownMenuRadioItem>
+                </DropdownMenuRadioGroup>
+              </DropdownMenuSubContent>
+            </DropdownMenuPortal>
+          </DropdownMenuSub>
+          <DropdownMenuSub>
+            <DropdownMenuSubTrigger>
+              <Signal class="mr-2 h-4 w-4" />
+              <span>Priority</span>
+            </DropdownMenuSubTrigger>
+            <DropdownMenuPortal>
+              <DropdownMenuSubContent>
+                <DropdownMenuRadioGroup v-model="priority">
+                  <DropdownMenuRadioItem
+                    @click="onUpdate(row.original.id, 'priority', priority)"
+                    v-for="label in priorities"
+                    :key="label.value"
+                    :value="label.value"
+                    class="pl-2"
+                  >
+                    <component :is="label.icon" class="mr-2 w-4 h-4" />
+                    {{ label.label }}
+                  </DropdownMenuRadioItem>
+                </DropdownMenuRadioGroup>
+              </DropdownMenuSubContent>
+            </DropdownMenuPortal>
+          </DropdownMenuSub>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem asChild>
+            <Button
+              variant="ghost"
+              @click="onDelete(row.original.id)"
+              class="w-full"
+            >
+              Delete
+              <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
+            </Button>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>{{ row.original.title }}</DialogTitle>
+          <DialogDescription>
+            {{ row.original.feedback }}
+          </DialogDescription>
+        </DialogHeader>
+        <DialogFooter>
+          <Button type="submit">Confirm</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   </div>
 </template>
