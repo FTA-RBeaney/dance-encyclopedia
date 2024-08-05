@@ -23,13 +23,12 @@ const { data } = await supabase
 favourites.value = data;
 
 async function userLogout() {
+  await navigateTo("/login");
   try {
     const { error } = await supabase.auth.signOut();
     if (error) throw error;
   } catch (error) {
     alert(error.message);
-  } finally {
-    await navigateTo("/login");
   }
 }
 

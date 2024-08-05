@@ -15,11 +15,14 @@ const supabase = useSupabaseClient();
 const userData = ref();
 
 onMounted(async () => {
-  const { data } = await supabase
+  const { data, error } = await supabase
     .from("profiles")
     .select()
     .eq("id", supabaseUser?.value?.id);
-  userData.value = data[0];
+
+  if (!error) {
+    userData.value = data[0];
+  }
 });
 </script>
 

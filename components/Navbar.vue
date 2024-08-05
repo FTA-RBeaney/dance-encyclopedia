@@ -23,7 +23,7 @@
       <Admin v-if="supabaseUser" />
 
       <div class="flex">
-        <FeedbackAdd class="mr-4" />
+        <FeedbackAdd v-if="supabaseUser" class="mr-4" />
         <NuxtLink v-if="isAdmin" to="/add-feedback">
           <Button class="relative"
             ><Bug class="w-4 h-4 mr-2" /> View feedback
