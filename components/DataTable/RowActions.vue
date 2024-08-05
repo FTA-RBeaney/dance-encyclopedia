@@ -18,7 +18,6 @@ import {
   TrendingUp,
 } from "lucide-vue-next";
 
-import { Toaster } from "@/components/ui/sonner";
 import { toast } from "vue-sonner";
 
 const supabase = useSupabaseClient();
@@ -146,6 +145,5 @@ async function onUpdate(id, column, columnValue) {
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-    <Toaster />
   </div>
 </template>

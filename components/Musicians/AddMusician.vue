@@ -1,13 +1,11 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 import { createReusableTemplate, useMediaQuery } from "@vueuse/core";
-import { Toaster } from "@/components/ui/toast";
-import { useToast } from "@/components/ui/toast/use-toast";
+import { toast } from "vue-sonner";
 
 // Reuse `form` section
 const [UseTemplate, GridForm] = createReusableTemplate();
 const isDesktop = useMediaQuery("(min-width: 768px)");
-const { toast } = useToast();
 const isOpen = ref(false);
 const mbid = ref("15ab8bb8-7348-4377-ab73-b7acdad1459c");
 const newArtistName = ref();
@@ -154,6 +152,5 @@ const addArtist = async (mbid) => {
         </DrawerFooter>
       </DrawerContent>
     </Drawer>
-    <Toaster />
   </div>
 </template>

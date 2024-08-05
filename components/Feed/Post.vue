@@ -68,9 +68,7 @@ const deletePost = async (id) => {
 
 onMounted(async () => {
   const { data, refresh } = await useAsyncData("likes", async () => {
-    console.log("we refresh");
     try {
-      console.log("now we trye");
       const { data, error } = await supabase
         .from("likes")
         .select(`*,profiles(*)`)
@@ -93,9 +91,7 @@ onMounted(async () => {
       table: "likes",
     },
 
-    (payload) => {
-      console.log("new", payload.new);
-      console.log("old", payload.old);
+    () => {
       refresh();
     }
   );

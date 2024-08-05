@@ -33,36 +33,6 @@ const { data, refresh } = await useAsyncData("feedback", async () => {
 
 const feedbackList = computed(() => data);
 
-console.log(feedbackList.value);
-
-// try {
-//   const { data } = await supabase
-//     .from("feedback")
-//     .select(`*,profiles(*)`)
-//     .eq("feedback_status", "to do")
-//     .order("created_at");
-//   feedbackList.value = data;
-
-//   const { data: inProgress } = await supabase
-//     .from("feedback")
-//     .select(`*,profiles(*)`)
-//     .eq("feedback_status", "in progress")
-//     .order("created_at");
-
-//   const { data: testing } = await supabase
-//     .from("feedback")
-//     .select(`*,profiles(*)`)
-//     .eq("feedback_status", "testing")
-//     .order("created_at");
-
-//   inProgressList.value = inProgress;
-//   inTestingList.value = testing;
-//   doneList.value = done;
-// } catch (error) {
-//   alert(error.message);
-// } finally {
-// }
-
 const { data: todo } = await supabase
   .from("feedback")
   .select(`*,profiles(*)`)
@@ -219,6 +189,5 @@ onUnmounted(() => {
         </Card> -->
       </div>
     </div>
-    <Toaster />
   </div>
 </template>

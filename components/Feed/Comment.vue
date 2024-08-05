@@ -13,8 +13,6 @@ const { data, error } = await supabase
   .from("post_comments")
   .select(`*,profiles(*)`)
   .eq("id", props.comment.id);
-
-console.log(data);
 </script>
 <template>
   <!-- comment listing section -->

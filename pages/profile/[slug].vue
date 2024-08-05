@@ -4,7 +4,6 @@ import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 import { columns } from "../components/Favourites/columns.ts";
 import { CalendarIcon, Globe } from "lucide-vue-next";
-import { Toaster } from "@/components/ui/sonner";
 import { toast } from "vue-sonner";
 import {
   CalendarDate,
@@ -76,9 +75,6 @@ const form = ref({
 });
 
 const handleSubmit = async (values) => {
-  console.log("form", form.value.firstName);
-  console.log("supabaseUser.value.id", supabaseUser.value.id);
-
   try {
     const { error } = await supabase
       .from("profiles")
@@ -1358,7 +1354,6 @@ const isMe = computed(() => supabaseUser.value.id === route.params.slug);
         </div>
       </div>
     </div> -->
-    <Toaster />
   </main>
 </template>
 

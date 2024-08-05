@@ -1,7 +1,7 @@
 <script setup>
 import * as z from "zod";
-import { toast } from "@/components/ui/toast";
 import { MessageSquare } from "lucide-vue-next";
+import { toast } from "vue-sonner";
 
 const supabase = useSupabaseClient();
 const supabaseUser = useSupabaseUser();
@@ -48,16 +48,12 @@ const onSubmit = async (values) => {
       .select();
 
     if (data === null) {
-      toast({
-        title: "Error!",
+      toast("Error!", {
         description: error,
-        variant: "destructive",
       });
     } else {
-      toast({
-        title: "Success!",
+      toast("Success!", {
         description: "Your feedback has been received.",
-        variant: "success",
       });
       isOpen.value = false;
     }
@@ -87,8 +83,27 @@ const onSubmit = async (values) => {
           class="w-full space-y-6"
           :schema="schema"
           :field-config="{
+            feedbackType: {
+              inputProps: {
+                placeholder: 'Choose a feedback type',
+              },
+            },
+            feedbackTitle: {
+              inputProps: {
+                placeholder: 'Enter a title for the issue',
+              },
+            },
             feedbackDescription: {
               component: 'textarea',
+              inputProps: {
+                placeholder:
+                  'Enter a description of the issue. Try and be as detailed as possible',
+              },
+            },
+            priority: {
+              inputProps: {
+                placeholder: 'Choose a priority',
+              },
             },
           }"
           @submit="onSubmit"
@@ -97,6 +112,5 @@ const onSubmit = async (values) => {
         </AutoForm>
       </DialogContent>
     </Dialog>
-    <Toaster />
   </div>
 </template>

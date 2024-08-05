@@ -60,7 +60,6 @@
         <Button type="submit"> Submit </Button>
       </div>
     </form>
-    <Toaster />
   </div>
 </template>
 
@@ -72,7 +71,7 @@ import * as z from "zod";
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { toast } from "@/components/ui/toast";
+import { toast } from "vue-sonner";
 
 const supabase = useSupabaseClient();
 

@@ -77,7 +77,6 @@ const selectedValues = computed(
               :value="option"
               @select="
                 (e) => {
-                  console.log(e.detail.value);
                   const isSelected = selectedValues.has(option.value);
                   if (isSelected) {
                     selectedValues.delete(option.value);

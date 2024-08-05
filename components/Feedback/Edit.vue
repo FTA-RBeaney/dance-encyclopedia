@@ -11,7 +11,7 @@ import { useForm } from "vee-validate";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Toaster } from "@/components/ui/sonner";
+
 import { toast } from "vue-sonner";
 
 const username = ref(props.feedback.feedback_title);
@@ -131,6 +131,5 @@ const onSubmit = handleSubmit(async (values) => {
         </form>
       </DialogContent>
     </Dialog>
-    <Toaster />
   </div>
 </template>
