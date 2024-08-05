@@ -97,5 +97,6 @@ const onSubmit = async (values) => {
         </AutoForm>
       </DialogContent>
     </Dialog>
+    <Toaster />
   </div>
 </template>

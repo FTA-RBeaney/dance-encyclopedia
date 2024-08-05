@@ -154,5 +154,6 @@ const addArtist = async (mbid) => {
         </DrawerFooter>
       </DrawerContent>
     </Drawer>
+    <Toaster />
   </div>
 </template>

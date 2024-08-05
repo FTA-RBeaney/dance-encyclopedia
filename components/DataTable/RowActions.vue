@@ -1,9 +1,23 @@
 <script setup lang="ts">
 import type { Row } from "@tanstack/vue-table";
-import { labels } from "./../components/DataTable/data";
+import { statuses, priorities } from "./../components/DataTable/data";
 import { taskSchema } from "./../components/DataTable/schema";
 import type { Task } from "./../components/DataTable/schema";
-import { Ellipsis } from "lucide-vue-next";
+
+import {
+  CircleHelp,
+  Circle,
+  Timer,
+  CircleCheck,
+  Ban,
+  SignalLow,
+  SignalMedium,
+  SignalHigh,
+  Ellipsis,
+  Signal,
+  TrendingUp,
+} from "lucide-vue-next";
+
 import { Toaster } from "@/components/ui/sonner";
 import { toast } from "vue-sonner";
 
@@ -16,6 +30,9 @@ const props = defineProps<DataTableRowActionsProps>();
 
 const task = computed(() => taskSchema.parse(props.row.original));
 
+const status = ref();
+const priority = ref();
+
 async function onDelete(id) {
   try {
     const { data, error } = await supabase
@@ -25,6 +42,27 @@ async function onDelete(id) {
 
     toast("Task deleted", {
       description: "Task deleted",
+    });
+
+    if (error) throw error;
+  } catch (error) {
+    toast("There was an error", {
+      title: "There was an error",
+      description: error,
+    });
+  } finally {
+  }
+}
+
+async function onUpdate(id, column, columnValue) {
+  try {
+    const { data, error } = await supabase
+      .from("feedback")
+      .update({ [column]: columnValue })
+      .eq("id", id);
+
+    toast("Task updated", {
+      description: "Task updated",
     });
 
     if (error) throw error;
@@ -51,25 +89,51 @@ async function onDelete(id) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" class="w-[160px]">
-        <!-- <DropdownMenuItem>Edit</DropdownMenuItem>
-      <DropdownMenuItem>Make a copy</DropdownMenuItem>
-      <DropdownMenuItem>Favorite</DropdownMenuItem>
-      <DropdownMenuSeparator /> -->
-        <!-- <DropdownMenuSub>
-        <DropdownMenuSubTrigger>Labels</DropdownMenuSubTrigger>
-        <DropdownMenuSubContent>
-          <DropdownMenuRadioGroup :value="task.label">
-            <DropdownMenuRadioItem
-              v-for="label in labels"
-              :key="label.value"
-              :value="label.value"
-            >
-              {{ label.label }}
-            </DropdownMenuRadioItem>
-          </DropdownMenuRadioGroup>
-        </DropdownMenuSubContent>
-      </DropdownMenuSub> -->
-        <!-- <DropdownMenuSeparator /> -->
+        <DropdownMenuSub>
+          <DropdownMenuSubTrigger>
+            <TrendingUp class="mr-2 h-4 w-4" />
+            <span>Status</span>
+          </DropdownMenuSubTrigger>
+          <DropdownMenuPortal>
+            <DropdownMenuSubContent>
+              <DropdownMenuRadioGroup v-model="status">
+                <DropdownMenuRadioItem
+                  @click="onUpdate(row.original.id, 'status', status)"
+                  v-for="label in statuses"
+                  :key="label.value"
+                  :value="label.value"
+                  class="pl-2"
+                >
+                  <component :is="label.icon" class="mr-2 w-4 h-4" />
+                  {{ label.label }}
+                </DropdownMenuRadioItem>
+              </DropdownMenuRadioGroup>
+            </DropdownMenuSubContent>
+          </DropdownMenuPortal>
+        </DropdownMenuSub>
+        <DropdownMenuSub>
+          <DropdownMenuSubTrigger>
+            <Signal class="mr-2 h-4 w-4" />
+            <span>Priority</span>
+          </DropdownMenuSubTrigger>
+          <DropdownMenuPortal>
+            <DropdownMenuSubContent>
+              <DropdownMenuRadioGroup v-model="priority">
+                <DropdownMenuRadioItem
+                  @click="onUpdate(row.original.id, 'priority', priority)"
+                  v-for="label in priorities"
+                  :key="label.value"
+                  :value="label.value"
+                  class="pl-2"
+                >
+                  <component :is="label.icon" class="mr-2 w-4 h-4" />
+                  {{ label.label }}
+                </DropdownMenuRadioItem>
+              </DropdownMenuRadioGroup>
+            </DropdownMenuSubContent>
+          </DropdownMenuPortal>
+        </DropdownMenuSub>
+        <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
           <Button
             variant="ghost"

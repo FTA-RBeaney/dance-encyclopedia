@@ -63,15 +63,18 @@ export const priorities = [
     value: "low",
     label: "Low",
     icon: h(SignalLow),
+    htmlIcon: "SignalLow",
   },
   {
     value: "medium",
     label: "Medium",
     icon: h(SignalMedium),
+    htmlIcon: "SignalMedium",
   },
   {
     value: "high",
     label: "High",
     icon: h(SignalHigh),
+    htmlIcon: "SignalHigh",
   },
 ];

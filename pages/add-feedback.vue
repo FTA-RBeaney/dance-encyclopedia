@@ -126,28 +126,6 @@ const onSubmit = async (values) => {
   }
 };
 
-async function onDelete(id) {
-  alert(id);
-  // try {
-  //   const { data, error } = await supabase
-  //     .from("feedback")
-  //     .delete()
-  //     .eq("id", id);
-
-  //   toast("Task deleted", {
-  //     description: "Task deleted",
-  //   });
-
-  //   if (error) throw error;
-  // } catch (error) {
-  //   toast("There was an error", {
-  //     title: "There was an error",
-  //     description: error,
-  //   });
-  // } finally {
-  // }
-}
-
 onMounted(() => {
   channel = supabase
     .channel("public:feedback")
@@ -196,12 +174,22 @@ onUnmounted(() => {
             :columns="columns"
             on-delete="onDelete"
           />
-          <p class="py-2 text-lg font-semibold mt-8">Done</p>
-          <DataTable
-            :data="feedbackList.value.done"
-            :columns="columns"
-            class="mt-4"
-          />
+          <Accordion type="single" collapsible defaultValue="item-1">
+            <AccordionItem value="item-1" class="border-none">
+              <AccordionTrigger
+                ><p class="py-2 text-lg font-semibold mt-8">
+                  Done
+                </p></AccordionTrigger
+              >
+              <AccordionContent>
+                <DataTable
+                  :data="feedbackList.value.done"
+                  :columns="columns"
+                  class="mt-4"
+                />
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
         </Card>
 
         <!-- <FeedbackTable :data="feedbackList" title="To Do" />
@@ -231,5 +219,6 @@ onUnmounted(() => {
         </Card> -->
       </div>
     </div>
+    <Toaster />
   </div>
 </template>
