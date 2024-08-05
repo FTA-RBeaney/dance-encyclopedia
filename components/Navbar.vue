@@ -39,37 +39,30 @@
         <NuxtLink v-if="!supabaseUser" class="font-medium px-2" to="/login"
           >Login</NuxtLink
         >
-        <!-- <div v-else class="flex items-center">
-          <NuxtLink class="font-medium px-2" to="/account">
+        <div v-else class="flex items-center">
+          <Sheet>
+            <SheetTrigger>
+              <Settings :stroke-width="1.5" class="mr-2" />
+            </SheetTrigger>
+            <SheetContent>
+              <SheetHeader>
+                <SheetTitle>Profile</SheetTitle>
+                <SheetDescription> </SheetDescription>
+              </SheetHeader>
+              <Account />
+            </SheetContent>
+          </Sheet>
+          <NuxtLink class="font-medium px-2 mr-2" to="/favourites">
+            <BookHeart :stroke-width="1.5" />
+          </NuxtLink>
+          <NuxtLink :to="`/profile/${supabaseUser.id}`">
             <img
               class="w-10 h-10 rounded-full mr-1"
               alt="Default avatar"
               :src="avatar"
             />
           </NuxtLink>
-        </div> -->
-        <Sheet>
-          <SheetTrigger>
-            <Settings :stroke-width="1.5" class="mr-2" />
-          </SheetTrigger>
-          <SheetContent>
-            <SheetHeader>
-              <SheetTitle>Profile</SheetTitle>
-              <SheetDescription> </SheetDescription>
-            </SheetHeader>
-            <Account />
-          </SheetContent>
-        </Sheet>
-        <NuxtLink class="font-medium px-2 mr-2" to="/favourites">
-          <BookHeart :stroke-width="1.5" />
-        </NuxtLink>
-        <NuxtLink :to="`/profile/${supabaseUser.id}`">
-          <img
-            class="w-10 h-10 rounded-full mr-1"
-            alt="Default avatar"
-            :src="avatar"
-          />
-        </NuxtLink>
+        </div>
       </nav>
     </div>
   </div>

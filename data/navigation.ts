@@ -1,8 +1,8 @@
 export const navigation = [
   {
-    title: "Feed",
+    title: "Chat",
     path: "/feed",
-    icon: "Activity",
+    icon: "MessageSquare",
   },
   {
     title: "Watch",
