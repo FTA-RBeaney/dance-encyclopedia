@@ -18,7 +18,7 @@ onMounted(async () => {
   const { data } = await supabase
     .from("profiles")
     .select()
-    .eq("id", supabaseUser.value.id);
+    .eq("id", supabaseUser?.value?.id);
   userData.value = data[0];
 });
 </script>

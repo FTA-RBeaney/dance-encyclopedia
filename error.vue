@@ -33,12 +33,7 @@ changeBg();
         </p>
         <p class="mb-8" v-html="error.stack"></p>
 
-        <button
-          class="px-4 inline py-2 text-sm font-medium leading-5 shadow text-white transition-colors duration-150 border border-transparent rounded-lg focus:outline-none focus:shadow-outline-blue bg-blue-600 active:bg-blue-600 hover:bg-blue-700"
-          @click="handleError"
-        >
-          back to homepage
-        </button>
+        <Button @click="handleError"> back to homepage </Button>
       </div>
       <div class="max-w-lg self-end">
         <img class="rounded-xl" :src="bgImage" />
