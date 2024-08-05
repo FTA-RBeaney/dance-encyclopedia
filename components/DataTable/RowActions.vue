@@ -21,6 +21,7 @@ import {
 import { toast } from "vue-sonner";
 
 const supabase = useSupabaseClient();
+const supabaseUser = useSupabaseUser();
 
 interface DataTableRowActionsProps {
   row: Row<Task>;
@@ -31,6 +32,11 @@ const task = computed(() => taskSchema.parse(props.row.original));
 
 const status = ref();
 const priority = ref();
+
+const { data: isAdmin, error } = await supabase
+  .from("profiles")
+  .select("is_admin")
+  .eq("id", supabaseUser?.value?.id);
 
 async function onDelete(id) {
   try {
@@ -97,7 +103,7 @@ async function onUpdate(id, column, columnValue) {
             </DialogTrigger>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
-          <DropdownMenuSub>
+          <DropdownMenuSub v-if="isAdmin">
             <DropdownMenuSubTrigger>
               <TrendingUp class="mr-2 h-4 w-4" />
               <span>Status</span>
@@ -119,7 +125,7 @@ async function onUpdate(id, column, columnValue) {
               </DropdownMenuSubContent>
             </DropdownMenuPortal>
           </DropdownMenuSub>
-          <DropdownMenuSub>
+          <DropdownMenuSub v-if="isAdmin">
             <DropdownMenuSubTrigger>
               <Signal class="mr-2 h-4 w-4" />
               <span>Priority</span>

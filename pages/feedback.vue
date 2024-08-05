@@ -10,8 +10,8 @@ const doneList = ref();
 
 let channel;
 
-import tasks from "./../components/DataTable/tasks.json";
-import { columns } from "./../components/DataTable/columns";
+import tasks from "../components/DataTable/tasks.json";
+import { columns } from "../components/DataTable/columns";
 
 const { data, refresh } = await useAsyncData("feedback", async () => {
   const { data: feedback } = await supabase
