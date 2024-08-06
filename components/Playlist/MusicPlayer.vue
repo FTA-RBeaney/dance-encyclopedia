@@ -12,6 +12,7 @@ const newTrack = ref(props.currentTrack);
 const changeTrack = (e) => {
   newTrack.value = e;
   fetchTrack(e);
+  playing.value = playing;
 };
 
 const fetchTrack = (e) => {
@@ -42,17 +43,17 @@ defineExpose({
 });
 </script>
 <template>
-  <div
-    class="sticky-div bg-white shadow-md rounded-lg overflow-hidden mb-4 sm:ml-6"
-  >
+  <div class="sticky-div bg-white shadow-md rounded-lg overflow-hidden mb-4">
     <audio hidden controls ref="video" id="playerid"></audio>
-    <div class="flex p-5 border-b">
-      <img
-        class="w-20 h-20 object-cover"
-        alt="User avatar"
-        :src="newTrack?.track?.album?.images[0]?.url || props.trackImage"
-      />
-      <div class="flex flex-col px-2 w-full">
+    <div class="p-5 border-b flex md:block">
+      <div class="w-20 md:w-full">
+        <img
+          class="object-cover w-full"
+          alt="User avatar"
+          :src="newTrack?.track?.album?.images[0]?.url || props.trackImage"
+        />
+      </div>
+      <div class="flex flex-col px-2 w-full md:mt-6">
         <span class="text-xs text-gray-700 uppercase font-medium">
           now playing
         </span>
@@ -65,7 +66,7 @@ defineExpose({
             newTrack?.artists.map((artist) => artist.name).join(", ")
           }}
         </span>
-        <div class="flex justify-end">
+        <!-- <div class="flex justify-end">
           <img
             class="w-5 cursor-pointer"
             src="https://www.iconpacks.net/icons/2/free-favourite-icon-2765-thumb.png"
@@ -78,10 +79,10 @@ defineExpose({
             class="w-5 cursor-pointer"
             src="https://www.iconpacks.net/icons/2/free-favourite-icon-2765-thumb.png"
           />
-        </div>
+        </div> -->
       </div>
     </div>
-    <div class="flex flex-col sm:flex-row items-center p-5">
+    <div class="flex flex-row items-center p-5">
       <div class="flex items-center">
         <div class="flex space-x-3 p-2">
           <button class="focus:outline-none">

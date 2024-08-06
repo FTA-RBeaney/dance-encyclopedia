@@ -1,6 +1,14 @@
 <template>
   <div class="w-full">
-    <div class="flex flex-col sm:flex-row justify-start items-start">
+    <div
+      class="flex flex-col sm:flex-row max-w-screen-lg justify-center items-start"
+    >
+      <PlaylistMusicPlayer
+        :currentTrack="currentTrack"
+        :trackImage="props.trackImage"
+        ref="myChild"
+        class="order-first w-full sm:w-6/12 top-0 sm:top-10 sm:mr-6"
+      />
       <div class="flex bg-white shadow-md rounded-lg overflow-hidden sm:w-6/12">
         <div class="flex flex-col w-full start">
           <div class="flex flex-col px-5 py-3">
@@ -29,12 +37,6 @@
           </div>
         </div>
       </div>
-      <PlaylistMusicPlayer
-        :currentTrack="currentTrack"
-        :trackImage="props.trackImage"
-        ref="myChild"
-        class="order-first sm:order-last w-full sm:w-6/12 top-0 sm:top-10"
-      />
     </div>
   </div>
 </template>
