@@ -29,7 +29,7 @@ const postId = props.post.id;
 const favouriteId = supabaseUser.value.id + postId;
 
 const isLikedByMe = ref(false);
-const isOpen = ref(false);
+const isOpen = ref(true);
 
 const toggleComments = () => {
   isOpen.value = !isOpen.value;
