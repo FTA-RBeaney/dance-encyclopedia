@@ -3,6 +3,7 @@ export const navigation = [
     title: "Chat",
     path: "/feed",
     icon: "MessageSquare",
+    count: true,
   },
   {
     title: "Watch",

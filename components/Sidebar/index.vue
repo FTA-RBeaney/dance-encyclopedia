@@ -4,6 +4,18 @@ import { playlists } from "~/data/playlists";
 import * as lucideIcons from "lucide-vue-next";
 const supabaseUser = useSupabaseUser();
 const supabase = useSupabaseClient();
+
+const { data, refresh } = await useAsyncData("posts", async () => {
+  try {
+    const { data, error } = await supabase
+      .from("posts")
+      .select("*")
+      .is("parent", null);
+    return data;
+  } catch (error) {
+    alert(error.message);
+  }
+});
 </script>
 
 <template>
@@ -19,9 +31,21 @@ const supabase = useSupabaseClient();
             :key="`nav${i}`"
             :to="item.path"
           >
-            <Button variant="ghost" class="w-full justify-start">
-              <component :is="lucideIcons[item.icon]" class="mr-2 w-4 h-4" />
-              {{ item.title }}
+            <Button
+              variant="ghost"
+              class="w-full flex justify-between items-center relative"
+            >
+              <div class="flex items-center">
+                <component :is="lucideIcons[item.icon]" class="mr-2 w-4 h-4" />
+
+                {{ item.title }}
+              </div>
+              <div
+                v-if="item.count"
+                class="flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-red-500 rounded-full"
+              >
+                {{ data.length }}
+              </div>
             </Button>
           </NuxtLink>
         </div>
