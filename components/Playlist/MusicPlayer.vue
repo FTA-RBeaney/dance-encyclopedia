@@ -3,6 +3,7 @@ import { useMediaControls } from "@vueuse/core";
 
 const props = defineProps({
   currentTrack: Object,
+  trackImage: String,
 });
 
 const video = ref();
@@ -14,7 +15,8 @@ const changeTrack = (e) => {
 };
 
 const fetchTrack = (e) => {
-  useMediaControls(video, { src: e.track.preview_url });
+  console.log("fetching", e.preview_url);
+  useMediaControls(video, { src: e?.track?.preview_url || e.preview_url });
 };
 
 const toMMSS = (numSecs) => {
@@ -29,8 +31,11 @@ const toMMSS = (numSecs) => {
 };
 
 const { playing, currentTime, duration, volume } = useMediaControls(video, {
-  src: props.currentTrack.track.preview_url,
+  src:
+    props?.currentTrack?.track?.preview_url || props.currentTrack.preview_url,
 });
+
+console.log(props.currentTrack);
 
 defineExpose({
   changeTrack,
@@ -45,17 +50,20 @@ defineExpose({
       <img
         class="w-20 h-20 object-cover"
         alt="User avatar"
-        :src="newTrack?.track?.album?.images[0]?.url"
+        :src="newTrack?.track?.album?.images[0]?.url || props.trackImage"
       />
       <div class="flex flex-col px-2 w-full">
         <span class="text-xs text-gray-700 uppercase font-medium">
           now playing
         </span>
         <span class="text-sm text-red-500 capitalize font-semibold pt-1">
-          {{ newTrack?.track?.name }}
+          {{ newTrack?.track?.name || newTrack.name }}
         </span>
         <span class="text-xs text-gray-500 uppercase font-medium">
-          {{ newTrack?.track?.artists.map((artist) => artist.name).join(", ") }}
+          {{
+            newTrack?.track?.artists.map((artist) => artist.name).join(", ") ||
+            newTrack?.artists.map((artist) => artist.name).join(", ")
+          }}
         </span>
         <div class="flex justify-end">
           <img

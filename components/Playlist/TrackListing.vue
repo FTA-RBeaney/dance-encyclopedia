@@ -17,10 +17,11 @@
             <div v-for="(track, index) in props.tracks" :key="`item${index}`">
               <div>
                 <PlaylistTrack
-                  v-if="track.track.preview_url"
+                  v-if="track?.track?.preview_url || track.preview_url"
                   @click="testCall(track)"
-                  :trackId="track.track.id"
+                  :trackId="track?.track?.id || track.id"
                   :track="track"
+                  :trackImage="props.trackImage"
                   class="flex items-center border-b py-3 cursor-pointer hover:shadow-md px-2"
                 />
               </div>
@@ -30,6 +31,7 @@
       </div>
       <PlaylistMusicPlayer
         :currentTrack="currentTrack"
+        :trackImage="props.trackImage"
         ref="myChild"
         class="order-first sm:order-last w-full sm:w-6/12 top-0 sm:top-10"
       />
@@ -40,6 +42,7 @@
 <script setup>
 const props = defineProps({
   tracks: Object,
+  trackImage: String,
 });
 
 const currentTrack = ref(props.tracks[0]);

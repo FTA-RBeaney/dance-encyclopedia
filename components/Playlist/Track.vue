@@ -3,17 +3,20 @@
     <img
       class="w-10 h-10 object-cover rounded-lg mr-2"
       alt="User avatar"
-      :src="track.track.album?.images[0]?.url"
+      :src="track?.track?.album?.images[0]?.url || props.trackImage"
     />
     <div class="flex flex-col px-2 w-full">
       <span class="text-sm text-red-500 capitalize font-semibold pt-1">
-        {{ track.track.name }}
+        {{ track?.track?.name || track.name }}
       </span>
-      <span class="text-xs text-gray-500 uppercase font-medium">
-        {{ track?.track.artists.map((artist) => artist.name).join(", ") }}
+      <span
+        v-if="track?.track?.artists"
+        class="text-xs text-gray-500 uppercase font-medium"
+      >
+        {{ track?.track?.artists.map((artist) => artist.name).join(", ") }}
       </span>
     </div>
-    <div class="px-4 py-4">
+    <div class="px-0 py-0">
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger>
@@ -21,6 +24,7 @@
               v-if="isFavourite"
               @click="removeFavourite(track.track)"
               extraClasses="bg-[#EF4444] hover:bg-[#EF4444]/90 focus:ring-[#EF4444]/50"
+              class="p-0"
               ><IconsHeartFull
             /></FavouriteButton>
             <FavouriteButton v-else @click="addFavourite(track.track)"
@@ -42,6 +46,7 @@ const supabase = useSupabaseClient();
 const props = defineProps({
   trackId: String,
   track: Object,
+  trackImage: String,
 });
 
 const isFavourite = ref();

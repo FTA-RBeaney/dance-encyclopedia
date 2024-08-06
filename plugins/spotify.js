@@ -31,4 +31,27 @@ export default defineNuxtPlugin(async (nuxtApp) => {
       },
     }).then((response) => response.json());
   };
+
+  nuxtApp.getArtistAlbums = async () => {
+    const { access_token: accessToken } = await getAccessToken();
+
+    return fetch(
+      "https://api.spotify.com/v1/artists/5V0MlUE1Bft0mbLlND7FJz/albums",
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    ).then((response) => response.json());
+  };
+
+  nuxtApp.getArtistAlbum = async (id) => {
+    const { access_token: accessToken } = await getAccessToken();
+
+    return fetch(`https://api.spotify.com/v1/albums/${id}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }).then((response) => response.json());
+  };
 });

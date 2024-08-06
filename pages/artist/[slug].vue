@@ -13,9 +13,9 @@ const artistId = route.params.slug;
 const { data: wikiInfo, error: wikiError } = await supabase
   .from("musicians")
   .select()
-  .eq("id", artistId);
+  .eq("name", artistId);
 // then get the musicbrainz data
-const artistUrl = `https://musicbrainz.org/ws/2/artist/${artistId}?inc=url-rels&fmt=json`;
+const artistUrl = `https://musicbrainz.org/ws/2/artist/${wikiInfo[0].id}?inc=url-rels&fmt=json`;
 const { data: artistData } = await useFetch(artistUrl);
 
 // get the musician name and change it to a format that we can use in Wikipedia's rest API
@@ -110,6 +110,17 @@ onMounted(async () => {
 <template>
   <div class="w-full h-full">
     <div>
+      <Breadcrumb>
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink href="/musicians"> Home </BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            {{ artistData?.name }}
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
       <div class="flex justify-between items-center">
         <Heading
           :title="artistData?.name"
@@ -144,11 +155,23 @@ onMounted(async () => {
       >
         <ArtistImageList :artistName="artistName" />
       </div>
-      <div
+      <Card class="p-6">
+        <div class="flex items-center justify-between">
+          <div class="space-y-1">
+            <h2 class="text-2xl font-semibold tracking-tight">Albums</h2>
+            <p class="text-sm text-muted-foreground">
+              A list of all the albums
+            </p>
+          </div>
+        </div>
+        <Separator class="my-4" />
+        <ArtistMusic />
+      </Card>
+      <!-- <div
         class="bg-white border p-6 border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 relative w-full h-full flex flex-col overflow-hidden mt-6"
       >
         <ArtistAlbumList :artistId="artistId" />
-      </div>
+      </div> -->
       <div class="bottom-drawer">
         <div class="h-2 bg-red-light"></div>
         <div class="inline-flex items-center justify-center bg-red-lightest">

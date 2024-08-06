@@ -13,7 +13,7 @@
         ><IconsHeartOutline
       /></FavouriteButton>
     </div>
-    <NuxtLink :to="`/artist/${artistId}`" class="">
+    <NuxtLink :to="`/artist/${props.musician.name}`" class="">
       <img
         class="w-full card-image aspect-square"
         :src="wikiInfo?.thumbnail?.source"
