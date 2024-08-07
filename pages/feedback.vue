@@ -15,7 +15,7 @@ const { data, refresh } = await useAsyncData("feedback", async () => {
   const { data: feedback } = await supabase
     .from("feedback")
     .select(`*,profiles(*)`)
-    .neq("status", "done")
+    .eq("status", "to do")
     .order("status", { ascending: false });
 
   const { data: done } = await supabase
@@ -30,7 +30,18 @@ const { data, refresh } = await useAsyncData("feedback", async () => {
     .eq("status", "in progress")
     .order("created_at");
 
-  return { feedback: feedback, done: done, inProgress: inProgress };
+  const { data: testing } = await supabase
+    .from("feedback")
+    .select(`*,profiles(*)`)
+    .eq("status", "testing")
+    .order("created_at");
+
+  return {
+    feedback: feedback,
+    done: done,
+    inProgress: inProgress,
+    testing: testing,
+  };
 });
 
 const feedbackList = computed(() => data);
@@ -61,14 +72,6 @@ onUnmounted(() => {
     <Heading title="Feedback" description="View the feedback so far below" />
     <div class="mt-6">
       <div class="mx-auto xl:mx-0">
-        <Card class="p-6" v-if="feedbackList.value.inProgress.length > 0">
-          <p class="pb-2 text-lg font-semibold">In Progress</p>
-          <DataTable
-            :data="feedbackList.value.inProgress"
-            :columns="columns"
-            on-delete="onDelete"
-          />
-        </Card>
         <Card class="p-6 mt-8">
           <p class="pb-2 text-lg font-semibold">To Do</p>
           <DataTable
@@ -76,6 +79,24 @@ onUnmounted(() => {
             :columns="columns"
             on-delete="onDelete"
             class="mt-4"
+          />
+        </Card>
+
+        <Card class="p-6 mt-8" v-if="feedbackList.value.inProgress.length > 0">
+          <p class="pb-2 text-lg font-semibold">In Progress</p>
+          <DataTable
+            :data="feedbackList.value.inProgress"
+            :columns="columns"
+            on-delete="onDelete"
+          />
+        </Card>
+
+        <Card class="p-6 mt-8" v-if="feedbackList.value.testing.length > 0">
+          <p class="pb-2 text-lg font-semibold">Testing</p>
+          <DataTable
+            :data="feedbackList.value.testing"
+            :columns="columns"
+            on-delete="onDelete"
           />
         </Card>
         <Card class="p-6 mt-8">
