@@ -9,8 +9,6 @@ const inTestingList = ref([]);
 const doneList = ref();
 
 let channel;
-
-import tasks from "../components/DataTable/tasks.json";
 import { columns } from "../components/DataTable/columns";
 
 const { data, refresh } = await useAsyncData("feedback", async () => {

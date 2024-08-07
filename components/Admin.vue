@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { navigation } from "../data/navigation";
+import { firstNavigation } from "../data/navigation";
 import * as lucideIcons from "lucide-vue-next";
 import { useMagicKeys } from "@vueuse/core";
 const supabase = useSupabaseClient();
@@ -49,7 +49,7 @@ const inputLength = computed(() => favourites.value.length);
         <CommandEmpty>No results found.</CommandEmpty>
         <CommandGroup heading="Suggestions">
           <CommandItem
-            v-for="(item, i) in navigation"
+            v-for="(item, i) in firstNavigation"
             :key="`nav${i}`"
             :value="item.title"
             @select="

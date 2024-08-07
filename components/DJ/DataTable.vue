@@ -66,11 +66,17 @@ const table = useVueTable({
   getFacetedRowModel: getFacetedRowModel(),
   getFacetedUniqueValues: getFacetedUniqueValues(),
 });
+
+// const autoCompleteSuggestions = Array.from(
+//   getColumn("artists").getFacetedUniqueValues().keys()
+// )
+//   .sort()
+//   .slice(0, 5000);
 </script>
 
 <template>
   <div class="space-y-4">
-    <DataTableToolbar :table="table" />
+    <DJToolbar :table="table" />
     <div class="rounded-md border">
       <Table>
         <TableHeader>
@@ -93,8 +99,13 @@ const table = useVueTable({
               v-for="row in table.getRowModel().rows"
               :key="row.id"
               :data-state="row.getIsSelected() && 'selected'"
+              @click="$emit('testCall', row.original.spotify_info)"
             >
-              <TableCell v-for="cell in row.getVisibleCells()" :key="cell.id">
+              <TableCell
+                v-for="cell in row.getVisibleCells()"
+                :key="cell.id"
+                class="py-2"
+              >
                 <FlexRender
                   :render="cell.column.columnDef.cell"
                   :props="cell.getContext()"

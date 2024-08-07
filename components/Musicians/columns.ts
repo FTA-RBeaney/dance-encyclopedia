@@ -13,19 +13,6 @@ interface Musician {
 }
 
 export const columns: ColumnDef<Musician>[] = [
-  //   {
-  //     accessorKey: "name",
-  //     header: () => h("div", { class: "text-left" }, "Name"),
-  //     cell: ({ row }: any) => {
-  //       const name = row.getValue("name");
-
-  //       var url = `https://en.wikipedia.org/api/rest_v1/page/summary/${name}`;
-  //       const { data: wikiInfo } = await useFetch(url);
-
-  //       return h("div", { class: "text-left font-medium" }, name);
-  //     },
-  //   },
-
   {
     accessorKey: "name",
     header: ({ column }) => {

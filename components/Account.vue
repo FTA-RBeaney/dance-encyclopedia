@@ -32,7 +32,7 @@ async function userLogout() {
   }
 }
 
-const themeColors = ["default", "dark", "rose", "blue"];
+const themeColors = ["default", "dark", "rose", "blue", "cafe"];
 </script>
 
 <template>
@@ -54,15 +54,27 @@ const themeColors = ["default", "dark", "rose", "blue"];
         <p class="py-2 text-lg font-semibold">Theme</p>
         <div class="my-4 w-96 theme-selector">
           <RadioGroup default-value="option-one" v-model="colorMode.preference">
-            <div class="flex items-center space-x-2">
-              <RadioGroupItem
+            <div class="flex items-start space-x-2">
+              <div
                 v-for="(themeColor, i) in themeColors"
                 :key="`theme${i}`"
-                :id="themeColor"
-                :value="themeColor"
-                :class="themeColor"
-                class="w-6 h-6 fill-slate-100"
-              />
+                class="h-6"
+              >
+                <TooltipProvider class="w-6 h-6">
+                  <Tooltip>
+                    <TooltipTrigger class="w-6 h-6">
+                      <RadioGroupItem
+                        :id="themeColor"
+                        :value="themeColor"
+                        :class="themeColor"
+                        class="w-6 h-6 fill-slate-100"
+                    /></TooltipTrigger>
+                    <TooltipContent>
+                      <p>{{ themeColor }}</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </div>
             </div>
           </RadioGroup>
         </div>
@@ -89,6 +101,14 @@ const themeColors = ["default", "dark", "rose", "blue"];
   }
   .rose {
     background-color: hsl(var(--rose));
+
+    svg {
+      fill: white;
+      color: white;
+    }
+  }
+  .cafe {
+    background-color: brown;
 
     svg {
       fill: white;

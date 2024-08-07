@@ -4,6 +4,7 @@ import { useMediaControls } from "@vueuse/core";
 const props = defineProps({
   currentTrack: Object,
   trackImage: String,
+  variant: String,
 });
 
 const video = ref();
@@ -36,24 +37,34 @@ const { playing, currentTime, duration, volume } = useMediaControls(video, {
     props?.currentTrack?.track?.preview_url || props.currentTrack.preview_url,
 });
 
-console.log(props.currentTrack);
-
 defineExpose({
   changeTrack,
 });
 </script>
 <template>
-  <div class="sticky-div bg-white shadow-md rounded-lg overflow-hidden mb-4">
+  <div
+    class="sticky-div bg-white shadow-md rounded-lg overflow-hidden mb-4"
+    :class="props.variant === 'dj' && 'flex'"
+  >
     <audio hidden controls ref="video" id="playerid"></audio>
-    <div class="p-5 border-b flex md:block">
-      <div class="w-20 md:w-full">
+    <div
+      class="p-5 border-b flex md:block"
+      :class="props.variant === 'dj' && 'border-none'"
+    >
+      <div
+        v-if="newTrack?.track?.album?.images[0]?.url || props.trackImage"
+        class="w-20 md:w-full"
+      >
         <img
           class="object-cover w-full"
           alt="User avatar"
           :src="newTrack?.track?.album?.images[0]?.url || props.trackImage"
         />
       </div>
-      <div class="flex flex-col px-2 w-full md:mt-6">
+      <div
+        class="flex flex-col px-2 w-full md:mt-6"
+        :class="props.variant === 'dj' && 'md:mt-0'"
+      >
         <span class="text-xs text-gray-700 uppercase font-medium">
           now playing
         </span>

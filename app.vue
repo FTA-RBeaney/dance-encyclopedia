@@ -27,6 +27,9 @@ const useIdFunction = () => useId();
 </template>
 
 <style>
+html.cafe {
+  filter: sepia(0.9) hue-rotate(315deg) brightness(0.9);
+}
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;

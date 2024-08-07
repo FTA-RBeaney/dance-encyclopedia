@@ -2,7 +2,6 @@
 import type { Table } from "@tanstack/vue-table";
 import type { Task } from "schema";
 
-import { priorities, statuses } from "./../components/DataTable/data";
 import { X } from "lucide-vue-next";
 
 interface DataTableToolbarProps {
@@ -14,28 +13,24 @@ const props = defineProps<DataTableToolbarProps>();
 const isFiltered = computed(
   () => props.table.getState().columnFilters.length > 0
 );
+
+const artists = props.table.getColumn("artist")?.getFacetedUniqueValues();
+console.log(artists);
 </script>
 
 <template>
   <div class="flex items-center justify-between">
     <div class="flex flex-1 items-center space-x-2">
       <Input
-        placeholder="Filter tasks..."
-        :model-value="(table.getColumn('title')?.getFilterValue() as string) ?? ''"
-        class="h-8 w-[150px] lg:w-[250px]"
-        @input="table.getColumn('title')?.setFilterValue($event.target.value)"
+        class="max-w-sm"
+        placeholder="Filter emails..."
+        :model-value="table.getColumn('name')?.getFilterValue() as string"
+        @update:model-value="table.getColumn('name')?.setFilterValue($event)"
       />
-      <DataTableFacetedFilter
-        v-if="statuses.lengh > 0"
-        :column="table.getColumn('status')"
-        title="Status"
-        :options="statuses"
-      />
-      <DataTableFacetedFilter
-        v-if="priorities.length > 0"
-        :column="table.getColumn('priority')"
-        title="Priority"
-        :options="priorities"
+      <DJFacetedFilter
+        :column="table.getColumn('artist')"
+        title="Artist"
+        :options="artists"
       />
 
       <Button
