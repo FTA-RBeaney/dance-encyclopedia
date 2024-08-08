@@ -33,20 +33,17 @@ export const musicNavigation = [
   },
   {
     title: "Albums",
-    path: "/under-construction",
+    path: "/albums",
     icon: "DiscAlbum",
-    disabled: true,
   },
   {
     title: "Songs",
-    path: "/under-construction",
+    path: "/tracks",
     icon: "Music",
-    disabled: true,
   },
   {
     title: "Playlists",
-    path: "/under-construction",
+    path: "/playlists",
     icon: "ListMusic",
-    disabled: true,
   },
 ];

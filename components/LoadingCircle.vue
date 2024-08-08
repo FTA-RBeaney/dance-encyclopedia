@@ -2,7 +2,7 @@
   <div class="w-full min-h-full z-20 left-0">
     <div
       role="status"
-      class="w-full min-h-[300px] text-center flex justify-center items-center"
+      class="w-full min-h-[300px] h-100 text-center flex justify-center items-center"
     >
       <svg
         aria-hidden="true"

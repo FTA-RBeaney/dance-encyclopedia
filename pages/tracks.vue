@@ -2,12 +2,22 @@
 import { columns } from "../components/DJ/columns";
 const supabase = useSupabaseClient();
 let channel;
+const isLoading = ref(false);
+
+const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+
 const { data, refresh } = await useAsyncData("albums", async () => {
+  isLoading.value = true;
+  await delay(1000);
+
   const { data } = await supabase
-    .from("albums")
+    .from("tracks")
     .select(`*,profiles(*)`)
     .neq("type", "album")
     .order("created_at", { ascending: false });
+
+  await delay(1000);
+  isLoading.value = false;
 
   return data;
 });
@@ -28,6 +38,8 @@ onMounted(() => {
       () => refresh()
     )
     .subscribe();
+
+  isLoading.value = false;
 });
 
 onUnmounted(() => {
@@ -46,6 +58,10 @@ function testCall(e) {
 
 <template>
   <div class="">
+    <LoadingCircle
+      v-if="isLoading"
+      class="fixed left-0 top-0 bg-black/30 w-screen h-screen z-20 flex justify-center items-center"
+    />
     <AddAlbum />
 
     <Card class="p-6 mt-6">
@@ -59,7 +75,7 @@ function testCall(e) {
     <PlaylistMusicPlayer
       :currentTrack="currentTrack"
       ref="myChild"
-      class="order-first h-auto fixed bottom-5 w-5/12 max-w-[450px] left-[47%] mx-auto"
+      class="order-first h-auto fixed bottom-5 w-5/12 max-w-[450px] right-8 border mx-auto"
       variant="dj"
     />
 

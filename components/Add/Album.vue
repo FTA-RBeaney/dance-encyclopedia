@@ -71,7 +71,7 @@ const addAlbum = async (spotifyId) => {
     console.log(track.artists);
     try {
       const { data, error } = await supabase
-        .from("albums")
+        .from("tracks")
         .upsert({
           id: track.id,
           name: track.name,
