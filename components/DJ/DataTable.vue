@@ -99,7 +99,7 @@ const table = useVueTable({
               v-for="row in table.getRowModel().rows"
               :key="row.id"
               :data-state="row.getIsSelected() && 'selected'"
-              @click="$emit('testCall', row.original.spotify_info)"
+              @click="$emit('testCall', row.original)"
             >
               <TableCell
                 v-for="cell in row.getVisibleCells()"

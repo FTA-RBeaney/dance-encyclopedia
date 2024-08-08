@@ -12,7 +12,7 @@ const { data, refresh } = await useAsyncData("albums", async () => {
 
   const { data } = await supabase
     .from("tracks")
-    .select(`*,profiles(*)`)
+    .select(`*,profiles(*),albums(*)`)
     .neq("type", "album")
     .order("created_at", { ascending: false });
 
@@ -46,9 +46,16 @@ onUnmounted(() => {
   supabase.removeChannel(channel);
 });
 
-console.log("musicList", musicList.value.value);
+// const trackImage = computed(
+//   () => musicList.value.value.albums.spotify_info.images[0].url
+// );
 
-const currentTrack = ref(musicList.value.value[0].spotify_info);
+console.log("image", musicList.value.value);
+
+const currentTrack = ref(musicList?.value?.value[0].spotify_info);
+const currentImage = ref(
+  musicList?.value?.value[0].albums.spotify_info.images[0].url
+);
 const myChild = ref(null);
 
 function testCall(e) {
@@ -57,7 +64,7 @@ function testCall(e) {
 </script>
 
 <template>
-  <div class="">
+  <div class="pb-40">
     <LoadingCircle
       v-if="isLoading"
       class="fixed left-0 top-0 bg-black/30 w-screen h-screen z-20 flex justify-center items-center"
@@ -75,8 +82,9 @@ function testCall(e) {
     <PlaylistMusicPlayer
       :currentTrack="currentTrack"
       ref="myChild"
-      class="order-first h-auto fixed bottom-5 w-5/12 max-w-[450px] right-8 border mx-auto"
+      class="order-first h-auto fixed bottom-5 w-6/12 max-w-[550px] min-w-[550px] right-8 border mx-auto"
       variant="dj"
+      :trackImage="currentImage"
     />
 
     <!-- 

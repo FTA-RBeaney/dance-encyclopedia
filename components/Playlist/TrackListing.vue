@@ -51,6 +51,7 @@ const currentTrack = ref(props.tracks[0]);
 const myChild = ref(null);
 
 function testCall(e) {
+  console.log("clicked", e);
   myChild.value.changeTrack(e);
 }
 </script>

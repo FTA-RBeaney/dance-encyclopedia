@@ -9,16 +9,25 @@ const props = defineProps({
 
 const video = ref();
 const newTrack = ref(props.currentTrack);
+const newImage = ref(props.trackImage);
 
 const changeTrack = (e) => {
-  newTrack.value = e;
-  fetchTrack(e);
+  console.log("e", e);
+  newImage.value = e?.albums?.spotify_info.images[0].url;
+  newTrack.value = e?.spotify_info || e;
+  if (e.spotify_info) {
+    fetchTrack(e.spotify_info);
+  } else {
+    fetchTrack(e);
+  }
   playing.value = playing;
 };
 
 const fetchTrack = (e) => {
-  console.log("fetching", e.preview_url);
-  useMediaControls(video, { src: e?.track?.preview_url || e.preview_url });
+  console.log("fetching", e);
+  useMediaControls(video, {
+    src: e?.track?.preview_url || e.preview_url,
+  });
 };
 
 const toMMSS = (numSecs) => {
@@ -49,21 +58,24 @@ defineExpose({
     <audio hidden controls ref="video" id="playerid"></audio>
     <div
       class="p-5 border-b flex md:block"
-      :class="props.variant === 'dj' && 'border-none'"
+      :class="props.variant === 'dj' && 'border-none md:flex'"
     >
       <div
-        v-if="newTrack?.track?.album?.images[0]?.url || props.trackImage"
+        v-if="
+          newTrack?.track?.album?.images[0]?.url || newImage || props.trackImage
+        "
         class="w-20 md:w-full"
+        :class="props.variant === 'dj' && 'md:w-28'"
       >
         <img
           class="object-cover w-full"
           alt="User avatar"
-          :src="newTrack?.track?.album?.images[0]?.url || props.trackImage"
+          :src="newImage || newTrack?.track?.album?.images[0]?.url"
         />
       </div>
       <div
         class="flex flex-col px-2 w-full md:mt-6"
-        :class="props.variant === 'dj' && 'md:mt-0'"
+        :class="props.variant === 'dj' && 'md:!mt-0'"
       >
         <span class="text-xs text-gray-700 uppercase font-medium">
           now playing

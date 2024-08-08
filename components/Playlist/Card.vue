@@ -4,11 +4,11 @@
       <div
         class="w-full h-full flex flex-col p-4 bg-black/40 bg-white dark:bg-secondary rounded-lg"
       >
-        <img :src="response.images[0].url" />
+        <img :src="response?.images[0].url" />
         <h1
           class="font-semibold text-md text-card-foreground mt-3 dark:text-primary"
         >
-          {{ response.name }}
+          {{ response?.name }}
         </h1>
         <p class="font-semibold text-sm text-gray-500 dark:text-foreground">
           Spada
