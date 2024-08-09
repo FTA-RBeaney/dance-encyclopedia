@@ -70,20 +70,5 @@ function testCall(e) {
         @test-call="testCall"
       />
     </Card>
-
-    <PlaylistMusicPlayer
-      :currentTrack="currentTrack"
-      ref="myChild"
-      class="order-first h-auto fixed bottom-5 w-5/12 max-w-[450px] right-8 border mx-auto"
-      variant="dj"
-    />
-
-    <!-- 
-    <MusicPlayer
-      :currentTrack="currentTrack"
-      :trackImage="props.trackImage"
-      ref="myChild"
-      class="order-first w-full sm:w-6/12 top-0 sm:top-10 sm:mr-6"
-    /> -->
   </div>
 </template>

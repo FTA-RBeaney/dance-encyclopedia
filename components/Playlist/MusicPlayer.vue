@@ -65,10 +65,11 @@ defineExpose({
           newTrack?.track?.album?.images[0]?.url || newImage || props.trackImage
         "
         class="w-20 md:w-full"
-        :class="props.variant === 'dj' && 'md:w-28'"
+        :class="props.variant === 'dj' && 'md:!w-28'"
       >
         <img
           class="object-cover w-full"
+          :class="props.variant === 'dj' && 'max-w-20'"
           alt="User avatar"
           :src="newImage || newTrack?.track?.album?.images[0]?.url"
         />
@@ -105,7 +106,10 @@ defineExpose({
         </div> -->
       </div>
     </div>
-    <div class="flex flex-row items-center p-5">
+    <div
+      class="flex flex-row items-center p-5"
+      :class="props.variant === 'dj' && 'w-6/12'"
+    >
       <div class="flex items-center">
         <div class="flex space-x-3 p-2">
           <button class="focus:outline-none">
@@ -167,7 +171,10 @@ defineExpose({
           </button>
         </div>
       </div>
-      <div class="relative w-full sm:w-1/2 md:w-7/12 lg:w-4/6 ml-2">
+      <div
+        v-if="variant != 'dj'"
+        class="relative w-full sm:w-1/2 md:w-7/12 lg:w-4/6 ml-2"
+      >
         <div class="bg-red-300 h-2 w-full rounded-lg">
           <input
             v-model="currentTime"
@@ -180,7 +187,7 @@ defineExpose({
           />
         </div>
       </div>
-      <div class="flex justify-end w-full sm:w-auto pt-1 sm:pt-0">
+      <div class="flex w-4/12 justify-end sm:w-auto pt-1 sm:pt-0">
         <span class="text-xs text-gray-700 uppercase font-medium pl-2">
           <span>{{ toMMSS(currentTime) }}</span
           >/<span>{{ toMMSS(duration) }}</span>

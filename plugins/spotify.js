@@ -64,4 +64,17 @@ export default defineNuxtPlugin(async (nuxtApp) => {
       },
     }).then((response) => response.json());
   };
+
+  nuxtApp.getRecommendations = async (id) => {
+    const { access_token: accessToken } = await getAccessToken();
+
+    return fetch(
+      `https://api.spotify.com/v1/recommendations?limit=5&seed_artists=5V0MlUE1Bft0mbLlND7FJz&seed_genres=jazz&seed_tracks=6bWBLntFViKFJ487Ek2cRb`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    ).then((response) => response.json());
+  };
 });

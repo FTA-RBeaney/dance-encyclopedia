@@ -44,7 +44,7 @@ const { data, refresh } = await useAsyncData("posts", async () => {
             </div>
             <div
               v-if="item.count"
-              class="flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-red-500 rounded-full"
+              class="relative grid items-center px-2 py-0.5 font-sans text-xs font-bold text-gray-900 uppercase rounded-full select-none whitespace-nowrap bg-gray-100 group-hover:bg-white/20 group-hover:text-white"
             >
               {{ data.length }}
             </div>
@@ -68,12 +68,6 @@ const { data, refresh } = await useAsyncData("posts", async () => {
                 <component :is="lucideIcons[item.icon]" class="mr-2 w-4 h-4" />
 
                 {{ item.title }}
-              </div>
-              <div
-                v-if="item.count"
-                class="flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-red-500 rounded-full"
-              >
-                {{ data.length }}
               </div>
             </Button>
           </NuxtLink>

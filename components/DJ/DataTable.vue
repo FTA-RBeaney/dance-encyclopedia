@@ -19,6 +19,8 @@ import {
 import type { Task } from "schema";
 import { valueUpdater } from "@/lib/utils";
 
+import { CirclePlay } from "lucide-vue-next";
+
 interface DataTableProps {
   columns: ColumnDef<Task, any>[];
   data: Task[];
@@ -67,6 +69,12 @@ const table = useVueTable({
   getFacetedUniqueValues: getFacetedUniqueValues(),
 });
 
+const range = (row) => {
+  const newRange = row.getVisibleCells();
+  console.log("newRange", newRange.slice(1));
+  return newRange.slice(1);
+};
+
 // const autoCompleteSuggestions = Array.from(
 //   getColumn("artists").getFacetedUniqueValues().keys()
 // )
@@ -95,23 +103,34 @@ const table = useVueTable({
         </TableHeader>
         <TableBody>
           <template v-if="table.getRowModel().rows?.length">
-            <TableRow
-              v-for="row in table.getRowModel().rows"
-              :key="row.id"
-              :data-state="row.getIsSelected() && 'selected'"
-              @click="$emit('testCall', row.original)"
-            >
-              <TableCell
-                v-for="cell in row.getVisibleCells()"
-                :key="cell.id"
-                class="py-2"
-              >
-                <FlexRender
-                  :render="cell.column.columnDef.cell"
-                  :props="cell.getContext()"
-                />
-              </TableCell>
-            </TableRow>
+            <template v-for="row in table.getRowModel().rows" :key="row.id">
+              <TableRow :data-state="row.getIsSelected() && 'selected'">
+                <TableCell
+                  @click="$emit('testCall', row.original)"
+                  class="cursor-pointer hover:underline"
+                >
+                  <div class="flex items-center">
+                    <CirclePlay class="w-4 h-4 mr-2" />
+                    {{ row.getValue("name") }}
+                  </div>
+                </TableCell>
+                <TableCell
+                  v-for="cell in range(row)"
+                  :key="cell.id"
+                  class="py-2"
+                >
+                  <FlexRender
+                    :render="cell.column.columnDef.cell"
+                    :props="cell.getContext()"
+                  />
+                </TableCell>
+              </TableRow>
+              <TableRow v-if="row.getIsExpanded()">
+                <TableCell :colspan="row.getAllCells().length">
+                  <SpotifyPlayer :songId="row.original.id" />
+                </TableCell>
+              </TableRow>
+            </template>
           </template>
 
           <TableRow v-else>

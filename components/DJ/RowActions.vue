@@ -28,16 +28,6 @@ interface DataTableRowActionsProps {
 }
 const props = defineProps<DataTableRowActionsProps>();
 
-const task = computed(() => taskSchema.parse(props.row.original));
-
-const status = ref();
-const priority = ref();
-
-const { data: isAdmin, error } = await supabase
-  .from("profiles")
-  .select("is_admin")
-  .eq("id", supabaseUser?.value?.id);
-
 async function onDelete(id) {
   try {
     const { data, error } = await supabase
@@ -47,27 +37,6 @@ async function onDelete(id) {
 
     toast("Task deleted", {
       description: "Task deleted",
-    });
-
-    if (error) throw error;
-  } catch (error) {
-    toast("There was an error", {
-      title: "There was an error",
-      description: error,
-    });
-  } finally {
-  }
-}
-
-async function onUpdate(id, column, columnValue) {
-  try {
-    const { data, error } = await supabase
-      .from("feedback")
-      .update({ [column]: columnValue })
-      .eq("id", id);
-
-    toast("Task updated", {
-      description: "Task updated",
     });
 
     if (error) throw error;
@@ -103,6 +72,7 @@ async function onUpdate(id, column, columnValue) {
             </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
+          <DropdownMenuItem @click="$emit('expand')"> Expand </DropdownMenuItem>
           <DropdownMenuItem asChild>
             <Button
               variant="ghost"

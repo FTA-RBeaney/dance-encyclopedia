@@ -58,9 +58,15 @@ const currentImage = ref(
 );
 const myChild = ref(null);
 
-function testCall(e) {
+const spotifyId = ref("0Ek1ETnfVq8J6s8pQQxVju");
+
+const { data: spotInfo } = await useFetch(
+  `https://open.spotify.com/oembed?url=https%3A%2F%2Fopen.spotify.com%2Ftrack%2F${spotifyId.value}`
+);
+
+const testCall = async (e) => {
   myChild.value.changeTrack(e);
-}
+};
 </script>
 
 <template>

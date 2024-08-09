@@ -10,6 +10,8 @@
   "dependencies": {
     "@carbon/icons-vue": "^10.93.1",
     "@carbon/vue": "^3.0.18",
+    "@editorjs/editorjs": "^2.30.4",
+    "@editorjs/header": "^2.8.7",
     "@internationalized/date": "^3.5.5",
     "@nuxt/content": "^2.12.1",
     "@nuxt/icon": "^1.0.0",

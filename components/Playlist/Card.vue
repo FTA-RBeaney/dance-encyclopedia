@@ -11,7 +11,7 @@
           {{ response?.name }}
         </h1>
         <p class="font-semibold text-sm text-gray-500 dark:text-foreground">
-          Spada
+          {{ response.owner.display_name }}
         </p>
         <div class="h-10 w-full">
           <svg

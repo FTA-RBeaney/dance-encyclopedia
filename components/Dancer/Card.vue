@@ -11,14 +11,24 @@
         width="150px"
         height="150px"
         class="h-auto w-auto object-cover transition-all hover:scale-105 aspect-square"
+        placeholder="https://res.cloudinary.com/dgbn0ttzf/image/upload/v1721434977/person-placeholder_ztoak6.png"
+        @error="
+          $event.target.src =
+            'https://archive.org/download/placeholder-image/placeholder-image.jpg'
+        "
       />
     </div>
     <div class="space-y-1 text-sm">
       <h3 class="font-medium leading-none">
         {{ dancer.name }}
       </h3>
-      <p v-if="danceStyles" class="text-xs text-muted-foreground">
-        {{ danceStyles }}
+      <p v-if="dancer.birth_year" class="text-xs text-muted-foreground">
+        <span v-if="dancer.birth_year">
+          {{ createDate(dancer.birth_year) }}</span
+        >
+        <span v-if="dancer.death_year">
+          - {{ createDate(dancer.death_year) }}
+        </span>
       </p>
     </div>
   </NuxtLink>
@@ -28,8 +38,14 @@
 const props = defineProps({
   dancer: Object,
 });
+
 const { dancer } = props;
 const danceStyles = computed(() =>
   dancer?.styles?.map((style) => style).join(", ")
 );
+
+var options = { year: "numeric", timeZone: "GMT" };
+
+const createDate = (createdAt) =>
+  new Date(createdAt).toLocaleDateString("en-UK", options);
 </script>

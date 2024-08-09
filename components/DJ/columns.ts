@@ -1,5 +1,5 @@
 import { getCoreRowModel, type ColumnDef } from "@tanstack/vue-table";
-import { h } from "vue";
+import { h, defineEmits } from "vue";
 
 import DataTableColumnHeader from "./../components/DataTable/ColumnHeader.vue";
 import DataTableRowActions from "./../components/DJ/RowActions.vue";
@@ -23,16 +23,19 @@ export const columns: ColumnDef<Task>[] = [
       );
     },
 
-    cell: ({ row }) => {
-      const name = row.getValue("name");
-      return h("div", { class: "flex items-center space-x-2 " }, [
-        h(
-          "span",
-          { class: "max-w-[500px] truncate font-medium cursor-pointer" },
-          name
-        ),
-      ]);
-    },
+    // cell: ({ row }) => {
+    //   const name = row.getValue("name");
+    //   return h("div", { class: "flex items-center space-x-2 " }, [
+    //     h(
+    //       "span",
+    //       {
+    //         class: "max-w-[500px] truncate font-medium cursor-pointer",
+    //         onClick: () => buttonClick(row.original),
+    //       },
+    //       name
+    //     ),
+    //   ]);
+    // },
   },
   {
     accessorKey: "album_name",
@@ -123,7 +126,7 @@ export const columns: ColumnDef<Task>[] = [
   {
     accessorKey: "created_by",
     header: ({ column }) =>
-      h(DataTableColumnHeader, { column, title: "Created by" }),
+      h(DataTableColumnHeader, { column, title: "Added by" }),
 
     cell: ({ row }) => {
       return h("div", { class: "flex items-center space-x-2" }, [
@@ -144,6 +147,7 @@ export const columns: ColumnDef<Task>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => h(DataTableRowActions, { row }),
+    cell: ({ row }) =>
+      h(DataTableRowActions, { row, onExpand: row.toggleExpanded }),
   },
 ];
