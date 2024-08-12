@@ -26,12 +26,6 @@
       <p class="leading-relaxed text-lg mb-4">
         {{ wikiInfo[0].wiki_data.extract }}
       </p>
-      <!-- <a
-        class="text-indigo-500 inline-flex items-center"
-        :href="wikiInfo.content_urls.desktop.page"
-        >Learn More
-        <IconsWikipedia />
-      </a> -->
     </div>
   </div>
 </template>

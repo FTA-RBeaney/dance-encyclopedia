@@ -36,19 +36,6 @@
                     :media="media"
                     class="w-[250px]"
                   />
-                  <!-- <NuxtLink
-                    :to="`/video/${album.name}`"
-                    class="relative block w-60 h-96 space-y-3"
-                    v-for="album in videoList"
-                    :key="album.name"
-                  >
-                    <ArtistAlbumArtwork
-                      :album="album"
-                      class="w-[250px]"
-                      aspect-ratio="portrait"
-                      :width="250"
-                    />
-                  </NuxtLink> -->
                 </div>
                 <ScrollBar orientation="horizontal" />
               </ScrollArea>

@@ -85,11 +85,6 @@
                     8 likes
                   </p>
                 </div>
-                <!-- <div
-                    class="opacity-0 group-hover:opacity-100 duration-300 absolute inset-x-0 bottom-0 h-full flex justify-center items-center text-sm bg-black bg-opacity-50 py-2 px-4 text-center text-white"
-                  >
-                    {{ video.snippet.title }}
-                  </div> -->
               </div>
             </div>
           </div>
@@ -163,6 +158,6 @@ realtimeChannel.subscribe();
 onUnmounted(() => {
   supabase.removeChannel(realtimeChannel);
 });
-</script>
 
-<style lang="scss" scoped></style>
+console.log(userVideoData);
+</script>

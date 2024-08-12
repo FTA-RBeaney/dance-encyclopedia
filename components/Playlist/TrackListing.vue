@@ -1,14 +1,25 @@
 <template>
   <div class="w-full">
     <div
-      class="flex flex-col sm:flex-row max-w-screen-lg justify-center items-start"
+      class="flex flex-col sm:flex-row max-w-screen-lg justify-start items-start"
     >
-      <PlaylistMusicPlayer
-        :currentTrack="currentTrack"
-        :trackImage="props.trackImage"
-        ref="myChild"
-        class="order-first w-full sm:w-6/12 top-0 sm:top-10 sm:mr-6"
-      />
+      <div class="w-full sm:w-4/12 sm:mr-6">
+        <PlaylistMusicPlayer
+          :currentTrack="currentTrack"
+          :trackImage="props.trackImage"
+          ref="myChild"
+          class="order-first top-0 sm:top-10"
+        />
+
+        <div v-if="selectedTrackArtistId">
+          <DJRecommendations
+            :artistId="selectedTrackArtistId"
+            :trackId="selectedTrackId"
+            :filteredItems="filteredItems"
+            @change-track="changeTrack"
+          />
+        </div>
+      </div>
       <div class="flex bg-white shadow-md rounded-lg overflow-hidden sm:w-6/12">
         <div class="flex flex-col w-full start">
           <div class="flex flex-col px-5 py-3">
@@ -26,7 +37,7 @@
               <div>
                 <PlaylistTrack
                   v-if="track?.track?.preview_url || track.preview_url"
-                  @click="testCall(track)"
+                  @click="testCall(track, props.trackImage)"
                   :trackId="track?.track?.id || track.id"
                   :track="track"
                   :trackImage="props.trackImage"
@@ -49,11 +60,39 @@ const props = defineProps({
 
 const currentTrack = ref(props.tracks[0]);
 const myChild = ref(null);
+const nuxtApp = useNuxtApp();
+const getRecommendations = nuxtApp.getRecommendations;
 
-function testCall(e) {
-  console.log("clicked", e);
-  myChild.value.changeTrack(e);
-}
+const selectedTrackId = ref();
+const selectedTrackArtistId = ref();
+const recommendations = ref();
+
+const refreshNewTrack = (e, trackImage) => {
+  selectedTrackId.value = e.id;
+  selectedTrackArtistId.value = e.artists[0].id;
+  myChild.value.changeTrack(e, trackImage);
+};
+
+const refreshRecommendations = async () => {
+  recommendations.value = await getRecommendations(
+    selectedTrackArtistId.value,
+    selectedTrackId.value,
+    20
+  );
+};
+
+const testCall = (e, trackImage) => {
+  refreshNewTrack(e, trackImage);
+  refreshRecommendations();
+};
+
+const changeTrack = (e, trackImage) => {
+  refreshNewTrack(e, trackImage);
+};
+
+const filteredItems = computed(() =>
+  recommendations?.value?.tracks.filter((track) => track.preview_url)
+);
 </script>
 
 <style scoped>

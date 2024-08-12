@@ -94,6 +94,8 @@ const filteredItems = artistData.value.relations.filter((item) => {
   }
 });
 
+var artistSpotifyId = /[^/]*$/.exec(filteredItems[0].url.resource)[0];
+
 if (filteredItems[0]) {
   spotifyLink.value =
     "https://open.spotify.com/oembed?url=" + filteredItems[0].url.resource;
@@ -165,13 +167,8 @@ onMounted(async () => {
           </div>
         </div>
         <Separator class="my-4" />
-        <ArtistMusic />
+        <ArtistMusic :artistSpotifyId="artistSpotifyId" />
       </Card>
-      <!-- <div
-        class="bg-white border p-6 border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 relative w-full h-full flex flex-col overflow-hidden mt-6"
-      >
-        <ArtistAlbumList :artistId="artistId" />
-      </div> -->
       <div class="bottom-drawer">
         <div class="h-2 bg-red-light"></div>
         <div class="inline-flex items-center justify-center bg-red-lightest">

@@ -45,8 +45,6 @@ onUnmounted(() => {
   supabase.removeChannel(channel);
 });
 
-console.log("musicList", musicList.value.value);
-
 const currentTrack = ref(musicList.value.value[0].spotify_info);
 const myChild = ref(null);
 

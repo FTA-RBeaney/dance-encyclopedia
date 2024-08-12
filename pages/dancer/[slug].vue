@@ -75,58 +75,12 @@
         </div>
       </Card>
     </div>
-    <!-- <Heading :title="dancer[0].name" /> -->
 
     <!-- right column -->
     <div class="w-7/12 body-font ml-4">
       <ClientOnly>
         <Editor :dancerId="dancer[0].id" />
       </ClientOnly>
-      <!-- <div
-        class="bg-white border p-6 border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 relative w-full h-full flex flex-col overflow-hidden"
-      >
-        <div class="">
-          <div class="flex flex-col sm:flex-row mt-1">
-            <div class="sm:w-1/3 text-center sm:pr-8">
-              <div class="overflow-hidden rounded-md">
-                <img
-                  v-if="wikiMedia?.original"
-                  :src="wikiMedia?.original?.source"
-                  :alt="wikiMedia.title"
-                  width="300px"
-                  height="300px"
-                  class="h-auto w-auto object-cover transition-all hover:scale-105 aspect-square"
-                />
-                <img
-                  v-else
-                  :src="dancer[0].image"
-                  :alt="dancer[0].name"
-                  width="150px"
-                  height="150px"
-                  class="h-auto w-full md:w-auto object-cover transition-all hover:scale-105 aspect-square"
-                />
-              </div>
-            </div>
-            <div
-              class="sm:w-2/3 sm:pl-8 sm:border-l border-gray-200 sm:border-t-0 border-t mt-4sm:mt-0 text-center sm:text-left"
-            >
-              Artist details here
-            </div>
-          </div>
-        </div>
-      </div> -->
-
-      <!-- <Card class="p-4">
-        <p v-if="dancer[0].blurb" class="leading-relaxed text-lg">
-          {{ dancer[0].blurb }}
-        </p>
-        <div
-          v-if="wikiMedia"
-          v-html="wikiMedia.extract"
-          class="leading-relaxed text-md mb-4 extract prose"
-        ></div>
-      </Card> -->
-
       <Card
         v-if="dancerPlaylistId"
         class="bg-white border p-6 border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 relative w-full h-full flex flex-col overflow-hidden mt-6"
@@ -180,11 +134,6 @@
                     </a>
                   </p>
                 </div>
-                <!-- <div
-                  class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white"
-                >
-                  $320
-                </div> -->
               </div>
             </li>
           </ul>
@@ -193,9 +142,6 @@
 
       <CommentsList />
     </div>
-    <!-- <pre>
-        {{ videoArray.items }}
-    </pre> -->
   </div>
 </template>
 

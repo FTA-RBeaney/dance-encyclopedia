@@ -35,8 +35,6 @@ const addAlbum = async (spotifyId) => {
   spotifyInfo.value = res;
   isOpen.value = false;
 
-  console.log("spotifyInfo", spotifyInfo.value);
-
   try {
     const { data, error } = await supabase
       .from("albums")
@@ -68,7 +66,7 @@ const addAlbum = async (spotifyId) => {
 
   spotifyInfo.value.tracks.items.forEach(async (track, i) => {
     const audioAnalysisInfo = await getTrackInfo(track.id);
-    console.log(track.artists);
+
     try {
       const { data, error } = await supabase
         .from("tracks")
@@ -156,9 +154,5 @@ const addAlbum = async (spotifyId) => {
         </DrawerFooter>
       </DrawerContent>
     </Drawer>
-
-    <!-- <pre>
-        {{ trackList[0] }}
-    </pre> -->
   </div>
 </template>

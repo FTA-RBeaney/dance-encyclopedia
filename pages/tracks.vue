@@ -50,8 +50,6 @@ onUnmounted(() => {
 //   () => musicList.value.value.albums.spotify_info.images[0].url
 // );
 
-console.log("image", musicList.value.value);
-
 const currentTrack = ref(musicList?.value?.value[0].spotify_info);
 const currentImage = ref(
   musicList?.value?.value[0].albums.spotify_info.images[0].url
@@ -88,17 +86,9 @@ const testCall = async (e) => {
     <PlaylistMusicPlayer
       :currentTrack="currentTrack"
       ref="myChild"
-      class="order-first h-auto fixed bottom-5 w-6/12 max-w-[550px] min-w-[550px] right-8 border mx-auto"
+      class="order-first h-auto fixed bottom-5 w-6/12 max-w-[550px] min-w-[550px] right-8 mx-auto"
       variant="dj"
       :trackImage="currentImage"
     />
-
-    <!-- 
-    <MusicPlayer
-      :currentTrack="currentTrack"
-      :trackImage="props.trackImage"
-      ref="myChild"
-      class="order-first w-full sm:w-6/12 top-0 sm:top-10 sm:mr-6"
-    /> -->
   </div>
 </template>

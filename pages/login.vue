@@ -45,9 +45,6 @@ body {
     <div
       class="container relative h-full flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0"
     >
-      <!-- <a href="/login" class="ghost absolute right-4 top-4 md:right-8 md:top-8">
-        Login
-      </a> -->
       <div
         class="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex bg-center bg-no-repeat bg-cover"
         :style="`background-image: url('${bgImage}')`"
@@ -69,16 +66,6 @@ body {
           </svg>
           Dance Encyclopedia
         </div>
-        <!-- <div class="relative z-20 mt-auto">
-          <blockquote class="space-y-2">
-            <p class="text-lg">
-              &ldquo;This library has saved me countless hours of work and
-              helped me deliver stunning designs to my clients faster than ever
-              before.&rdquo;
-            </p>
-            <footer class="text-sm">Sofia Davis</footer>
-          </blockquote>
-        </div> -->
       </div>
       <div class="lg:p-8">
         <div
@@ -104,23 +91,6 @@ body {
             PLEASE NOTE: This site is currently DESKTOP ONLY. If you're viewing
             this on mobile, then don't 🙂
           </p>
-          <!-- <p class="px-8 text-center text-sm text-muted-foreground">
-            By clicking continue, you agree to our
-            <a
-              href="/terms"
-              class="underline underline-offset-4 hover:text-primary"
-            >
-              Terms of Service
-            </a>
-            and
-            <a
-              href="/privacy"
-              class="underline underline-offset-4 hover:text-primary"
-            >
-              Privacy Policy
-            </a>
-            .
-          </p> -->
         </div>
       </div>
     </div>

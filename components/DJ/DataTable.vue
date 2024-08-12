@@ -71,7 +71,6 @@ const table = useVueTable({
 
 const range = (row) => {
   const newRange = row.getVisibleCells();
-  console.log("newRange", newRange.slice(1));
   return newRange.slice(1);
 };
 

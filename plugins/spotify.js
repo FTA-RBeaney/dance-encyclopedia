@@ -32,11 +32,11 @@ export default defineNuxtPlugin(async (nuxtApp) => {
     }).then((response) => response.json());
   };
 
-  nuxtApp.getArtistAlbums = async () => {
+  nuxtApp.getArtistAlbums = async (id) => {
     const { access_token: accessToken } = await getAccessToken();
 
     return fetch(
-      "https://api.spotify.com/v1/artists/5V0MlUE1Bft0mbLlND7FJz/albums",
+      `https://api.spotify.com/v1/artists/${id}/albums?include_groups=album&limit=50`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -65,11 +65,11 @@ export default defineNuxtPlugin(async (nuxtApp) => {
     }).then((response) => response.json());
   };
 
-  nuxtApp.getRecommendations = async (id) => {
+  nuxtApp.getRecommendations = async (artistId, trackId, limit) => {
     const { access_token: accessToken } = await getAccessToken();
 
     return fetch(
-      `https://api.spotify.com/v1/recommendations?limit=5&seed_artists=5V0MlUE1Bft0mbLlND7FJz&seed_genres=jazz&seed_tracks=6bWBLntFViKFJ487Ek2cRb`,
+      `https://api.spotify.com/v1/recommendations?limit=${limit}&seed_artists=${artistId}&seed_genres=swing&seed_tracks=${trackId}`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,

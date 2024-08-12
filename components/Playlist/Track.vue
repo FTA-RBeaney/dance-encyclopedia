@@ -3,7 +3,7 @@
     <img
       class="w-10 h-10 object-cover rounded-lg mr-2"
       alt="User avatar"
-      :src="track?.track?.album?.images[0]?.url || props.trackImage"
+      :src="track?.track?.album?.images[0]?.url || props?.trackImage"
     />
     <div class="flex flex-col px-2 w-full">
       <span class="text-sm text-red-500 capitalize font-semibold pt-1">

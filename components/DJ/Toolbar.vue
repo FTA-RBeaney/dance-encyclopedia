@@ -15,7 +15,6 @@ const isFiltered = computed(
 );
 
 const artists = props.table.getColumn("artist")?.getFacetedUniqueValues();
-console.log(artists);
 </script>
 
 <template>

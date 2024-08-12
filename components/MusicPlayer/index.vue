@@ -123,12 +123,6 @@ onMounted(() => {
               </div>
             </div>
             <div class="relative w-full sm:w-1/2 md:w-7/12 lg:w-4/6 ml-2">
-              <!-- <div
-                v-if="!audioLoaded"
-                class="w-full top-0 bottom-0 right-0 left-0 px-2 pointer-events-none"
-              >
-                Loading please wait...
-              </div> -->
               <div class="bg-red-300 h-2 w-full rounded-lg">
                 <input
                   v-model="currentTime"

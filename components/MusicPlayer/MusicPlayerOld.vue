@@ -1,14 +1,11 @@
 <template>
   <div id="audio-player-root">
-    <!-- Hide the default audio player -->
     <div>
       <audio hidden controls ref="player" :id="playerid">
         <source :src="url" type="audio/mpeg" />
       </audio>
     </div>
 
-    <!-- component -->
-    <!-- This is an example component -->
     <div class="w-full">
       <div
         class="flex w-8/12 bg-white shadow-md rounded-lg overflow-hidden mx-auto"
@@ -141,12 +138,7 @@
         </div>
       </div>
     </div>
-
-    <!-- outer gray border -->
   </div>
-  <!-- white bg -->
-
-  <!-- root -->
 </template>
 
 <script>

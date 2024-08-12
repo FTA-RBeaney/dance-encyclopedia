@@ -60,9 +60,6 @@
                 Listen on Spotify
                 <IconsSpotify />
               </a>
-
-              <!-- response.tracks.items[0].track.artists[]  -->
-              <!-- response.tracks.items[0].track.external_urls.spotify  -->
             </TableCell>
           </TableRow>
         </TableBody>

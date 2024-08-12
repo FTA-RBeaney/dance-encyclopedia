@@ -33,55 +33,11 @@
     </div>
 
     <div class="w-screen mx-auto">
-      <!-- <Articles :results="results" /> -->
-
       <ul class="flex flex-wrap">
         <li v-for="musician in results.data" :key="musician" class="flex">
           <ArtistCard :artistId="musician.id" :musician="musician" />
         </li>
       </ul>
-
-      <!-- <Table>
-        <TableCaption>A list of moves.</TableCaption>
-        <TableHeader>
-          <TableRow>
-            <TableHead class=""> Move name </TableHead>
-            <TableHead class=""> Tags </TableHead>
-            <TableHead class="text-right"> Author </TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          <TableRow v-for="move in results.data" :key="move.name">
-            <TableCell class="font-medium flex items-center">
-              <img
-                class="w-10 h-10 rounded mr-2"
-                :src="move.image"
-                alt="Default avatar"
-              />
-
-              {{ move.name }}
-            </TableCell>
-            <TableCell>
-              <span
-                v-for="tag in move.tags"
-                :key="tag"
-                class="text-xs font-semibold inline-block py-1 px-2 rounded text-indigo-600 bg-indigo-200 uppercase last:mr-0 mr-1"
-              >
-                {{ tag }}
-              </span>
-            </TableCell>
-            <TableCell class="font-medium flex items-center justify-end">
-              <img
-                class="w-10 h-10 rounded-full mr-2"
-                :src="move.author_image"
-                alt="Default avatar"
-              />
-
-              {{ move.author }}
-            </TableCell>
-          </TableRow>
-        </TableBody>
-      </Table> -->
     </div>
   </section>
 </template>

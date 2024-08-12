@@ -22,12 +22,6 @@
       :tracks="response?.tracks?.items"
       :trackImage="response?.images[0].url"
     />
-    <!-- <ul>
-        <li v-for="(item, i) in response.tracks.items" :key="`item${i}`">
-          <pre>{{ item }}</pre>
-        </li>
-      </ul>
-      <pre>{{ response }}</pre> -->
   </div>
 </template>
 

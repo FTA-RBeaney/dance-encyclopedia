@@ -1,9 +1,8 @@
 <template>
   <div>
-    <!-- <PlaylistTrackListing :tracks="response?.tracks?.items" /> -->
     <div class="relative">
       <div class="grid-container">
-        <div v-for="(item, i) in response.items" :key="`item${i}`">
+        <div v-for="(item, i) in response?.items" :key="`item${i}`">
           <NuxtLink
             :to="`/album/${item.id}`"
             class="space-y-3 mb-4"
@@ -37,22 +36,14 @@
         </div>
       </div>
     </div>
-    <!-- <ul class="grid grid-cols-4">
-      <li v-for="(item, i) in response.items" :key="`item${i}`">
-        <h3>{{ item.name }}</h3>
-        <h3>{{ item.release_date }}</h3>
-        <p>{{ item.total_tracks }}</p>
-        <p>{{ item.external_urls.spotify }}</p>
-        <p>{{ item.images[0].url }}</p>
-      </li>
-    </ul> -->
   </div>
 </template>
 
 <script setup>
 const props = defineProps({
-  artistName: String,
+  artistSpotifyId: String,
 });
+
 const nuxtApp = useNuxtApp();
 const route = useRoute();
 
@@ -60,7 +51,7 @@ const getArtistAlbums = nuxtApp.getArtistAlbums;
 const playlistId = route.params.slug;
 const response = ref();
 
-const res = await getArtistAlbums();
+const res = await getArtistAlbums(props.artistSpotifyId);
 response.value = res;
 </script>
 
