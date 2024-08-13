@@ -1,5 +1,5 @@
 <script setup>
-import { videoList } from "../data/videos";
+import { videoList, otherVideos } from "../data/videos";
 import "vidstack/bundle";
 const supabase = useSupabaseClient();
 
@@ -21,14 +21,19 @@ const dancerIds = [
   "3756148c-687b-4f43-8df1-f43f928d4293",
   "302da88c-6cb4-4cf6-8ae9-1f7e023609a3",
 ];
+
+const combinedVideoLists = otherVideos.concat(videoList);
+
+chosenVideo.value = combinedVideoLists.find(
+  (e) => e.name === route.params.slug
+);
+
 const { data: dancers } = await supabase
   .from("dancers")
   .select()
-  .in("id", dancerIds);
+  .in("id", chosenVideo.value.dancers);
 
-chosenVideo.value = videoList.find((e) => e.name === route.params.slug);
-
-var mediaUrl = `https://en.wikipedia.org/w/api.php?action=parse&format=json&page=${chosenVideo.value.wikiLink}&prop=text&origin=*`;
+var mediaUrl = `https://en.wikipedia.org/w/api.php?action=parse&format=json&page=${chosenVideo?.value?.wikiLink}&prop=text&origin=*`;
 
 const { data, error } = await useFetch(mediaUrl);
 

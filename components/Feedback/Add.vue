@@ -1,7 +1,7 @@
 <script setup>
 import * as z from "zod";
 import { MessageSquare } from "lucide-vue-next";
-import { toast } from "vue-sonner";
+const { $toast } = useNuxtApp();
 
 const supabase = useSupabaseClient();
 const supabaseUser = useSupabaseUser();
@@ -46,11 +46,11 @@ const onSubmit = async (values) => {
       .select();
 
     if (data === null) {
-      toast("Error!", {
+      $toast("Error!", {
         description: error,
       });
     } else {
-      toast("Success!", {
+      $toast("Success!", {
         description: "Your feedback has been received.",
       });
       isOpen.value = false;

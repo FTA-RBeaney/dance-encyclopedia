@@ -9,18 +9,15 @@ const isDesktop = useMediaQuery("(min-width: 768px)");
 const { $toast } = useNuxtApp();
 const open = ref();
 const isOpen = ref(false);
-const newArtistName = ref();
-const alertMessage = ref("");
 
 const nuxtApp = useNuxtApp();
 
 const getArtistAlbum = nuxtApp.getArtistAlbum;
 const getTrackInfo = nuxtApp.getTrackInfo;
+const getTrack = nuxtApp.getTrack;
 
 const spotifyInfo = ref();
 const spotifyId = ref();
-
-let trackList = ref([]);
 
 const openDialog = () => {
   open.value = !open.value;
@@ -30,20 +27,28 @@ const addAlbum = async (spotifyId) => {
   const supabase = useSupabaseClient();
   const supabaseUser = useSupabaseUser();
 
-  const res = await getArtistAlbum(spotifyId);
-  spotifyInfo.value = res;
+  //   spotifyInfo.value = res;
   isOpen.value = false;
+
+  const trackInfo = await getTrack(spotifyId);
+  const audioAnalysisInfo = await getTrackInfo(spotifyId);
+
+  const res = await getArtistAlbum(trackInfo.album.id);
+  spotifyInfo.value = res;
+
+  console.log(trackInfo);
+  console.log(audioAnalysisInfo);
 
   try {
     const { data, error } = await supabase
       .from("albums")
       .upsert(
         {
-          id: spotifyId,
-          name: spotifyInfo.value.name,
+          id: trackInfo.album.id,
+          name: trackInfo.album.name,
           created_by: supabaseUser.value.id,
           spotify_info: spotifyInfo.value,
-          artist: spotifyInfo.value.artists[0].name,
+          artist: trackInfo.artists[0].name,
           type: "album",
         },
         { onConflict: "id" }
@@ -52,44 +57,37 @@ const addAlbum = async (spotifyId) => {
 
     if (error) {
       console.log(error);
-    } else {
-      $toast("Success", {
-        description: "Video successfully added",
-      });
     }
   } catch (error) {
     console.log("EXISTS", error);
   }
 
-  spotifyInfo.value.tracks.items.forEach(async (track, i) => {
-    const audioAnalysisInfo = await getTrackInfo(track.id);
-
-    try {
-      const { data, error } = await supabase
-        .from("tracks")
-        .upsert({
-          id: track.id,
-          name: track.name,
-          created_by: supabaseUser.value.id,
-          spotify_info: track,
-          type: "track",
-          album_id: spotifyId,
-          album_name: spotifyInfo.value.name,
-          artist: track.artists[0].name,
-          bpm: audioAnalysisInfo.track.tempo,
-        })
-        .select();
-      if (error) {
-        console.log(error);
-      } else {
-        $toast("Success!", {
-          description: "Video successfully added.",
-        });
-      }
-    } catch (error) {
-      console.log("EXISTS", error);
+  try {
+    const { data, error } = await supabase
+      .from("tracks")
+      .upsert({
+        id: spotifyId,
+        name: trackInfo.name,
+        created_by: supabaseUser.value.id,
+        spotify_info: trackInfo,
+        type: "track",
+        album_id: trackInfo.album.id,
+        album_name: trackInfo.album.name,
+        artist: trackInfo.artists[0].name,
+        bpm: audioAnalysisInfo.track.tempo,
+        duration: audioAnalysisInfo.track.duration,
+      })
+      .select();
+    if (error) {
+      console.log(error);
+    } else {
+      $toast("Success!", {
+        description: "Track successfully added.",
+      });
     }
-  });
+  } catch (error) {
+    console.log("EXISTS", error);
+  }
 };
 </script>
 
@@ -109,7 +107,7 @@ const addAlbum = async (spotifyId) => {
             v-model="spotifyId"
           />
           <Button type="submit" class="mt-2">
-            <CirclePlus class="mr-2 h-4 w-4" /> Add an album
+            <CirclePlus class="mr-2 h-4 w-4" /> Add a track
           </Button>
         </div>
       </form>
@@ -118,7 +116,7 @@ const addAlbum = async (spotifyId) => {
     <Dialog v-if="isDesktop" v-model:open="isOpen">
       <DialogTrigger as-child>
         <Button variant="outline" @click="openDialog"
-          ><CirclePlus class="mr-2 h-4 w-4" /> Add an album
+          ><CirclePlus class="mr-2 h-4 w-4" /> Add a track
         </Button>
       </DialogTrigger>
       <DialogContent class="sm:max-w-[425px]">
@@ -133,7 +131,7 @@ const addAlbum = async (spotifyId) => {
     <Drawer v-else v-model="open" v-model:open="isOpen">
       <DrawerTrigger as-child>
         <Button variant="outline" @click="openDialog"
-          ><CirclePlus class="mr-2 h-4 w-4" /> Add an album
+          ><CirclePlus class="mr-2 h-4 w-4" /> Add a track
         </Button>
       </DrawerTrigger>
       <DrawerContent>

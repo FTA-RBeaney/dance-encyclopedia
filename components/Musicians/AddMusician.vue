@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 import { createReusableTemplate, useMediaQuery } from "@vueuse/core";
-import { toast } from "vue-sonner";
+const { $toast } = useNuxtApp();
 
 // Reuse `form` section
 const [UseTemplate, GridForm] = createReusableTemplate();
@@ -44,7 +44,7 @@ const addArtist = async (mbid) => {
       .select();
 
     if (data === null) {
-      toast({
+      $toast({
         title: "This artist already exists!",
         description: "Please try again with another Artist MBID" + error,
         variant: "destructive",
@@ -57,7 +57,7 @@ const addArtist = async (mbid) => {
       newArtistName.value = null;
       artistExists.value = false;
     } else {
-      toast({
+      $toast({
         title: "Success!",
         description: "Artist successfully added.",
         variant: "success",

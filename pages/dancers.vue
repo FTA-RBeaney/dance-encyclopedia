@@ -41,18 +41,13 @@ function titleCase(string) {
     <Heading title="Dancers" :description="`${dancers?.length} records`" />
     <div class="flex items-start">
       <div class="w-3/12 mr-6">
-        <Card class="p-6">
-          <div class="space-6">
+        <Card>
+          <CardHeader>
+            <CardTitle>Filter</CardTitle>
+            <CardDescription>Filter dancers below</CardDescription>
+          </CardHeader>
+          <CardContent>
             <div class="space-y-6">
-              <div>
-                <h3 class="text-lg font-medium">Filter</h3>
-                <p class="text-sm text-muted-foreground">Filter below.</p>
-              </div>
-              <div
-                data-orientation="horizontal"
-                role="separator"
-                class="shrink-0 bg-border relative h-px w-full"
-              ></div>
               <form>
                 <div class="space-y-2">
                   <div class="mb-4">
@@ -83,9 +78,10 @@ function titleCase(string) {
                 </div>
               </form>
             </div>
-
-            <Button @click="resetOptions" class="mt-10"> Reset </Button>
-          </div>
+          </CardContent>
+          <CardFooter
+            ><Button @click="resetOptions"> Reset </Button></CardFooter
+          >
         </Card>
       </div>
 

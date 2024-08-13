@@ -7,7 +7,7 @@ import { CirclePlus } from "lucide-vue-next";
 // Reuse `form` section
 const [UseTemplate, GridForm] = createReusableTemplate();
 const isDesktop = useMediaQuery("(min-width: 768px)");
-const { toast } = useToast();
+const { $toast } = useNuxtApp();
 const open = ref();
 const isOpen = ref(false);
 const newArtistName = ref();
@@ -32,14 +32,12 @@ const addVideo = async (url) => {
       .select();
 
     if (data === null) {
-      toast({
-        title: "This video already exists!",
+      $toast("This video already exists", {
         description:
           "Please try again with another video. CODE: " +
           error.code +
           " DESC: " +
           error.details,
-        variant: "destructive",
       });
 
       isOpen.value = false;

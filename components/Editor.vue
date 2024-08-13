@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Card v-if="typedInfo.blocks.length > 0 && !isToggled" class="p-4">
+    <Card v-if="typedInfo?.blocks?.length > 0 && !isToggled" class="p-4">
       <div v-for="(block, i) in typedInfo?.blocks" :key="`block${i}`">
         <h2 class="py-2 text-xl font-semibold" v-if="block.type === 'header'">
           {{ block.data.text }}
@@ -12,10 +12,9 @@
       <Button class="mt-4" @click="toggle">Edit</Button>
     </Card>
 
-    <Card v-if="typedInfo.blocks.length === 0 && !isToggled" class="p-4">
+    <Card v-if="!typedInfo?.blocks && !isToggled" class="p-4">
       <Button @click="toggle">Add dancer information</Button></Card
     >
-    <Toaster />
 
     <Card v-show="isToggled" class="p-4">
       <div id="editor"></div>
@@ -28,6 +27,7 @@
 import EditorJS from "@editorjs/editorjs";
 import Header from "@editorjs/header";
 
+const { $toast } = useNuxtApp();
 const client = useSupabaseClient();
 const isToggled = ref(false);
 
@@ -36,7 +36,6 @@ const props = defineProps({
 });
 
 let editor;
-let description;
 const typedInfo = ref();
 
 const { data, refresh } = await useAsyncData("info", async () => {
@@ -48,6 +47,7 @@ const { data, refresh } = await useAsyncData("info", async () => {
     .single();
 
   typedInfo.value = data.info;
+  console.log("typedInfo", typedInfo.value);
 });
 
 const toggle = () => {
@@ -85,7 +85,7 @@ const saveData = () => {
 
   isToggled.value = false;
 
-  toast("Article updated", {
+  $toast("Article updated", {
     description: "The article has been updated",
   });
 };

@@ -8,8 +8,7 @@ useSeoMeta({
 });
 
 import { ConfigProvider } from "radix-vue";
-import { Toaster } from "@/components/ui/sonner";
-import { toast } from "vue-sonner";
+import { Toaster, toast } from "vue-sonner";
 
 const useIdFunction = () => useId();
 </script>
@@ -19,10 +18,11 @@ const useIdFunction = () => useId();
     <div class="bg-background">
       <NuxtLoadingIndicator />
       <NuxtLayout>
+        <Toaster position="top-right" />
+
         <NuxtPage />
       </NuxtLayout>
     </div>
-    <Toaster />
   </ConfigProvider>
 </template>
 

@@ -73,7 +73,9 @@ const testCall = async (e) => {
       v-if="isLoading"
       class="fixed left-0 top-0 bg-black/30 w-screen h-screen z-20 flex justify-center items-center"
     />
-    <AddAlbum />
+    <!-- <AddAlbum /> -->
+
+    <AddSong />
 
     <Card class="p-6 mt-6">
       <DJDataTable

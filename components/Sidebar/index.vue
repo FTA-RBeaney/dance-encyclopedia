@@ -46,7 +46,7 @@ const { data, refresh } = await useAsyncData("posts", async () => {
               v-if="item.count"
               class="relative grid items-center px-2 py-0.5 font-sans text-xs font-bold text-gray-900 uppercase rounded-full select-none whitespace-nowrap bg-gray-100 group-hover:bg-white/20 group-hover:text-white"
             >
-              {{ data.length }}
+              {{ data?.length }}
             </div>
           </Button>
         </NuxtLink>

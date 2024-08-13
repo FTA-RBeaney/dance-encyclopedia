@@ -1,5 +1,5 @@
 <script setup>
-import { columns } from "../components/DJ/columns";
+import { columns } from "../components/Albums/columns";
 const supabase = useSupabaseClient();
 let channel;
 const isLoading = ref(false);
@@ -59,14 +59,10 @@ function testCall(e) {
       v-if="isLoading"
       class="fixed left-0 top-0 bg-black/30 w-screen h-screen z-20 flex justify-center items-center"
     />
-    <AddAlbum />
+    <!-- <AddAlbum /> -->
 
     <Card class="p-6 mt-6">
-      <DJDataTable
-        :data="musicList.value"
-        :columns="columns"
-        @test-call="testCall"
-      />
+      <AlbumsDataTable :data="musicList.value" :columns="columns" />
     </Card>
   </div>
 </template>

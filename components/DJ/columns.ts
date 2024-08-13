@@ -124,9 +124,9 @@ export const columns: ColumnDef<Task>[] = [
     filterFn: "arrIncludesSome",
   },
   {
-    accessorKey: "created_by",
+    accessorKey: "duration",
     header: ({ column }) =>
-      h(DataTableColumnHeader, { column, title: "Added by" }),
+      h(DataTableColumnHeader, { column, title: "Duration" }),
 
     cell: ({ row }) => {
       return h("div", { class: "flex items-center space-x-2" }, [
@@ -140,7 +140,7 @@ export const columns: ColumnDef<Task>[] = [
           {
             class: "max-w-[500px] truncate font-medium",
           },
-          row.original.profiles.first_name
+          row.original.duration
         ),
       ]);
     },

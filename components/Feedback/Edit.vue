@@ -12,7 +12,7 @@ import { useForm } from "vee-validate";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-import { toast } from "vue-sonner";
+const { $toast } = useNuxtApp();
 
 const username = ref(props.feedback.feedback_title);
 const feedback_status = ref(props.feedback.feedback_status);
@@ -44,7 +44,7 @@ const onSubmit = handleSubmit(async (values) => {
       .eq("id", props.feedback.id.value);
 
     if (error) {
-      toast({
+      $toast({
         title: "Error!",
         description: error,
         variant: "destructive",
@@ -53,7 +53,7 @@ const onSubmit = handleSubmit(async (values) => {
       isOpen.value = false;
       await delay(1000);
     } else {
-      toast("Task has been updated", {
+      $toast("Task has been updated", {
         description: `${props.feedback.id.value}: ${values.username} ${values.feedback_status}`,
       });
       isOpen.value = false;
