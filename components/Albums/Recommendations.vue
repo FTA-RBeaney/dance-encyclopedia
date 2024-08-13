@@ -41,6 +41,12 @@ const { artistId, trackId } = toRefs(props);
         <h3 class="text-lg font-medium mb-4">Track listing:</h3>
 
         <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Name</TableHead>
+              <TableHead>Spotify ID</TableHead>
+            </TableRow>
+          </TableHeader>
           <TableBody>
             <TableRow
               v-for="(track, i) in filteredItems.tracks.items"
@@ -49,6 +55,9 @@ const { artistId, trackId } = toRefs(props);
               <TableCell>
                 {{ i + 1 }}.
                 {{ track.name }}
+              </TableCell>
+              <TableCell>
+                {{ track.id }}
               </TableCell>
             </TableRow>
           </TableBody>
