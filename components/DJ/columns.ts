@@ -22,20 +22,6 @@ export const columns: ColumnDef<Task>[] = [
         () => ["Name", h(ArrowUpDown, { class: "ml-2 h-4 w-4" })]
       );
     },
-
-    // cell: ({ row }) => {
-    //   const name = row.getValue("name");
-    //   return h("div", { class: "flex items-center space-x-2 " }, [
-    //     h(
-    //       "span",
-    //       {
-    //         class: "max-w-[500px] truncate font-medium cursor-pointer",
-    //         onClick: () => buttonClick(row.original),
-    //       },
-    //       name
-    //     ),
-    //   ]);
-    // },
   },
   {
     accessorKey: "album_name",
@@ -105,22 +91,6 @@ export const columns: ColumnDef<Task>[] = [
         h("span", { class: "max-w-[500px] truncate font-medium" }, artist),
       ]);
     },
-    // cell: ({ row }) => {
-    //   return h("div", { class: "flex items-center space-x-2 " }, [
-    //     row.original.spotify_info.artists.map((item, i) =>
-    //       h(
-    //         "a",
-    //         {
-    //           class:
-    //             "max-w-[500px] truncate font-sm border rounded-md px-2 py-1",
-    //           href: `./artist/${item.name}`,
-    //         },
-    //         item.name
-    //       )
-    //     ),
-    //     h("div", row.original),
-    //   ]);
-    // },
     filterFn: "arrIncludesSome",
   },
   {
@@ -130,17 +100,12 @@ export const columns: ColumnDef<Task>[] = [
 
     cell: ({ row }) => {
       return h("div", { class: "flex items-center space-x-2" }, [
-        // h("img", {
-        //   class:
-        //     "w-6 h-6 mr-1 rounded-md inline-flex items-center justify-center bg-gray-200 text-gray-400 object-cover object-left-top",
-        //   src: row.original.profiles.avatar_url,
-        // }),
         h(
           "span",
           {
             class: "max-w-[500px] truncate font-medium",
           },
-          row.original.duration
+          (Math.round((row.original.duration / 60) * 100) / 100).toFixed(2)
         ),
       ]);
     },

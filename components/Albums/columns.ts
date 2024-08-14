@@ -5,7 +5,12 @@ import DataTableColumnHeader from "./../components/DataTable/ColumnHeader.vue";
 import DataTableRowActions from "./../components/DJ/RowActions.vue";
 
 import { Badge } from "@/components/ui/badge";
-import { ArrowUpDown, ChevronDown, ChevronUp } from "lucide-vue-next";
+import {
+  ArrowUpDown,
+  ChevronDown,
+  ChevronUp,
+  Maximize2,
+} from "lucide-vue-next";
 import { Button } from "@/components/ui/button";
 
 export const columns: ColumnDef<Task>[] = [
@@ -16,7 +21,7 @@ export const columns: ColumnDef<Task>[] = [
         Button,
         {
           variant: "link",
-          class: "p-0",
+          class: "pl-0",
           onClick: () => column.toggleSorting(column.getIsSorted() === "asc"),
         },
         () => ["Name", h(ArrowUpDown, { class: "ml-2 h-4 w-4" })]
@@ -28,16 +33,10 @@ export const columns: ColumnDef<Task>[] = [
       return h(
         Button,
         {
-          class: "text-right justify-self-end",
-          variant: "ghost",
-          onClick: () => row.toggleExpanded(),
+          class: "text-right justify-self-end p-0",
+          variant: "link",
         },
-        () => [
-          name,
-          row.getIsExpanded()
-            ? h(ChevronUp, { class: "ml-2 h-4 w-4" })
-            : h(ChevronDown, { class: "ml-2 h-4 w-4" }),
-        ]
+        () => [name]
       );
     },
   },

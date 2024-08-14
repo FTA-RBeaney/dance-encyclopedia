@@ -113,10 +113,21 @@ const toggleExpanded = () => {
                   :key="cell.id"
                   class="py-2"
                 >
-                  <FlexRender
-                    :render="cell.column.columnDef.cell"
-                    :props="cell.getContext()"
-                  />
+                  <Dialog>
+                    <DialogTrigger as-child>
+                      <FlexRender
+                        :render="cell.column.columnDef.cell"
+                        :props="cell.getContext()"
+                      />
+                    </DialogTrigger>
+                    <DialogContent class="sm:max-w-[80%] h-[90dvh]">
+                      <div class="overflow-y-auto grid max-h-full">
+                        <AlbumsRecommendations
+                          :filteredItems="row.original.spotify_info"
+                        />
+                      </div>
+                    </DialogContent>
+                  </Dialog>
                 </TableCell>
               </TableRow>
               <TableRow v-if="row.getIsExpanded()">

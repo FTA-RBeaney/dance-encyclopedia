@@ -37,31 +37,34 @@ const { artistId, trackId } = toRefs(props);
       <!-- <pre>{{ filteredItems }}</pre> -->
     </div>
     <div class="w-7/12 ml-4 max-w-screen-md">
-      <Card class="p-4">
-        <h3 class="text-lg font-medium mb-4">Track listing:</h3>
-
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Name</TableHead>
-              <TableHead>Spotify ID</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            <TableRow
-              v-for="(track, i) in filteredItems.tracks.items"
-              :key="`track${i}`"
-            >
-              <TableCell>
-                {{ i + 1 }}.
-                {{ track.name }}
-              </TableCell>
-              <TableCell>
-                {{ track.id }}
-              </TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
+      <Card>
+        <CardHeader>
+          <CardTitle> Track listing: </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Name</TableHead>
+                <TableHead>Spotify ID</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <TableRow
+                v-for="(track, i) in filteredItems.tracks.items"
+                :key="`track${i}`"
+              >
+                <TableCell>
+                  {{ i + 1 }}.
+                  {{ track.name }}
+                </TableCell>
+                <TableCell>
+                  {{ track.id }}
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </CardContent>
         <!-- <div
       v-for="(rec, i) in filteredItems"
       :key="`rec${i}`"

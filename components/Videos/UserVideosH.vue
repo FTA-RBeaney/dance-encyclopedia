@@ -1,91 +1,73 @@
 <template>
   <div>
-    <!-- <div class="flex items-center justify-between mt-4">
-      <div class="space-y-1">
-        <h2 class="text-2xl font-semibold tracking-tight">User videos</h2>
-        <p class="text-sm text-muted-foreground">
-          A selection of user favourites!
-        </p>
-      </div>
-    </div>
-    <Separator class="my-4" /> -->
     <div class="relative">
-      <!-- <div class="flex">
-        <div class="w-8/12">
-          <div>
-            <VideoPlayer
-              v-if="chosenVideo"
-              :video="chosenVideo"
-              :poster="userVideoData?.snippet?.thumbnails.high.url"
-            />
-            <div v-else>
-              <img
-                src="https://i0.wp.com/blog.straycat.me.uk/wp-content/uploads/2024/02/Hellzapoppin-New-YT-Cover-2.png?fit=1116%2C714&ssl=1"
-                class="w-full object-cover aspect-video rounded-lg"
-              />
-            </div>
-          </div>
-        </div>
-        <div class="w-4/12 ml-4">
-          <Card v-if="chosenVideo" class="p-4 mb-6">
-            <div class="px-2">
-              <h3
-                class="font-semibold text-xl leading-none tracking-tight mt-2 mb-4"
-              >
-                {{ chosenVideoDetails.snippet.title }}
-              </h3>
-
-              <p class="text-sm text-muted-foreground my-2">
-                {{ chosenVideoDetails.snippet.description }}
-              </p>
-              <h3 class="font-semibold leading-none tracking-tight mt-6">
-                Tags:
-              </h3>
-              <ul class="flex flex-wrap mt-6">
-                <li
-                  v-for="(tag, i) in chosenVideoDetails.snippet.tags"
-                  :key="`tag${i}`"
-                  class="mr-2 mb-2"
-                >
-                  <Badge variant="secondary" class="rounded-md">
-                    {{ tag }}
-                  </Badge>
-                </li>
-              </ul>
-            </div>
-          </Card>
-        </div>
-      </div> -->
       <div v-if="userVideoData.length > 1" class="flex gap-4">
         <div
           v-for="(video, i) in userVideoData"
           :key="`video${i}`"
           class="rounded-sm overflow-hidden w-[20%]"
         >
-          <div
-            @click="changeVideo(video.id)"
-            class="relative group cursor-pointer mb-2"
-          >
-            <div class="rounded-lg overflow-hidden aspect-video mr-3">
-              <img
-                :src="video.snippet.thumbnails.maxres.url"
-                class="h-full object-cover transition-all hover:scale-105"
-              />
+          <Dialog>
+            <div class="relative group cursor-pointer mb-2">
+              <div class="rounded-lg overflow-hidden aspect-video mr-3">
+                <img
+                  :src="video.snippet.thumbnails.maxres.url"
+                  class="h-full object-cover transition-all hover:scale-105"
+                />
+              </div>
+              <div class="mt-3">
+                <DialogTrigger as-child>
+                  <h3
+                    class="text-sm font-medium leading-none tracking-tight max-w-full"
+                  >
+                    {{ video.snippet.title.substring(0, 50) + "…" }}
+                  </h3>
+                </DialogTrigger>
+                <p class="text-xs font-medium text-muted-foreground mt-1">
+                  {{ video.snippet.channelTitle }}
+                </p>
+                <p class="text-xs font-medium text-muted-foreground mt-1">
+                  8 likes
+                </p>
+              </div>
             </div>
-            <div class="mt-3">
-              <h3
-                class="text-sm font-medium leading-none tracking-tight max-w-full"
-              >
-                {{ video.snippet.title.substring(0, 50) + "…" }}
-              </h3>
-              <p class="text-xs font-medium text-muted-foreground mt-1">
-                {{ video.snippet.channelTitle }}
-              </p>
-              <p class="text-xs font-medium text-muted-foreground mt-1">
-                8 likes
-              </p>
-            </div>
-          </div>
+
+            <DialogContent class="sm:max-w-[1400px] max-h-[800px]">
+              <div class="flex max-h-[400px]">
+                <div class="w-5/12">
+                  <VideoPlayer
+                    :video="`https://www.youtube.com/watch?v=${video.id}`"
+                    :poster="userVideoData?.snippet?.thumbnails.high.url"
+                  />
+                </div>
+                <div class="px-6 w-7/12">
+                  <h3
+                    class="font-semibold text-xl leading-none tracking-tight mt-2 mb-4"
+                  >
+                    {{ video?.snippet?.title }}
+                  </h3>
+
+                  <p class="text-sm text-muted-foreground my-2">
+                    {{ video?.snippet?.description }}
+                  </p>
+                  <h3 class="font-semibold leading-none tracking-tight mt-6">
+                    Tags:
+                  </h3>
+                  <ul class="flex flex-wrap mt-6">
+                    <li
+                      v-for="(tag, i) in video?.snippet?.tags"
+                      :key="`tag${i}`"
+                      class="mr-2 mb-2"
+                    >
+                      <Badge variant="secondary" class="rounded-md">
+                        {{ tag }}
+                      </Badge>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
     </div>
@@ -156,6 +138,4 @@ realtimeChannel.subscribe();
 onUnmounted(() => {
   supabase.removeChannel(realtimeChannel);
 });
-
-console.log(userVideoData);
 </script>
