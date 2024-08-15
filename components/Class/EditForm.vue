@@ -78,8 +78,11 @@ const { handleSubmit, setFieldValue, values } = useForm({
     teachers: initialTeachers.value,
     theme: props.lesson.class_theme,
     taking_card: props.lesson.taking_card,
+    taking_cash: props.lesson.taking_cash,
   },
 });
+
+console.log("props.lesson.date", props.lesson.date);
 
 const onSubmit = handleSubmit(async (values) => {
   try {
@@ -118,28 +121,30 @@ const onSubmit = handleSubmit(async (values) => {
   }
 });
 
-const date = ref();
+// const date = ref(parseDate(props.lesson.date));
+
+const date = computed(() => props.lesson.date.split("-").reverse().join("-"));
 const isOpen = ref(false);
 </script>
 
 <template>
   <Dialog v-model:open="isOpen">
     <DialogTrigger as-child>
-      <Button><Pencil class="w-3 h-3 mr-2" />Edit</Button>
+      <Button class="text-xs"><Pencil class="w-3 h-3" /></Button>
     </DialogTrigger>
     <DialogContent class="sm:max-w-[425px]">
       <DialogHeader>
-        <DialogTitle>Edit lesson</DialogTitle>
+        <DialogTitle>Edit {{ date }}</DialogTitle>
         <DialogDescription>
           Make changes to your lesson here. Click save when you're done.
         </DialogDescription>
       </DialogHeader>
 
       <form @submit="onSubmit" class="space-y-4">
-        <FormField name="date">
+        <!-- <FormField name="date">
           <FormItem class="flex flex-col">
-            <FormLabel>Date of birth</FormLabel>
-            <Popover>
+            <FormLabel>Date of lesson</FormLabel> -->
+        <!-- <Popover>
               <PopoverTrigger as-child>
                 <Button
                   variant="outline"
@@ -156,10 +161,12 @@ const isOpen = ref(false);
               <PopoverContent class="w-auto p-0">
                 <Calendar v-model="date" initial-focus />
               </PopoverContent>
-            </Popover>
-            <FormMessage />
+            </Popover> -->
+        <!-- <Input type="text" v-model="date" disabled class="text-black" /> -->
+        <!-- <Label>{{ parseDate(props.lesson.date) }}</Label> -->
+        <!-- <FormMessage />
           </FormItem>
-        </FormField>
+        </FormField> -->
         <FormField v-slot="{ componentField }" name="theme">
           <FormItem>
             <div>

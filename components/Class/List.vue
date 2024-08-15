@@ -54,6 +54,7 @@ console.log(firstKey);
 
       <TabsContent v-for="(month, i) in months" :key="i" :value="monthNames[i]">
         <Card>
+          <CardHeader></CardHeader>
           <CardContent>
             <Table>
               <TableHeader>
@@ -65,24 +66,21 @@ console.log(firstKey);
                   <TableHead>Total Takings</TableHead>
                   <TableHead>Teachers</TableHead>
                   <TableHead>Class Theme</TableHead>
+                  <TableHead></TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 <TableRow v-for="(week, i) in month" :key="`week${i}`">
                   <TableCell>
-                    {{ week.date }}
+                    {{ week.date.split("-").reverse().join("-") }}
                   </TableCell>
                   <TableCell>
                     {{ week.attendees }}
                   </TableCell>
+                  <TableCell> £{{ week.taking_card }} </TableCell>
+                  <TableCell> £{{ week.taking_cash }} </TableCell>
                   <TableCell>
-                    {{ week.taking_card }}
-                  </TableCell>
-                  <TableCell>
-                    {{ week.taking_cash }}
-                  </TableCell>
-                  <TableCell>
-                    {{ week.taking_card + week.taking_cash }}
+                    £{{ week.taking_card + week.taking_cash }}
                   </TableCell>
                   <TableCell>
                     <span
@@ -99,11 +97,12 @@ console.log(firstKey);
                   <TableCell>
                     {{ week.class_theme }}
                   </TableCell>
+                  <TableCell>
+                    <ClassEditForm :lesson="week" />
+                  </TableCell>
                 </TableRow>
               </TableBody>
             </Table>
-
-            <pre>{{ week }}</pre>
           </CardContent>
         </Card>
       </TabsContent>

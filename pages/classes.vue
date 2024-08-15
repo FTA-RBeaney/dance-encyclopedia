@@ -11,7 +11,7 @@ const currentCategory = ref("weeks");
 const { data: graphData, graphError } = await supabase
   .from("classes")
   .select("date, attendees, taking_card")
-  .order("date", { ascending: false });
+  .order("date", { ascending: true });
 </script>
 
 <template>
@@ -33,15 +33,6 @@ const { data: graphData, graphError } = await supabase
                   index="date"
                   :data="graphData"
                   :categories="['attendees', 'taking_card']"
-                  :y-formatter="
-                    (tick, i) => {
-                      return typeof tick === 'number'
-                        ? `£ ${new Intl.NumberFormat('uk')
-                            .format(tick)
-                            .toString()}`
-                        : '';
-                    }
-                  "
                   :rounded-corners="4"
                 />
               </CardContent>
@@ -54,15 +45,6 @@ const { data: graphData, graphError } = await supabase
                   :categories="['attendees', 'taking_card']"
                   :colors="['blue', 'pink', 'orange', 'red']"
                   :custom-tooltip="ClassChartTooltip"
-                  :y-formatter="
-                    (tick, i) => {
-                      return typeof tick === 'number'
-                        ? `£ ${new Intl.NumberFormat('uk')
-                            .format(tick)
-                            .toString()}`
-                        : '';
-                    }
-                  "
                 />
               </CardContent>
             </Card>

@@ -26,10 +26,12 @@ onMounted(async () => {
     <div class="border-t">
       <div class="bg-background">
         <div class="lg:grid lg:grid-cols-5 min-h-screen">
-          <Sidebar v-if="supabaseUser" class="hidden lg:block" />
+          <Card class="rounded-none -mt-0.5 max-w-[300px]">
+            <Sidebar v-if="supabaseUser" class="hidden lg:block" />
+          </Card>
           <div
             id="main-content"
-            class="main-content lg:border-l relative"
+            class="main-content relative"
             :class="isLoggedInClasses"
           >
             <div class="h-screen">
