@@ -8,7 +8,7 @@
     <div class="border-t">
       <div class="bg-[--bodybg] dark:bg-background">
         <div class="lg:grid lg:grid-cols-6 max-w-screen-2xl min-h-screen">
-          <Card class="rounded-none">
+          <Card class="rounded-none max-w-[300px]">
             <Sidebar class="hidden lg:block" />
           </Card>
           <div

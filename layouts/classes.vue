@@ -7,7 +7,7 @@
     </div>
     <div class="border-t">
       <div class="bg-[--bodybg] dark:bg-background">
-        <div class="lg:grid lg:grid-cols-6 max-w-screen-2xl min-h-screen">
+        <div class="lg:grid lg:grid-cols-6 min-h-screen">
           <Card class="rounded-none -mt-0.5 max-w-[300px]">
             <Sidebar class="hidden lg:block" />
           </Card>

@@ -36,9 +36,6 @@ const addAlbum = async (spotifyId) => {
   const res = await getArtistAlbum(trackInfo.album.id);
   spotifyInfo.value = res;
 
-  console.log(trackInfo);
-  console.log(audioAnalysisInfo);
-
   try {
     const { data, error } = await supabase
       .from("albums")
