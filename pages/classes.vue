@@ -8,9 +8,14 @@ const supabase = useSupabaseClient();
 const categories = ref(["weeks", "months"]);
 const currentCategory = ref("weeks");
 
-const { data: graphData, graphError } = await supabase
+const { data: attendeesData, graphError } = await supabase
   .from("classes")
-  .select("date, attendees, taking_card")
+  .select("date, attendees")
+  .order("date", { ascending: true });
+
+const { data: takingData, takingError } = await supabase
+  .from("classes")
+  .select("date, taking_cash, taking_card")
   .order("date", { ascending: true });
 </script>
 
@@ -31,8 +36,8 @@ const { data: graphData, graphError } = await supabase
               <CardContent>
                 <BarChart
                   index="date"
-                  :data="graphData"
-                  :categories="['attendees', 'taking_card']"
+                  :data="attendeesData"
+                  :categories="['attendees']"
                   :rounded-corners="4"
                 />
               </CardContent>
@@ -40,9 +45,9 @@ const { data: graphData, graphError } = await supabase
             <Card>
               <CardContent>
                 <LineChart
-                  :data="graphData"
+                  :data="takingData"
                   index="date"
-                  :categories="['attendees', 'taking_card']"
+                  :categories="['taking_cash', 'taking_card']"
                   :colors="['blue', 'pink', 'orange', 'red']"
                   :custom-tooltip="ClassChartTooltip"
                 />
