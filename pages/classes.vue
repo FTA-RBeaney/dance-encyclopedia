@@ -5,9 +5,16 @@ definePageMeta({
 
 import { CirclePlus } from "lucide-vue-next";
 import { data } from "../data/classes";
+import _mean from "lodash/mean";
+
 const supabase = useSupabaseClient();
 const categories = ref(["weeks", "months"]);
 const currentCategory = ref("weeks");
+
+const { data: allData, allError } = await supabase
+  .from("classes")
+  .select("*")
+  .order("date", { ascending: true });
 
 const { data: attendeesData, graphError } = await supabase
   .from("classes")
@@ -18,6 +25,31 @@ const { data: takingData, takingError } = await supabase
   .from("classes")
   .select("date, taking_cash, taking_card")
   .order("date", { ascending: true });
+
+let takingCard = takingData.map((entry) => {
+  return entry.taking_card;
+});
+let takingCash = takingData.map((entry) => {
+  return entry.taking_cash;
+});
+
+let attendees = attendeesData.map((entry) => {
+  return entry.attendees;
+});
+
+let allTakings = [];
+allTakings.push(...takingCard, ...takingCash);
+
+const mean_val = _mean(allTakings);
+
+const setAverage = (data) => {
+  return _mean(data);
+};
+
+let gbp = new Intl.NumberFormat("en-GB", {
+  style: "currency",
+  currency: "GBP",
+});
 </script>
 
 <template>
@@ -25,6 +57,32 @@ const { data: takingData, takingError } = await supabase
     <Heading title="Classes" description="Information on class attendance" />
 
     <main>
+      <div class="flex justify-between mb-6">
+        <Card class="w-[33.333%] mr-4">
+          <CardHeader>
+            <CardTitle>Average</CardTitle>
+          </CardHeader>
+          <CardContent>{{ gbp.format(mean_val) }}</CardContent>
+        </Card>
+        <Card class="w-[30%] mr-4">
+          <CardHeader>
+            <CardTitle>Average card</CardTitle>
+          </CardHeader>
+          <CardContent>{{ gbp.format(setAverage(takingCard)) }}</CardContent>
+        </Card>
+        <Card class="w-[30%] mr-4">
+          <CardHeader>
+            <CardTitle>Average cash</CardTitle>
+          </CardHeader>
+          <CardContent>{{ gbp.format(setAverage(takingCash)) }}</CardContent>
+        </Card>
+        <Card class="w-[30%]">
+          <CardHeader>
+            <CardTitle>Average attendees</CardTitle>
+          </CardHeader>
+          <CardContent>{{ Math.ceil(setAverage(attendees)) }}</CardContent>
+        </Card>
+      </div>
       <div class="xl:flex">
         <div class="xl:w-7/12 xl:mr-6">
           <div class="flex justify-end">
