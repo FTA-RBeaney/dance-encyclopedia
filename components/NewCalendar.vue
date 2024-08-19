@@ -1,5 +1,5 @@
 <template>
-  <div class="app">
+  <div class="px-8">
     <FullCalendar :options="calendarOptions" @eventClick="handleClick">
       <template v-slot:eventContent="arg">
         <Dialog>

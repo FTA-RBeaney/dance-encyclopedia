@@ -44,6 +44,7 @@ function capitalizeFirstLetter(string) {
       {{ props.lesson.class_theme }}
     </TableCell>
     <TableCell>
+      <ClassSummary :lesson="props.lesson" />
       <ClassEditForm :lesson="props.lesson" />
     </TableCell>
   </TableRow>

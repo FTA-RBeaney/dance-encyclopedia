@@ -3,6 +3,7 @@ definePageMeta({
   layout: "classes",
 });
 
+import { CirclePlus } from "lucide-vue-next";
 import { data } from "../data/classes";
 const supabase = useSupabaseClient();
 const categories = ref(["weeks", "months"]);
@@ -24,15 +25,25 @@ const { data: takingData, takingError } = await supabase
     <Heading title="Classes" description="Information on class attendance" />
 
     <main>
-      <div class="flex">
-        <div class="w-7/12 mr-6">
-          <AddLesson />
+      <div class="xl:flex">
+        <div class="xl:w-7/12 xl:mr-6">
+          <div class="flex justify-end">
+            <NuxtLink to="/add-lesson"
+              ><Button
+                ><CirclePlus class="w-3 h-3 mr-2" />Add lesson</Button
+              ></NuxtLink
+            >
+          </div>
+          <!-- <AddLesson /> -->
 
           <ClassList />
         </div>
-        <div class="w-5/12">
-          <div>
-            <Card class="mb-6">
+        <div class="xl:w-5/12 mt-6 xl:mt-0">
+          <div class="flex xl:block">
+            <Card class="mb-6 w-6/12 xl:w-full mr-6 xl:mr-0">
+              <CardHeader>
+                <CardTitle>Attendees </CardTitle>
+              </CardHeader>
               <CardContent>
                 <BarChart
                   index="date"
@@ -42,7 +53,10 @@ const { data: takingData, takingError } = await supabase
                 />
               </CardContent>
             </Card>
-            <Card>
+            <Card class="w-6/12 xl:w-full">
+              <CardHeader>
+                <CardTitle>Takings </CardTitle>
+              </CardHeader>
               <CardContent>
                 <LineChart
                   :data="takingData"

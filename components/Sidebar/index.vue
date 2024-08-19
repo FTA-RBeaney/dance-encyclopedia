@@ -35,10 +35,14 @@ const { data, refresh } = await useAsyncData("posts", async () => {
         >
           <Button
             variant="ghost"
-            class="w-full flex justify-between items-center relative"
+            class="w-full flex justify-between items-center relative font-normal"
           >
             <div class="flex items-center">
-              <component :is="lucideIcons[item.icon]" class="mr-2 w-4 h-4" />
+              <component
+                :is="lucideIcons[item.icon]"
+                :stroke-width="1.5"
+                class="mr-2 w-4 h-4"
+              />
 
               {{ item.title }}
             </div>
@@ -62,10 +66,14 @@ const { data, refresh } = await useAsyncData("posts", async () => {
           >
             <Button
               variant="ghost"
-              class="w-full flex justify-between items-center relative"
+              class="w-full flex justify-between items-center relative font-normal"
             >
               <div class="flex items-center">
-                <component :is="lucideIcons[item.icon]" class="mr-2 w-4 h-4" />
+                <component
+                  :is="lucideIcons[item.icon]"
+                  :stroke-width="1.5"
+                  class="mr-2 w-4 h-4"
+                />
 
                 {{ item.title }}
               </div>
@@ -83,11 +91,15 @@ const { data, refresh } = await useAsyncData("posts", async () => {
           >
             <Button
               variant="ghost"
-              class="w-full flex justify-between items-center relative"
+              class="w-full flex justify-between items-center relative font-normal"
               :disabled="item.disabled"
             >
               <div class="flex items-center">
-                <component :is="lucideIcons[item.icon]" class="mr-2 w-4 h-4" />
+                <component
+                  :is="lucideIcons[item.icon]"
+                  :stroke-width="1.5"
+                  class="mr-2 w-4 h-4"
+                />
 
                 {{ item.title }}
               </div>

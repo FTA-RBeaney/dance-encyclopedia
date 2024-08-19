@@ -34,7 +34,7 @@ onMounted(async () => {
             class="main-content relative"
             :class="isLoggedInClasses"
           >
-            <div class="h-screen">
+            <div class="min-h-screen pb-8">
               <slot />
             </div>
           </div>

@@ -7,13 +7,13 @@
     </div>
     <div class="border-t">
       <div class="bg-[--bodybg] dark:bg-background">
-        <div class="lg:grid lg:grid-cols-6 min-h-screen">
+        <div class="lg:grid lg:grid-cols-8 min-h-screen">
           <Card class="rounded-none -mt-0.5 max-w-[300px]">
             <Sidebar class="hidden lg:block" />
           </Card>
           <div
             id="main-content"
-            class="main-content col-span-4 lg:col-span-5 relative"
+            class="main-content col-span-4 lg:col-span-7 relative"
           >
             <Suspense>
               <div class="px-8 py-6 mx-auto h-full">

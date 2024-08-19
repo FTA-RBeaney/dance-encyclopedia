@@ -61,8 +61,8 @@ console.log(firstKey);
                 <TableRow>
                   <TableHead>Date</TableHead>
                   <TableHead>Attendees</TableHead>
-                  <TableHead>Card</TableHead>
-                  <TableHead>Cash</TableHead>
+                  <!-- <TableHead>Card</TableHead>
+                  <TableHead>Cash</TableHead> -->
                   <TableHead>Total Takings</TableHead>
                   <TableHead>Teachers</TableHead>
                   <TableHead>Class Theme</TableHead>
@@ -77,8 +77,8 @@ console.log(firstKey);
                   <TableCell>
                     {{ week.attendees }}
                   </TableCell>
-                  <TableCell> £{{ week.taking_card }} </TableCell>
-                  <TableCell> £{{ week.taking_cash }} </TableCell>
+                  <!-- <TableCell> £{{ week.taking_card }} </TableCell>
+                  <TableCell> £{{ week.taking_cash }} </TableCell> -->
                   <TableCell>
                     £{{ week.taking_card + week.taking_cash }}
                   </TableCell>
@@ -98,7 +98,10 @@ console.log(firstKey);
                     {{ week.class_theme }}
                   </TableCell>
                   <TableCell>
-                    <ClassEditForm :lesson="week" />
+                    <div class="flex">
+                      <ClassSummary :lesson="week" />
+                      <ClassEditForm :lesson="week" />
+                    </div>
                   </TableCell>
                 </TableRow>
               </TableBody>
