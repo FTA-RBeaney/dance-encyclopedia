@@ -38,7 +38,7 @@ let gbp = new Intl.NumberFormat("en-GB", {
           <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">
             <dt class="text-sm font-medium text-gray-500">Lesson date</dt>
             <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-              {{ lesson.date.split("-").reverse().join("-") }}
+              {{ lesson.date.split("-").reverse().join("/") }}
             </dd>
           </div>
           <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">

@@ -63,16 +63,16 @@ console.log(firstKey);
                   <TableHead>Attendees</TableHead>
                   <!-- <TableHead>Card</TableHead>
                   <TableHead>Cash</TableHead> -->
-                  <TableHead>Total Takings</TableHead>
+                  <TableHead>Takings</TableHead>
                   <TableHead>Teachers</TableHead>
-                  <TableHead>Class Theme</TableHead>
+                  <TableHead>Class</TableHead>
                   <TableHead></TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 <TableRow v-for="(week, i) in month" :key="`week${i}`">
-                  <TableCell>
-                    {{ week.date.split("-").reverse().join("-") }}
+                  <TableCell class="min-w-[120px]">
+                    {{ week.date.split("-").reverse().join("/") }}
                   </TableCell>
                   <TableCell>
                     {{ week.attendees }}
@@ -83,16 +83,16 @@ console.log(firstKey);
                     £{{ week.taking_card + week.taking_cash }}
                   </TableCell>
                   <TableCell>
-                    <span
+                    <div
                       v-for="(teacher, i) in week.teachers"
                       :key="`teacher${i}`"
-                      class="mr-2"
+                      class="mb-2"
                     >
                       <span
                         class="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-yellow-300 border border-yellow-300"
                         >{{ capitalizeFirstLetter(teacher) }}</span
                       >
-                    </span>
+                    </div>
                   </TableCell>
                   <TableCell>
                     {{ week.class_theme }}
