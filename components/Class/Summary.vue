@@ -21,6 +21,10 @@ let gbp = new Intl.NumberFormat("en-GB", {
   style: "currency",
   currency: "GBP",
 });
+
+const openDialog = () => {
+  open.value = !open.value;
+};
 </script>
 <template>
   <Dialog v-model:open="isOpen">

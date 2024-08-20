@@ -1,11 +1,12 @@
 <script setup>
+const props = defineProps({
+  classData: Object,
+});
+
+const newData = reactive(props);
+
 const supabase = useSupabaseClient();
 import _groupBy from "lodash/groupBy";
-
-const { data: classData, error } = await supabase
-  .from("classes")
-  .select()
-  .order("date", { ascending: false });
 
 const monthNames = [
   "January",
@@ -21,38 +22,37 @@ const monthNames = [
   "November",
   "December",
 ];
-const months = _groupBy(classData, ({ date }) => new Date(date).getMonth());
-
-const totalTakings = computed(
-  () => classData.taking_cash + classData.taking_card
+const months = computed(() =>
+  _groupBy(newData.classData, ({ date }) => new Date(date).getMonth())
 );
 
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-// var firstItem = months.splice(0, 1)[0];
-
-let [firstKey] = Object.keys(months);
-
-console.log(firstKey);
+let [firstKey] = Object.keys(months.value);
 </script>
 
 <template>
   <div>
-    <!-- <pre>{{ classData }}</pre> -->
-    <Tabs :default-value="monthNames[firstKey]">
-      <TabsList>
-        <TabsTrigger
-          :value="monthNames[i]"
-          v-for="(month, i) in months"
-          :key="i"
-        >
-          {{ monthNames[i] }}
-        </TabsTrigger>
-      </TabsList>
-
-      <TabsContent v-for="(month, i) in months" :key="i" :value="monthNames[i]">
+    <Tabs :default-value="monthNames[firstKey]" class="text-right">
+      <Card class="p-1 inline-flex ml-auto">
+        <TabsList>
+          <TabsTrigger
+            :value="monthNames[i]"
+            v-for="(month, i) in months"
+            :key="i"
+          >
+            {{ monthNames[i] }}
+          </TabsTrigger>
+        </TabsList>
+      </Card>
+      <TabsContent
+        v-for="(month, i) in months"
+        :key="i"
+        :value="monthNames[i]"
+        class="text-left"
+      >
         <Card>
           <CardHeader></CardHeader>
           <CardContent>
@@ -61,8 +61,6 @@ console.log(firstKey);
                 <TableRow>
                   <TableHead>Date</TableHead>
                   <TableHead>Attendees</TableHead>
-                  <!-- <TableHead>Card</TableHead>
-                  <TableHead>Cash</TableHead> -->
                   <TableHead>Takings</TableHead>
                   <TableHead>Teachers</TableHead>
                   <TableHead>Class</TableHead>
@@ -77,8 +75,6 @@ console.log(firstKey);
                   <TableCell>
                     {{ week.attendees }}
                   </TableCell>
-                  <!-- <TableCell> £{{ week.taking_card }} </TableCell>
-                  <TableCell> £{{ week.taking_cash }} </TableCell> -->
                   <TableCell>
                     £{{ week.taking_card + week.taking_cash }}
                   </TableCell>

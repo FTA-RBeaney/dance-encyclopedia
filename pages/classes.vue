@@ -3,176 +3,139 @@ definePageMeta({
   layout: "classes",
 });
 
-import { CirclePlus } from "lucide-vue-next";
-import { data } from "../data/classes";
 import _mean from "lodash/mean";
 
 const supabase = useSupabaseClient();
-const categories = ref(["weeks", "months"]);
-const currentCategory = ref("weeks");
 
-const { data: allData, allError } = await supabase
-  .from("classes")
-  .select("*")
-  .order("date", { ascending: true });
+const { data: classData, refresh } = await useAsyncData("classes", async () => {
+  const { data, allError } = await supabase
+    .from("classes")
+    .select("*")
+    .order("date", { ascending: true });
 
-const { data: attendeesData, graphError } = await supabase
-  .from("classes")
-  .select("date, attendees")
-  .order("date", { ascending: true });
-
-const { data: takingData, takingError } = await supabase
-  .from("classes")
-  .select("date, taking_cash, taking_card")
-  .order("date", { ascending: true });
-
-let takingCard = takingData.map((entry) => {
-  return entry.taking_card;
-});
-let takingCash = takingData.map((entry) => {
-  return entry.taking_cash;
+  return data;
 });
 
-let attendees = attendeesData.map((entry) => {
-  return entry.attendees;
+const { data: attendeesData, refresh: refreshAttendees } = await useAsyncData(
+  "attendees",
+  async () => {
+    const { data, error } = await supabase
+      .from("classes")
+      .select("date, attendees")
+      .order("date", { ascending: true });
+
+    return data;
+  }
+);
+
+const { data: takingData, refresh: refreshTakings } = await useAsyncData(
+  "taking",
+  async () => {
+    const { data, error } = await supabase
+      .from("classes")
+      .select("date, taking_card, taking_cash")
+      .order("date", { ascending: true });
+
+    return data;
+  }
+);
+
+let allTakings = computed(() => {
+  const mappedCash = classData.value.map((entry) => entry.taking_cash);
+  const mappedCard = classData.value.map((entry) => entry.taking_card);
+  const mergedArray = [...mappedCash, ...mappedCard];
+  return mergedArray;
 });
 
-let allTakings = [];
-allTakings.push(...takingCard, ...takingCash);
+const dataFormatter = (number) =>
+  `$${Intl.NumberFormat("us").format(number).toString()}`;
 
-const mean_val = _mean(allTakings);
-
-const setAverage = (data) => {
-  return _mean(data);
-};
-
-let gbp = new Intl.NumberFormat("en-GB", {
-  style: "currency",
-  currency: "GBP",
-});
+async function refreshData() {
+  refresh();
+  refreshAttendees();
+  refreshTakings();
+}
 </script>
 
 <template>
   <div>
-    <Heading title="Classes" description="Information on class attendance" />
+    <div class="flex justify-between items-center">
+      <Heading title="Classes" description="Information on class attendance" />
+      <NuxtLink to="/add-lesson"
+        ><Button
+          ><CirclePlus class="w-3 h-3 mr-2" />Add lesson</Button
+        ></NuxtLink
+      >
+    </div>
 
     <main>
       <div class="flex justify-between mb-6">
-        <Card class="w-[33.333%] mr-4">
+        <ClassAverageCard
+          title="Average"
+          :data="allTakings"
+          icon="PiggyBank"
+          :currency="true"
+        />
+
+        <ClassAverageCard
+          title="Avg. card"
+          :data="classData"
+          property="taking_card"
+          :currency="true"
+          icon="HandCoins"
+        />
+
+        <ClassAverageCard
+          title="Avg. cash"
+          :data="classData"
+          property="taking_cash"
+          :currency="true"
+          icon="CreditCard"
+        />
+
+        <ClassAverageCard
+          title="Avg. attendees"
+          :data="classData"
+          property="attendees"
+          icon="Users"
+        />
+      </div>
+      <div class="flex mt-6">
+        <Card class="w-6/12 mr-6">
           <CardHeader>
-            <CardTitle>Average</CardTitle>
+            <CardTitle>Attendees </CardTitle>
           </CardHeader>
-          <CardContent>{{ gbp.format(mean_val) }}</CardContent>
+          <CardContent>
+            <BarChart
+              index="date"
+              :data="attendeesData"
+              :categories="['attendees']"
+              :rounded-corners="4"
+              :show-x-axis="false"
+            />
+          </CardContent>
         </Card>
-        <Card class="w-[30%] mr-4">
+        <Card class="w-6/12">
           <CardHeader>
-            <CardTitle>Average card</CardTitle>
+            <CardTitle>Takings </CardTitle>
           </CardHeader>
-          <CardContent>{{ gbp.format(setAverage(takingCard)) }}</CardContent>
-        </Card>
-        <Card class="w-[30%] mr-4">
-          <CardHeader>
-            <CardTitle>Average cash</CardTitle>
-          </CardHeader>
-          <CardContent>{{ gbp.format(setAverage(takingCash)) }}</CardContent>
-        </Card>
-        <Card class="w-[30%]">
-          <CardHeader>
-            <CardTitle>Average attendees</CardTitle>
-          </CardHeader>
-          <CardContent>{{ Math.ceil(setAverage(attendees)) }}</CardContent>
+          <CardContent>
+            <AreaChart
+              :data="takingData"
+              index="date"
+              :categories="['taking_cash', 'taking_card']"
+              :colors="['blue', 'pink', 'orange', 'red']"
+              :show-x-axis="false"
+            />
+          </CardContent>
         </Card>
       </div>
-      <div class="xl:flex">
-        <div class="xl:w-7/12 xl:mr-6">
-          <div class="flex justify-end">
-            <NuxtLink to="/add-lesson"
-              ><Button
-                ><CirclePlus class="w-3 h-3 mr-2" />Add lesson</Button
-              ></NuxtLink
-            >
-          </div>
-          <!-- <AddLesson /> -->
-
-          <ClassList />
+      <div class="flex mt-6 w-full">
+        <div class="w-8/12 xl:w-8/12 mr-6">
+          <ClassList :classData="classData" />
         </div>
-        <div class="xl:w-5/12 mt-6 xl:mt-0">
-          <div class="flex xl:block">
-            <Card class="mb-6 w-6/12 xl:w-full mr-6 xl:mr-0">
-              <CardHeader>
-                <CardTitle>Attendees </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <BarChart
-                  index="date"
-                  :data="attendeesData"
-                  :categories="['attendees']"
-                  :rounded-corners="4"
-                />
-              </CardContent>
-            </Card>
-            <Card class="w-6/12 xl:w-full">
-              <CardHeader>
-                <CardTitle>Takings </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <LineChart
-                  :data="takingData"
-                  index="date"
-                  :categories="['taking_cash', 'taking_card']"
-                  :colors="['blue', 'pink', 'orange', 'red']"
-                  :custom-tooltip="ClassChartTooltip"
-                />
-              </CardContent>
-            </Card>
-          </div>
-          <!-- <Tabs default-value="weeks">
-            <TabsList>
-              <TabsTrigger
-                :value="category"
-                v-for="(category, index) in categories"
-                :key="index"
-              >
-                {{ category }}
-              </TabsTrigger>
-            </TabsList>
-            <TabsContent
-              v-for="(category, index) in categories"
-              :value="category"
-              :key="index"
-            >
-              <Card>
-                <CardContent>
-                  <LineChart
-                    :data="data[category]"
-                    index="name"
-                    :categories="['total']"
-                    :colors="[primary]"
-                  />
-                </CardContent>
-              </Card>
-              <Table class="w-10/12 mx-auto my-6">
-                <TableHeader>
-                  <TableRow>
-                    <TableHead class="font-bold"> Date </TableHead>
-                    <TableHead class="font-bold text-right">
-                      Number of people
-                    </TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  <TableRow v-for="item in data[category]" :key="item.name">
-                    <TableCell class="font-medium w-3/12">
-                      {{ item.name }}
-                    </TableCell>
-                    <TableCell class="font-medium text-right">
-                      {{ item.total }}
-                    </TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </TabsContent>
-          </Tabs> -->
+        <div class="w-4/12 xl:w-4/12 mt-6 xl:mt-0">
+          <AddLesson @refresh-data="refreshData" />
         </div>
       </div>
     </main>

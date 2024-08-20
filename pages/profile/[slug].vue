@@ -590,30 +590,6 @@ const isMe = computed(() => supabaseUser.value.id === route.params.slug);
                     :enable-time-picker="false"
                     class="shadow-sm text-left bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                   ></VueDatePicker>
-                  <!-- <Popover>
-                  <PopoverTrigger as-child>
-                    <Button
-                      variant="outline"
-                      class="shadow-sm text-left bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 flex w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                    >
-                      <span>{{
-                        value ? df.format(toDate(value)) : "Pick a date"
-                      }}</span>
-                      <CalendarIcon class="ms-auto h-4 w-4 opacity-50" />
-                    </Button>
-                    <input hidden />
-                  </PopoverTrigger>
-                  <PopoverContent class="w-auto p-0">
-                    <Calendar
-                      v-model:placeholder="placeholder"
-                      v-model="value"
-                      calendar-label="Date of birth"
-                      initial-focus
-                      :min-value="new CalendarDate(1900, 1, 1)"
-                      :max-value="today(getLocalTimeZone())"
-                    />
-                  </PopoverContent>
-                </Popover> -->
                 </div>
 
                 <div class="col-span-6 sm:col-full">
