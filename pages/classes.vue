@@ -61,11 +61,11 @@ async function refreshData() {
   <div>
     <div class="flex justify-between items-center">
       <Heading title="Classes" description="Information on class attendance" />
-      <NuxtLink to="/add-lesson"
+      <!-- <NuxtLink to="/add-lesson"
         ><Button
           ><CirclePlus class="w-3 h-3 mr-2" />Add lesson</Button
         ></NuxtLink
-      >
+      > -->
     </div>
 
     <main>

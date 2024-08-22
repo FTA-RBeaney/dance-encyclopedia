@@ -61,11 +61,6 @@ const df = new DateFormatter("en-US", {
   dateStyle: "long",
 });
 
-// const value = computed({
-//   get: () => (values.date ? parseDate(values.date) : undefined),
-//   set: (val) => val,
-// });
-
 const initialTeachers = computed(() =>
   data.teachers.map((teacher) => {
     return teacher;

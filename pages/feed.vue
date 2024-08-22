@@ -26,9 +26,6 @@ const createPost = async (post) => {
 
   content.value = "";
   uploads.value = [];
-
-  // refreshKey.value += 1;
-  // reloadNuxtApp();
 };
 
 const showHideSpinner = ref(true);

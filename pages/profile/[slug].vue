@@ -472,7 +472,7 @@ const isMe = computed(() => supabaseUser.value.id === route.params.slug);
                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                     >First Name</label
                   >
-                  <input
+                  <Input
                     type="text"
                     name="first-name"
                     id="first-name"
@@ -488,7 +488,7 @@ const isMe = computed(() => supabaseUser.value.id === route.params.slug);
                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                     >Last Name</label
                   >
-                  <input
+                  <Input
                     type="text"
                     name="last-name"
                     id="last-name"
@@ -504,7 +504,7 @@ const isMe = computed(() => supabaseUser.value.id === route.params.slug);
                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                     >Country</label
                   >
-                  <input
+                  <Input
                     type="text"
                     name="country"
                     id="country"
@@ -520,7 +520,7 @@ const isMe = computed(() => supabaseUser.value.id === route.params.slug);
                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                     >City</label
                   >
-                  <input
+                  <Input
                     type="text"
                     name="city"
                     id="city"
@@ -536,7 +536,7 @@ const isMe = computed(() => supabaseUser.value.id === route.params.slug);
                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                     >Address</label
                   >
-                  <input
+                  <Input
                     type="text"
                     name="address"
                     id="address"
@@ -552,7 +552,7 @@ const isMe = computed(() => supabaseUser.value.id === route.params.slug);
                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                     >Email</label
                   >
-                  <input
+                  <Input
                     type="email"
                     name="email"
                     id="email"
@@ -568,7 +568,7 @@ const isMe = computed(() => supabaseUser.value.id === route.params.slug);
                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                     >Phone Number</label
                   >
-                  <input
+                  <Input
                     type="number"
                     name="phone-number"
                     id="phone-number"
@@ -588,7 +588,6 @@ const isMe = computed(() => supabaseUser.value.id === route.params.slug);
                     v-model="date"
                     format="dd/MM/yyyy"
                     :enable-time-picker="false"
-                    class="shadow-sm text-left bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                   ></VueDatePicker>
                 </div>
 
@@ -613,7 +612,7 @@ const isMe = computed(() => supabaseUser.value.id === route.params.slug);
                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >Current password</label
                 >
-                <input
+                <Input
                   type="text"
                   name="current-password"
                   id="current-password"
@@ -628,7 +627,7 @@ const isMe = computed(() => supabaseUser.value.id === route.params.slug);
                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >New password</label
                 >
-                <input
+                <Input
                   data-popover-target="popover-password"
                   data-popover-placement="bottom"
                   type="password"
@@ -714,7 +713,7 @@ const isMe = computed(() => supabaseUser.value.id === route.params.slug);
                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >Confirm password</label
                 >
-                <input
+                <Input
                   type="text"
                   name="confirm-password"
                   id="confirm-password"
@@ -1112,7 +1111,7 @@ const isMe = computed(() => supabaseUser.value.id === route.params.slug);
                 for="company-news"
                 class="relative flex items-center cursor-pointer"
               >
-                <input type="checkbox" id="company-news" class="sr-only" />
+                <Input type="checkbox" id="company-news" class="sr-only" />
                 <span
                   class="h-6 bg-gray-200 border border-gray-200 rounded-full w-11 toggle-bg dark:bg-gray-700 dark:border-gray-600"
                 ></span>
@@ -1136,7 +1135,7 @@ const isMe = computed(() => supabaseUser.value.id === route.params.slug);
                 for="account-activity"
                 class="relative flex items-center cursor-pointer"
               >
-                <input
+                <Input
                   type="checkbox"
                   id="account-activity"
                   class="sr-only"
@@ -1165,7 +1164,7 @@ const isMe = computed(() => supabaseUser.value.id === route.params.slug);
                 for="meetups"
                 class="relative flex items-center cursor-pointer"
               >
-                <input type="checkbox" id="meetups" class="sr-only" checked />
+                <Input type="checkbox" id="meetups" class="sr-only" checked />
                 <span
                   class="h-6 bg-gray-200 border border-gray-200 rounded-full w-11 toggle-bg dark:bg-gray-700 dark:border-gray-600"
                 ></span>
@@ -1188,7 +1187,7 @@ const isMe = computed(() => supabaseUser.value.id === route.params.slug);
                 for="new-messages"
                 class="relative flex items-center cursor-pointer"
               >
-                <input type="checkbox" id="new-messages" class="sr-only" />
+                <Input type="checkbox" id="new-messages" class="sr-only" />
                 <span
                   class="h-6 bg-gray-200 border border-gray-200 rounded-full w-11 toggle-bg dark:bg-gray-700 dark:border-gray-600"
                 ></span>
@@ -1233,7 +1232,7 @@ const isMe = computed(() => supabaseUser.value.id === route.params.slug);
                 for="rating-reminders"
                 class="relative flex items-center cursor-pointer"
               >
-                <input type="checkbox" id="rating-reminders" class="sr-only" />
+                <Input type="checkbox" id="rating-reminders" class="sr-only" />
                 <span
                   class="h-6 bg-gray-200 border border-gray-200 rounded-full w-11 toggle-bg dark:bg-gray-700 dark:border-gray-600"
                 ></span>
@@ -1256,7 +1255,7 @@ const isMe = computed(() => supabaseUser.value.id === route.params.slug);
                 for="item-update"
                 class="relative flex items-center cursor-pointer"
               >
-                <input
+                <Input
                   type="checkbox"
                   id="item-update"
                   class="sr-only"
@@ -1284,7 +1283,7 @@ const isMe = computed(() => supabaseUser.value.id === route.params.slug);
                 for="item-comment"
                 class="relative flex items-center cursor-pointer"
               >
-                <input
+                <Input
                   type="checkbox"
                   id="item-comment"
                   class="sr-only"
@@ -1313,7 +1312,7 @@ const isMe = computed(() => supabaseUser.value.id === route.params.slug);
                 for="buyer-rev"
                 class="relative flex items-center cursor-pointer"
               >
-                <input type="checkbox" id="buyer-rev" class="sr-only" />
+                <Input type="checkbox" id="buyer-rev" class="sr-only" />
                 <span
                   class="h-6 bg-gray-200 border border-gray-200 rounded-full w-11 toggle-bg dark:bg-gray-700 dark:border-gray-600"
                 ></span>
@@ -1334,16 +1333,13 @@ const isMe = computed(() => supabaseUser.value.id === route.params.slug);
 </template>
 
 <style lang="scss">
-.dp__input {
+.dp__Input {
   background: none;
-  border: none;
+  height: 2.5rem;
   font-size: 0.875rem;
   line-height: 1.25rem;
-  margin-top: 0;
-  padding-top: 0;
-  padding-bottom: 0;
-
-  input {
+  border-radius: 0.5rem;
+  Input {
     width: 100%;
   }
 }

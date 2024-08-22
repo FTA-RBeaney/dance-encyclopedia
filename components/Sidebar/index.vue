@@ -6,6 +6,7 @@ import {
 } from "../data/navigation";
 import { playlists } from "~/data/playlists";
 import * as lucideIcons from "lucide-vue-next";
+import { HandCoins, School } from "lucide-vue-next";
 const supabaseUser = useSupabaseUser();
 const supabase = useSupabaseClient();
 
@@ -20,6 +21,11 @@ const { data, refresh } = await useAsyncData("posts", async () => {
     alert(error.message);
   }
 });
+
+const { data: isAdmin, error } = await supabase
+  .from("profiles")
+  .select("is_admin")
+  .eq("id", supabaseUser?.value?.id);
 </script>
 
 <template>
@@ -102,6 +108,36 @@ const { data, refresh } = await useAsyncData("posts", async () => {
                 />
 
                 {{ item.title }}
+              </div>
+            </Button>
+          </NuxtLink>
+        </div>
+      </div>
+
+      <div class="px-3 py-2" v-if="isAdmin">
+        <h2 class="mb-2 px-4 text-lg font-semibold tracking-tight">
+          Sunshine Swing
+        </h2>
+        <div class="space-y-1">
+          <NuxtLink to="/classes">
+            <Button
+              variant="ghost"
+              class="w-full flex justify-between items-center relative font-normal"
+            >
+              <div class="flex items-center">
+                <School :st roke-width="1.5" class="mr-2 w-4 h-4" />
+                <div class="flex items-center">Classes</div>
+              </div>
+            </Button>
+          </NuxtLink>
+          <NuxtLink to="/expenses">
+            <Button
+              variant="ghost"
+              class="w-full flex justify-between items-center relative font-normal"
+            >
+              <div class="flex items-center">
+                <HandCoins :stroke-width="1.5" class="mr-2 w-4 h-4" />
+                <div class="flex items-center">Expenses</div>
               </div>
             </Button>
           </NuxtLink>
