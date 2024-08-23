@@ -12,6 +12,11 @@ let channel;
 import { columns } from "../components/DataTable/columns";
 
 const { data, refresh } = await useAsyncData("feedback", async () => {
+  const { data: all } = await supabase
+    .from("feedback")
+    .select(`*,profiles(*)`)
+    .order("status", { ascending: false });
+
   const { data: feedback } = await supabase
     .from("feedback")
     .select(`*,profiles(*)`)
@@ -37,6 +42,7 @@ const { data, refresh } = await useAsyncData("feedback", async () => {
     .order("created_at");
 
   return {
+    all: all,
     feedback: feedback,
     done: done,
     inProgress: inProgress,
@@ -70,7 +76,20 @@ onUnmounted(() => {
 <template>
   <div>
     <Heading title="Feedback" description="View the feedback so far below" />
-    <div class="mt-6">
+
+    <div>
+      <Card class="p-6 mt-4 mr-4">
+        <p class="pb-2 text-lg font-semibold">To Do</p>
+        <DataTable
+          :data="feedbackList.value.all"
+          :columns="columns"
+          on-delete="onDelete"
+          class="mt-4"
+        />
+      </Card>
+    </div>
+
+    <!-- <div class="mt-6">
       <div class="mx-auto xl:mx-0">
         <div class="flex">
           <Card class="p-6 mt-8 mr-4 max-w-[50%]">
@@ -127,6 +146,6 @@ onUnmounted(() => {
           </Card>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>

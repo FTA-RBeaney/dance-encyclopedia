@@ -91,7 +91,7 @@ export const columns: ColumnDef<Task>[] = [
         label ? h(Badge, { variant: "outline" }, () => label.type) : null,
         h("img", {
           class:
-            "w-10 h-10 mr-2 rounded-md inline-flex items-center justify-center bg-gray-200 text-gray-400 object-cover object-left-top",
+            "w-8 h-8 mr-2 rounded-md inline-flex items-center justify-center bg-gray-200 text-gray-400 object-cover object-left-top",
           src: row.original.profiles.avatar_url,
         }),
         h(

@@ -125,11 +125,17 @@ export const columns: ColumnDef<Task>[] = [
 
     cell: ({ row }) => {
       const approved = row.getValue("approved");
+      let classes;
+      if (approved) {
+        classes = "max-w-[500px] truncate font-medium bg-green-500";
+      } else {
+        classes = "max-w-[500px] truncate font-medium bg-red-500";
+      }
       return h("div", { class: "flex items-center space-x-2" }, [
         h(
-          "span",
+          Badge,
           {
-            class: "max-w-[500px] truncate font-medium",
+            class: classes,
           },
           approved
         ),
