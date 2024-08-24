@@ -53,11 +53,11 @@ onMounted(async () => {
           class="flex items-center justify-center w-full h-full bg-gray-900/40"
         >
           <div class="text-center">
-            <h1 class="text-4xl font-semibold text-white lg:text-6xl">
+            <h1 class="text-4xl font-extrabold text-white lg:text-6xl">
               Welcome
-              <span class="text-secondary dark:text-primary">{{
-                userData?.first_name
-              }}</span
+              <span
+                className="text-transparent bg-clip-text bg-gradient-to-r from-[#4F46E5] to-[#E114E5] font-extrabold"
+                >{{ userData?.first_name }}</span
               >!
             </h1>
           </div>

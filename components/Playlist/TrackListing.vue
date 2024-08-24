@@ -37,7 +37,12 @@
               <div>
                 <PlaylistTrack
                   v-if="track?.track?.preview_url || track.preview_url"
-                  @click="testCall(track, props.trackImage)"
+                  @click="
+                    testCall(
+                      track.track || track,
+                      track?.track?.album?.images[0].url || props.trackImage
+                    )
+                  "
                   :trackId="track?.track?.id || track.id"
                   :track="track"
                   :trackImage="props.trackImage"
@@ -82,6 +87,7 @@ const refreshRecommendations = async () => {
 };
 
 const testCall = (e, trackImage) => {
+  console.log("testCall", e, trackImage);
   refreshNewTrack(e, trackImage);
   refreshRecommendations();
 };

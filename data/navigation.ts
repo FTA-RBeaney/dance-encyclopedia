@@ -23,6 +23,11 @@ export const danceNavigation = [
     path: "/videos",
     icon: "CirclePlay",
   },
+  {
+    title: "Articles",
+    path: "/articles",
+    icon: "Newspaper",
+  },
 ];
 
 export const musicNavigation = [

@@ -11,8 +11,17 @@ const video = ref();
 const newTrack = ref(props.currentTrack);
 const newImage = ref(props.trackImage);
 
+const { playing, currentTime, duration, volume } = useMediaControls(video, {
+  src:
+    props?.currentTrack?.track?.preview_url || props.currentTrack.preview_url,
+});
+
 const changeTrack = (e, trackImage) => {
   newImage.value = e?.albums?.spotify_info.images[0].url || trackImage;
+  console.log(newTrack?.track?.album?.images[0]?.url);
+  console.log("newImage", newImage.value);
+  console.log(props.trackImage);
+
   newTrack.value = e?.spotify_info || e;
   if (e.spotify_info) {
     fetchTrack(e.spotify_info);
@@ -26,6 +35,7 @@ const fetchTrack = (e) => {
   useMediaControls(video, {
     src: e?.track?.preview_url || e.preview_url,
   });
+  console.log("playing", playing.value);
 };
 
 const toMMSS = (numSecs) => {
@@ -38,11 +48,6 @@ const toMMSS = (numSecs) => {
     .toString()
     .padStart(2, "0")}`;
 };
-
-const { playing, currentTime, duration, volume } = useMediaControls(video, {
-  src:
-    props?.currentTrack?.track?.preview_url || props.currentTrack.preview_url,
-});
 
 defineExpose({
   changeTrack,
@@ -87,10 +92,8 @@ defineExpose({
           </span>
           <span class="text-xs text-gray-500 uppercase font-medium">
             {{
-              newTrack?.track?.artists
-                .map((artist) => artist.name)
-                .join(", ") ||
-              newTrack?.artists.map((artist) => artist.name).join(", ")
+              newTrack?.artists?.map((artist) => artist.name).join(", ") ||
+              newTrack?.track?.artists.map((artist) => artist.name).join(", ")
             }}
           </span>
         </div>

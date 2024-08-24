@@ -125,7 +125,7 @@ const { data: isAdmin, error } = await supabase
               class="w-full flex justify-between items-center relative font-normal"
             >
               <div class="flex items-center">
-                <School :st roke-width="1.5" class="mr-2 w-4 h-4" />
+                <School :stroke-width="1.5" class="mr-2 w-4 h-4" />
                 <div class="flex items-center">Classes</div>
               </div>
             </Button>
