@@ -2,17 +2,6 @@
   <div
     class="max-w-sm bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 relative w-full h-full flex flex-col overflow-hidden"
   >
-    <div v-if="supabaseUser" class="absolute top-1 right-1 z-10">
-      <FavouriteButton
-        v-if="isFavourite"
-        @click="removeFavourite(artistId)"
-        extraClasses="bg-[#EF4444] hover:bg-[#EF4444]/90 focus:ring-[#EF4444]/50"
-        ><IconsHeartFull
-      /></FavouriteButton>
-      <FavouriteButton v-else @click="addFavourite(artistId)"
-        ><IconsHeartOutline
-      /></FavouriteButton>
-    </div>
     <NuxtLink :to="`/artist/${props.musician.name}`" class="">
       <img
         class="w-full card-image aspect-square"
@@ -30,7 +19,7 @@
         alt=""
       />
     </NuxtLink>
-    <div class="py-2 px-3">
+    <div class="py-2 px-3 flex justify-between items-center">
       <a href="#">
         <h5
           v-if="wikiInfo"
@@ -39,6 +28,17 @@
           {{ wikiInfo.titles.normalized }}
         </h5>
       </a>
+      <div v-if="supabaseUser" class="z-10 h-5">
+        <FavouriteButton
+          v-if="isFavourite"
+          @click="removeFavourite(artistId)"
+          extraClasses="!text-[#EF4444] hover:bg-[#EF4444]/90 focus:ring-[#EF4444]/50"
+          ><IconsHeartFull
+        /></FavouriteButton>
+        <FavouriteButton v-else @click="addFavourite(artistId)"
+          ><IconsHeartOutline
+        /></FavouriteButton>
+      </div>
     </div>
   </div>
 </template>
@@ -115,15 +115,7 @@ async function removeFavourite(id) {
 
 <style scoped lang="scss">
 .card-image {
-  // width: 200px;
   height: 100%;
-  // max-height: 160px;
-  // min-height: 160px;
   object-fit: cover;
-
-  @media (width >= 600px) {
-    // max-height: 160px;
-    // min-height: 160px;
-  }
 }
 </style>

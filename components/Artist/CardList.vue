@@ -1,12 +1,14 @@
 <template>
   <div>
-    <ul>
+    <ul class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
       <li
         v-for="(musician, i) in props.musicians"
         :key="`musician-${i}`"
         class="flex"
       >
-        <ArtistCard :artistId="musician.id" :musician="musician" />
+        <MotionGroup preset="fadeVisible" :duration="600">
+          <ArtistCard :artistId="musician.id" :musician="musician" />
+        </MotionGroup>
       </li>
     </ul>
   </div>
@@ -19,14 +21,14 @@ const props = defineProps({
 </script>
 
 <style scoped lang="scss">
-ul {
-  display: grid;
-  gap: 0.2em;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 180px));
-}
+// ul {
+//   display: grid;
+//   gap: 1em;
+//   grid-template-columns: repeat(auto-fit, minmax(180px, 23%));
+//   margin: 0 auto;
+// }
 
 li {
-  margin-right: 1rem;
   margin-bottom: 1rem;
 
   > div > a {

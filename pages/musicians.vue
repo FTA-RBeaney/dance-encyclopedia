@@ -77,9 +77,7 @@ onUnmounted(() => {
           />
         </div>
       </div>
-      <div
-        class="bg-white border p-6 border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 relative w-12/12 h-full flex flex-col overflow-hidden mt-6"
-      >
+      <div>
         <div v-if="!isToggled && !noResults">
           <ArtistCardList :musicians="results" />
         </div>

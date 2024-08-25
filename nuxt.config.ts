@@ -32,6 +32,7 @@ export default defineNuxtConfig({
     layoutTransition: { name: "fade", mode: "out-in" },
   },
   devtools: { enabled: true },
+
   modules: [
     "@nuxt/content",
     "@nuxtjs/tailwindcss",
@@ -44,6 +45,7 @@ export default defineNuxtConfig({
     "@nuxt/icon",
     "@nuxtjs/color-mode",
     "@nuxt/scripts",
+    "@vueuse/motion/nuxt",
   ],
   colorMode: {
     classSuffix: "",
@@ -66,6 +68,23 @@ export default defineNuxtConfig({
       SPREAD_SHEET_ID: "1CVkFzZB8Eg6Ig8GvvvWgSC_uHjzRYp31DRnKV-sfxzQ",
       YOUTUBE_API_KEY: "AIzaSyDPwdCSsl2eQdCa-gt7zlkvIaytjiT7Uwk",
       YOUTUBE_PLAYLIST_ID: process.env.NUXT_YOUTUBE_PLAYLIST_ID,
+
+      motion: {
+        directives: {
+          "pop-bottom": {
+            initial: {
+              scale: 0,
+              opacity: 0,
+              y: 100,
+            },
+            visible: {
+              scale: 1,
+              opacity: 1,
+              y: 0,
+            },
+          },
+        },
+      },
     },
   },
 

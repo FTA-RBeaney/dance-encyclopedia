@@ -36,6 +36,7 @@
     "@vee-validate/zod": "^4.13.2",
     "@vuepic/vue-datepicker": "^9.0.1",
     "@vueuse/core": "^10.11.1",
+    "@vueuse/motion": "^2.2.3",
     "algoliasearch": "^4.24.0",
     "buffer": "^6.0.3",
     "carbon-components": "^10.58.15",

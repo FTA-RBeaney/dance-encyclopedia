@@ -52,14 +52,16 @@ onMounted(async () => {
         <div
           class="flex items-center justify-center w-full h-full bg-gray-900/40"
         >
-          <div class="text-center">
-            <h1 class="text-4xl font-extrabold text-white lg:text-6xl">
-              Welcome
-              <span
-                className="text-transparent bg-clip-text bg-gradient-to-r from-[#4F46E5] to-[#E114E5] font-extrabold"
-                >{{ userData?.first_name }}</span
-              >!
-            </h1>
+          <div v-motion-roll-visible-left>
+            <div class="text-center">
+              <h1 class="text-4xl font-extrabold text-white lg:text-6xl">
+                Welcome
+                <span
+                  className="text-transparent bg-clip-text bg-gradient-to-r from-[#4F46E5] to-[#E114E5] font-extrabold"
+                  >{{ userData?.first_name }}</span
+                >!
+              </h1>
+            </div>
           </div>
         </div>
       </div>
