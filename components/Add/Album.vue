@@ -9,8 +9,6 @@ const isDesktop = useMediaQuery("(min-width: 768px)");
 const { $toast } = useNuxtApp();
 const open = ref();
 const isOpen = ref(false);
-const newArtistName = ref();
-const alertMessage = ref("");
 
 const nuxtApp = useNuxtApp();
 
@@ -19,8 +17,6 @@ const getTrackInfo = nuxtApp.getTrackInfo;
 
 const spotifyInfo = ref();
 const spotifyId = ref();
-
-let trackList = ref([]);
 
 const openDialog = () => {
   open.value = !open.value;

@@ -1,36 +1,36 @@
+<script setup>
+const supabase = useSupabaseClient();
+
+const { data: musicians } = await useAsyncData(
+  "cardListMusicians",
+  async () => {
+    const { data, error } = await supabase
+      .from("musicians")
+      .select()
+      .order("name", { ascending: true });
+    return data;
+  }
+);
+
+console.log("musc", musicians);
+</script>
+
 <template>
   <div>
-    <ul class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+    <ul class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 w-full">
       <li
-        v-for="(musician, i) in props.musicians"
+        v-for="(musician, i) in musicians"
         :key="`musician-${i}`"
         class="flex"
       >
-        <MotionGroup preset="fadeVisible" :duration="600">
-          <ArtistCard :artistId="musician.id" :musician="musician" />
-        </MotionGroup>
+        <ArtistCard :artistId="musician.id" :musician="musician" />
       </li>
     </ul>
   </div>
 </template>
 
-<script setup>
-const props = defineProps({
-  musicians: Object,
-});
-</script>
-
 <style scoped lang="scss">
-// ul {
-//   display: grid;
-//   gap: 1em;
-//   grid-template-columns: repeat(auto-fit, minmax(180px, 23%));
-//   margin: 0 auto;
-// }
-
 li {
-  margin-bottom: 1rem;
-
   > div > a {
     max-height: 150px;
     overflow: hidden;

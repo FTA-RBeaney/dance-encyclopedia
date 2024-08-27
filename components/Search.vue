@@ -26,7 +26,7 @@
         id="search"
         v-model="searchString"
         @input="$emit('search', searchString)"
-        placeholder="Search something.."
+        placeholder="Search for an artist.."
       />
     </div>
   </section>

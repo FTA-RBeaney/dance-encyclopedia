@@ -1,12 +1,5 @@
 <template>
   <div>
-    <div class="flex items-center justify-between">
-      <div class="space-y-1">
-        <h2 class="text-2xl font-semibold tracking-tight">Images</h2>
-        <p class="text-sm text-muted-foreground">Various images</p>
-      </div>
-    </div>
-    <Separator class="my-4" />
     <div>
       <ScrollArea class="w-[100%] whitespace-nowrap">
         <div class="flex space-x-4">

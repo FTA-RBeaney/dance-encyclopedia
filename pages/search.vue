@@ -27,7 +27,7 @@
           id="search"
           v-model="searchString"
           @input="search"
-          placeholder="Search something.."
+          placeholder="Search for an artist.."
         />
       </div>
     </div>

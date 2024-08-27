@@ -65,6 +65,15 @@ export default defineNuxtPlugin(async (nuxtApp) => {
     }).then((response) => response.json());
   };
 
+  nuxtApp.getArtistInfo = async (id) => {
+    const { access_token: accessToken } = await getAccessToken();
+    return fetch(`https://api.spotify.com/v1/artists/${id}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }).then((response) => response.json());
+  };
+
   nuxtApp.getTrackInfo = async (id) => {
     const { access_token: accessToken } = await getAccessToken();
 

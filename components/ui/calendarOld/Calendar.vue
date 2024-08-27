@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<!-- <script setup lang="ts">
 import { type HTMLAttributes, type Ref, computed } from "vue";
 import {
   CalendarRoot,
@@ -34,16 +34,6 @@ import {
 } from "@/components/ui/select";
 import { cn } from "../../../lib/utils.ts";
 
-const props = withDefaults(
-  defineProps<CalendarRootProps & { class?: HTMLAttributes["class"] }>(),
-  {
-    modelValue: undefined,
-    placeholder() {
-      return today(getLocalTimeZone());
-    },
-    weekdayFormat: "short",
-  }
-);
 const emits = defineEmits<CalendarRootEmits>();
 
 const delegatedProps = computed(() => {
@@ -156,4 +146,4 @@ const formatter = useDateFormatter("en");
       </CalendarGrid>
     </div>
   </CalendarRoot>
-</template>
+</template> -->

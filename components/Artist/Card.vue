@@ -1,48 +1,3 @@
-<template>
-  <div
-    class="max-w-sm bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 relative w-full h-full flex flex-col overflow-hidden"
-  >
-    <NuxtLink :to="`/artist/${props.musician.name}`" class="">
-      <img
-        class="w-full card-image aspect-square"
-        :src="wikiInfo?.thumbnail?.source"
-        format="webp"
-        width="300"
-        height="300"
-        preload
-        loading="lazy"
-        placeholder="https://res.cloudinary.com/dgbn0ttzf/image/upload/v1721434977/person-placeholder_ztoak6.png"
-        @error="
-          $event.target.src =
-            'https://archive.org/download/placeholder-image/placeholder-image.jpg'
-        "
-        alt=""
-      />
-    </NuxtLink>
-    <div class="py-2 px-3 flex justify-between items-center">
-      <a href="#">
-        <h5
-          v-if="wikiInfo"
-          class="text-md font-bold tracking-tight text-gray-900 dark:text-white"
-        >
-          {{ wikiInfo.titles.normalized }}
-        </h5>
-      </a>
-      <div v-if="supabaseUser" class="z-10 h-5">
-        <FavouriteButton
-          v-if="isFavourite"
-          @click="removeFavourite(artistId)"
-          extraClasses="!text-[#EF4444] hover:bg-[#EF4444]/90 focus:ring-[#EF4444]/50"
-          ><IconsHeartFull
-        /></FavouriteButton>
-        <FavouriteButton v-else @click="addFavourite(artistId)"
-          ><IconsHeartOutline
-        /></FavouriteButton>
-      </div>
-    </div>
-  </div>
-</template>
-
 <script setup>
 import { cn } from "@/lib/utils";
 const img = useImage();
@@ -113,9 +68,73 @@ async function removeFavourite(id) {
 }
 </script>
 
-<style scoped lang="scss">
-.card-image {
-  height: 100%;
-  object-fit: cover;
-}
-</style>
+<template>
+  <div
+    class="max-w-sm bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 relative w-full h-full flex flex-col overflow-hidden"
+  >
+    <NuxtLink :to="`/artist/${props.musician.name}`" class="relative">
+      <img
+        class="w-full card-image object-cover aspect-[9/12]"
+        :src="wikiInfo?.thumbnail?.source"
+        format="webp"
+        width="300"
+        height="300"
+        preload
+        loading="lazy"
+        placeholder="https://res.cloudinary.com/dgbn0ttzf/image/upload/v1721434977/person-placeholder_ztoak6.png"
+        @error="
+          $event.target.src =
+            'https://archive.org/download/placeholder-image/placeholder-image.jpg'
+        "
+        alt=""
+      />
+      <div
+        class="bg-gradient-to-t from-black absolute left-0 top-0 z-10 w-full h-full opacity-60"
+      ></div>
+      <div
+        class="absolute h-10 left-0 bottom-0 w-full flex items-center pl-4 z-20"
+      >
+        <a href="#">
+          <h5
+            v-if="wikiInfo"
+            class="text-md font-bold tracking-tight text-white dark:text-white"
+          >
+            {{ wikiInfo.titles.normalized }}
+          </h5>
+        </a>
+      </div>
+      <div v-if="supabaseUser" class="z-20 h-5 ml-4 absolute top-4 right-4">
+        <FavouriteButton
+          v-if="isFavourite"
+          @click="removeFavourite(artistId)"
+          extraClasses="!text-[#EF4444] hover:bg-[#EF4444]/90 focus:ring-[#EF4444]/50"
+          ><IconsHeartFull
+        /></FavouriteButton>
+        <FavouriteButton v-else @click="addFavourite(artistId)"
+          ><IconsHeartOutline class="stroke-white"
+        /></FavouriteButton>
+      </div>
+    </NuxtLink>
+    <!-- <div class="py-2 px-3 flex justify-between items-center">
+      <a href="#">
+        <h5
+          v-if="wikiInfo"
+          class="text-md font-bold tracking-tight text-gray-900 dark:text-white"
+        >
+          {{ wikiInfo.titles.normalized }}
+        </h5>
+      </a>
+      <div v-if="supabaseUser" class="z-10 h-5">
+        <FavouriteButton
+          v-if="isFavourite"
+          @click="removeFavourite(artistId)"
+          extraClasses="!text-[#EF4444] hover:bg-[#EF4444]/90 focus:ring-[#EF4444]/50"
+          ><IconsHeartFull
+        /></FavouriteButton>
+        <FavouriteButton v-else @click="addFavourite(artistId)"
+          ><IconsHeartOutline
+        /></FavouriteButton>
+      </div>
+    </div> -->
+  </div>
+</template>

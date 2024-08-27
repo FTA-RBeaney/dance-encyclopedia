@@ -7,27 +7,50 @@ const isFavourite = ref(false);
 const isLoaded = ref(false);
 const spotifyLink = ref();
 const spotInfoHtml = ref();
+let artistUrl = null;
 
 // get artist data from Supabase, starting with the ID
 const artistId = route.params.slug;
-const { data: wikiInfo, error: wikiError } = await supabase
-  .from("musicians")
-  .select()
-  .eq("name", artistId);
+
+const { data: artistData, refresh: wikiRefresh } = await useAsyncData(
+  "artistData",
+  async () => {
+    const { data, error } = await supabase
+      .from("musicians")
+      .select()
+      .eq("name", artistId)
+      .limit(1)
+      .single();
+
+    return data;
+  }
+);
+
 // then get the musicbrainz data
-const artistUrl = `https://musicbrainz.org/ws/2/artist/${wikiInfo[0].id}?inc=url-rels&fmt=json`;
-const { data: artistData } = await useFetch(artistUrl);
+artistUrl = `https://musicbrainz.org/ws/2/artist/${artistData.value.id}?inc=url-rels&fmt=json`;
+
+const { data: musicbrainzData, refresh: artistRefresh } = await useAsyncData(
+  "artist",
+  async () => {
+    const { data } = await useFetch(artistUrl);
+    return data;
+  }
+);
 
 // get the musician name and change it to a format that we can use in Wikipedia's rest API
-const artistName = wikiInfo[0].name;
+const artistName = artistData.name;
 
 // check favourites table to see if current page is a favourite
-const { data, error } = await supabase
-  .from("favourites")
-  .select("favourite_id")
-  .eq("favourite_id", user.value.id + route.params.slug);
+const { data, refresh } = await useAsyncData("favourites", async () => {
+  const { data, error } = await supabase
+    .from("favourites")
+    .select("favourite_id")
+    .eq("favourite_id", user.value.id + route.params.slug);
 
-if (data.length > 0) {
+  return data;
+});
+
+if (data?.length > 0) {
   isFavourite.value = true;
 }
 
@@ -88,20 +111,28 @@ async function removeFavourite(id) {
 }
 
 // get spotify embed link
-const filteredItems = artistData.value.relations.filter((item) => {
+const filteredItems = musicbrainzData?.relations?.filter((item) => {
   if (item.url.resource.includes("spotify")) {
     return item.url.resource.includes("spotify");
   }
 });
 
-var artistSpotifyId = /[^/]*$/.exec(filteredItems[0].url.resource)[0];
+var artistSpotifyId;
 
-if (filteredItems[0]) {
+if (filteredItems) {
+  artistSpotifyId = /[^/]*$/.exec(filteredItems[0]?.url?.resource)[0];
+
   spotifyLink.value =
     "https://open.spotify.com/oembed?url=" + filteredItems[0].url.resource;
   const { data: spotInfo } = await useFetch(spotifyLink.value);
   spotInfoHtml.value = spotInfo.value.html;
 }
+
+const nuxtApp = useNuxtApp();
+const getArtistInfo = nuxtApp.getArtistInfo;
+const response = ref();
+const res = await getArtistInfo(artistData.value.spotify_id);
+response.value = res;
 
 // change loaded state on mount
 onMounted(async () => {
@@ -119,15 +150,49 @@ onMounted(async () => {
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            {{ artistData?.name }}
+            {{ artistId }}
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
+
+      <div
+        class="relative min-h-60 bg-white rounded-lg shadow-lg overflow-hidde mt-6 mb-14"
+      >
+        <div class="absolute inset-0 rounded-lg overflow-hidden bg-red-200">
+          <img
+            :src="response.images[0].url"
+            :alt="artistData.name"
+            class="object-cover w-full h-full"
+          />
+          <div
+            class="absolute inset-0 backdrop backdrop-blur-10 bg-gradient-to-b from-transparent to-black"
+          ></div>
+        </div>
+        <div
+          class="absolute flex space-x-6 transform translate-x-6 translate-y-24"
+        >
+          <div class="w-44 h-44 rounded-lg shadow-lg overflow-hidden">
+            <img
+              :src="response.images[0].url"
+              :alt="artistData.name"
+              class="object-cover h-full w-full"
+            />
+          </div>
+          <div class="text-white pt-12">
+            <h3 class="font-bold">{{ artistData.name }}</h3>
+            <span class="text-sm opacity-60 mr-1">
+              <span> {{ artistData.wiki_data.description }}</span>
+            </span>
+          </div>
+        </div>
+      </div>
+
       <div class="flex justify-between items-center">
-        <Heading
-          :title="artistData?.name"
-          :description="wikiInfo.description"
-        />
+        <!-- <Heading
+          :title="artistId"
+          :description="artistData.wiki_data.description"
+        /> -->
+
         <div class="px-4 py-4">
           <FavouriteButton
             v-if="isFavourite"
@@ -141,34 +206,38 @@ onMounted(async () => {
         </div>
       </div>
 
-      <div
-        class="bg-white border p-6 border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 relative w-full h-full flex flex-col overflow-hidden mt-6"
-      >
-        <section class="text-gray-600 body-font">
-          <div class="container flex flex-col">
-            <div class="lg:w-5/6">
-              <ArtistDetail :musician="artistData" :wikiInfo="wikiInfo" />
-            </div>
-          </div>
-        </section>
-      </div>
-      <div
-        class="bg-white border p-6 border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 relative w-full h-full flex flex-col overflow-hidden mt-6"
-      >
-        <ArtistImageList :artistName="artistName" />
-      </div>
-      <Card class="p-6">
-        <div class="flex items-center justify-between">
-          <div class="space-y-1">
-            <h2 class="text-2xl font-semibold tracking-tight">Albums</h2>
-            <p class="text-sm text-muted-foreground">
-              A list of all the albums
-            </p>
-          </div>
+      <div class="flex">
+        <div class="w-5/12 mr-4">
+          <Card>
+            <CardHeader>
+              <CardTitle>About</CardTitle>
+            </CardHeader>
+            <CardContent>
+              {{ artistData.wiki_data.extract }}
+            </CardContent>
+          </Card>
         </div>
-        <Separator class="my-4" />
-        <ArtistMusic :artistSpotifyId="artistSpotifyId" />
-      </Card>
+        <div class="7/12">
+          <Card>
+            <CardHeader>
+              <CardTitle> Images </CardTitle>
+              <CardDescription> Various images </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ArtistImageList :artistName="artistData.name" />
+            </CardContent>
+
+            <CardHeader>
+              <CardTitle> Albums </CardTitle>
+              <CardDescription> A list of albums </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ArtistMusic :artistSpotifyId="artistData.spotify_id" />
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+
       <div class="bottom-drawer">
         <div class="h-2 bg-red-light"></div>
         <div class="inline-flex items-center justify-center bg-red-lightest">
