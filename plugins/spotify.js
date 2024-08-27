@@ -84,6 +84,16 @@ export default defineNuxtPlugin(async (nuxtApp) => {
     }).then((response) => response.json());
   };
 
+  nuxtApp.getNextAlbums = async (url) => {
+    const { access_token: accessToken } = await getAccessToken();
+
+    return fetch(`${url}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }).then((response) => response.json());
+  };
+
   nuxtApp.getRecommendations = async (artistId, trackId, limit) => {
     const { access_token: accessToken } = await getAccessToken();
 

@@ -207,7 +207,7 @@ onMounted(async () => {
       </div>
 
       <div class="flex">
-        <div class="w-5/12 mr-4">
+        <div class="w-4/12 mr-4">
           <Card>
             <CardHeader>
               <CardTitle>About</CardTitle>
@@ -217,7 +217,7 @@ onMounted(async () => {
             </CardContent>
           </Card>
         </div>
-        <div class="7/12">
+        <div class="w-8/12">
           <Card>
             <CardHeader>
               <CardTitle> Images </CardTitle>
@@ -226,14 +226,7 @@ onMounted(async () => {
             <CardContent>
               <ArtistImageList :artistName="artistData.name" />
             </CardContent>
-
-            <CardHeader>
-              <CardTitle> Albums </CardTitle>
-              <CardDescription> A list of albums </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <ArtistMusic :artistSpotifyId="artistData.spotify_id" />
-            </CardContent>
+            <ArtistMusic :artistSpotifyId="artistData.spotify_id" />
           </Card>
         </div>
       </div>
