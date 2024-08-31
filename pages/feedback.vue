@@ -11,44 +11,47 @@ const doneList = ref();
 let channel;
 import { columns } from "../components/DataTable/columns";
 
-const { data, refresh } = await useAsyncData("feedback", async () => {
-  const { data: all } = await supabase
-    .from("feedback")
-    .select(`*,profiles(*)`)
-    .order("status", { ascending: false });
+const { data, refresh } = await useAsyncData(
+  "feedbackAllFeedback",
+  async () => {
+    const { data: all } = await supabase
+      .from("feedback")
+      .select(`*,profiles(*)`)
+      .order("status", { ascending: false });
 
-  const { data: feedback } = await supabase
-    .from("feedback")
-    .select(`*,profiles(*)`)
-    .eq("status", "to do")
-    .order("status", { ascending: false });
+    const { data: feedback } = await supabase
+      .from("feedback")
+      .select(`*,profiles(*)`)
+      .eq("status", "to do")
+      .order("status", { ascending: false });
 
-  const { data: done } = await supabase
-    .from("feedback")
-    .select(`*,profiles(*)`)
-    .eq("status", "done")
-    .order("created_at");
+    const { data: done } = await supabase
+      .from("feedback")
+      .select(`*,profiles(*)`)
+      .eq("status", "done")
+      .order("created_at");
 
-  const { data: inProgress } = await supabase
-    .from("feedback")
-    .select(`*,profiles(*)`)
-    .eq("status", "in progress")
-    .order("created_at");
+    const { data: inProgress } = await supabase
+      .from("feedback")
+      .select(`*,profiles(*)`)
+      .eq("status", "in progress")
+      .order("created_at");
 
-  const { data: testing } = await supabase
-    .from("feedback")
-    .select(`*,profiles(*)`)
-    .eq("status", "testing")
-    .order("created_at");
+    const { data: testing } = await supabase
+      .from("feedback")
+      .select(`*,profiles(*)`)
+      .eq("status", "testing")
+      .order("created_at");
 
-  return {
-    all: all,
-    feedback: feedback,
-    done: done,
-    inProgress: inProgress,
-    testing: testing,
-  };
-});
+    return {
+      all: all,
+      feedback: feedback,
+      done: done,
+      inProgress: inProgress,
+      testing: testing,
+    };
+  }
+);
 
 const feedbackList = computed(() => data);
 

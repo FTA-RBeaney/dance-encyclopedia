@@ -38,7 +38,7 @@ const props = defineProps({
 let editor;
 const typedInfo = ref();
 
-const { data, refresh } = await useAsyncData("info", async () => {
+const { data, refresh } = await useAsyncData("editorDancerInfo", async () => {
   const { data, error } = await client
     .from("dancers")
     .select()

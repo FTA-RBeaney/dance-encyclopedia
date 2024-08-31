@@ -41,7 +41,7 @@ const { data: musicbrainzData, refresh: artistRefresh } = await useAsyncData(
 const artistName = artistData.name;
 
 // check favourites table to see if current page is a favourite
-const { data, refresh } = await useAsyncData("favourites", async () => {
+const { data, refresh } = await useAsyncData("checkFavourites", async () => {
   const { data, error } = await supabase
     .from("favourites")
     .select("favourite_id")

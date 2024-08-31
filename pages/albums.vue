@@ -6,7 +6,7 @@ const isLoading = ref(false);
 
 const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
-const { data, refresh } = await useAsyncData("albums", async () => {
+const { data, refresh } = await useAsyncData("albumsGetAlbums", async () => {
   isLoading.value = true;
   await delay(1000);
 

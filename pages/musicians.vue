@@ -10,7 +10,7 @@ const allTheMusic = ref();
 const isToggled = ref(false);
 
 const { data: topArtists, refresh: topRefresh } = await useAsyncData(
-  "top",
+  "topMusicians",
   async () => {
     const { data, error } = await supabase
       .from("favourites")

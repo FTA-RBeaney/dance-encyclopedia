@@ -3,7 +3,7 @@ import ExpensesChartTooltip from "../components/Expenses/ChartTooltip.vue";
 import { columns } from "../components/Expenses/columns";
 const supabase = useSupabaseClient();
 
-const { data, refresh } = await useAsyncData("expenses", async () => {
+const { data, refresh } = await useAsyncData("getExpenses", async () => {
   const { data } = await supabase
     .from("expenses")
     .select(`*,profiles(*)`)

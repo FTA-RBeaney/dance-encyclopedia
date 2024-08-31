@@ -39,7 +39,7 @@ const addArtist = async (mbid) => {
   const artistUrl = `https://musicbrainz.org/ws/2/artist/${mbid}?inc=url-rels&fmt=json`;
 
   const { data: artistData, refresh: artistRefresh } = await useAsyncData(
-    "artist",
+    "addArtist",
     async () => {
       const { data } = await useFetch(artistUrl);
       return data;

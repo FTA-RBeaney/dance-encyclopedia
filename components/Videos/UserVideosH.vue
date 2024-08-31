@@ -111,7 +111,7 @@ const changeVideo = (id) => {
   );
 };
 
-const { data, refresh } = await useAsyncData("videos", async () => {
+const { data, refresh } = await useAsyncData("userVideosH", async () => {
   try {
     const { data: videos, error } = await supabase.from("videos").select();
     userVideos.value = videos;

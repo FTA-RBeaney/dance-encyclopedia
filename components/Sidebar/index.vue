@@ -10,7 +10,7 @@ import { HandCoins, School } from "lucide-vue-next";
 const supabaseUser = useSupabaseUser();
 const supabase = useSupabaseClient();
 
-const { data, refresh } = await useAsyncData("posts", async () => {
+const { data, refresh } = await useAsyncData("sidebarPosts", async () => {
   try {
     const { data, error } = await supabase
       .from("posts")

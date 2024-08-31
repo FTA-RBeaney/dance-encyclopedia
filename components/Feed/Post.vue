@@ -67,7 +67,7 @@ const deletePost = async (id) => {
 };
 
 onMounted(async () => {
-  const { data, refresh } = await useAsyncData("likes", async () => {
+  const { data, refresh } = await useAsyncData("postLikes", async () => {
     try {
       const { data, error } = await supabase
         .from("likes")

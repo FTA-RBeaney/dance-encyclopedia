@@ -3,7 +3,7 @@ const props = defineProps({});
 
 const supabase = useSupabaseClient();
 const { data: attendeesData, refresh: refreshAttendees } = await useAsyncData(
-  "attendees",
+  "graphAttendees",
   async () => {
     const { data, error } = await supabase
       .from("classes")
@@ -15,7 +15,7 @@ const { data: attendeesData, refresh: refreshAttendees } = await useAsyncData(
 );
 
 const { data: takingData, refresh: refreshTakings } = await useAsyncData(
-  "taking",
+  "graphTakings",
   async () => {
     const { data, error } = await supabase
       .from("classes")

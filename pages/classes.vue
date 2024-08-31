@@ -7,17 +7,20 @@ import _mean from "lodash/mean";
 
 const supabase = useSupabaseClient();
 
-const { data: classData, refresh } = await useAsyncData("classes", async () => {
-  const { data, allError } = await supabase
-    .from("classes")
-    .select("*")
-    .order("date", { ascending: true });
+const { data: classData, refresh } = await useAsyncData(
+  "getClasses",
+  async () => {
+    const { data, allError } = await supabase
+      .from("classes")
+      .select("*")
+      .order("date", { ascending: true });
 
-  return data;
-});
+    return data;
+  }
+);
 
 const { data: attendeesData, refresh: refreshAttendees } = await useAsyncData(
-  "attendees",
+  "getAttendees",
   async () => {
     const { data, error } = await supabase
       .from("classes")
@@ -29,7 +32,7 @@ const { data: attendeesData, refresh: refreshAttendees } = await useAsyncData(
 );
 
 const { data: takingData, refresh: refreshTakings } = await useAsyncData(
-  "taking",
+  "getTakings",
   async () => {
     const { data, error } = await supabase
       .from("classes")

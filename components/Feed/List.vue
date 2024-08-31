@@ -6,7 +6,7 @@ const supabase = useSupabaseClient();
 const posts = ref([]);
 
 // Fetch collaborators and get the refresh method provided by useAsyncData
-const { data, refresh } = await useAsyncData("posts", async () => {
+const { data, refresh } = await useAsyncData("listPosts", async () => {
   try {
     const { data, error } = await supabase
       .from("posts")
