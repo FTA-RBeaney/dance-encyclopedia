@@ -6,7 +6,7 @@ import {
 } from "../data/navigation";
 import { playlists } from "~/data/playlists";
 import * as lucideIcons from "lucide-vue-next";
-import { HandCoins, School } from "lucide-vue-next";
+import { HandCoins, School, TicketSlash } from "lucide-vue-next";
 const supabaseUser = useSupabaseUser();
 const supabase = useSupabaseClient();
 
@@ -127,6 +127,17 @@ const { data: isAdmin, error } = await supabase
               <div class="flex items-center">
                 <School :stroke-width="1.5" class="mr-2 w-4 h-4" />
                 <div class="flex items-center">Classes</div>
+              </div>
+            </Button>
+          </NuxtLink>
+          <NuxtLink to="/socials">
+            <Button
+              variant="ghost"
+              class="w-full flex justify-between items-center relative font-normal"
+            >
+              <div class="flex items-center">
+                <TicketSlash :stroke-width="1.5" class="mr-2 w-4 h-4" />
+                <div class="flex items-center">Socials</div>
               </div>
             </Button>
           </NuxtLink>
