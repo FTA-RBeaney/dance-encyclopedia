@@ -1,12 +1,8 @@
 <script setup>
-import * as z from "zod";
 import { toast } from "@/components/ui/toast";
 
 const supabase = useSupabaseClient();
 const supabaseUser = useSupabaseUser();
-
-const inTestingList = ref([]);
-const doneList = ref();
 
 let channel;
 import { columns } from "../components/DataTable/columns";
@@ -86,7 +82,6 @@ onUnmounted(() => {
         <DataTable
           :data="feedbackList.value.all"
           :columns="columns"
-          on-delete="onDelete"
           class="mt-4"
         />
       </Card>

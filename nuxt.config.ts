@@ -46,6 +46,7 @@ export default defineNuxtConfig({
     "@nuxtjs/color-mode",
     "@nuxt/scripts",
     "@vueuse/motion/nuxt",
+    "nuxt-highcharts",
   ],
   colorMode: {
     classSuffix: "",
