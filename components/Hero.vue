@@ -8,10 +8,12 @@
             type="video/mp4"
           />
         </video>
-        <div class="relative z-10 max-w-screen-xl mx-auto px-4 py-28 md:px-8">
-          <div class="space-y-5 max-w-4xl mx-auto text-center">
-            <h2 class="text-4xl text-white font-extrabold mx-auto md:text-5xl">
-              Welcome!
+        <div class="relative z-10 mx-auto px-4 py-28 md:px-4">
+          <div class="space-y-5 max-w-[1200px] mx-auto text-center">
+            <h2
+              class="text-4xl text-white font-extrabold mx-auto md:text-9xl lg:text-9xl"
+            >
+              Welcome to the Dance Encyclopedia!
             </h2>
             <!-- <p class="max-w-2xl mx-auto text-gray-400">
               Sed ut perspiciatis unde omnis iste natus voluptatem accusantium
@@ -170,7 +172,7 @@ const props = defineProps({
 
 <style scoped>
 h2 {
-  font-size: 5rem;
+  /* font-size: 5rem; */
 }
 .background-video {
   position: absolute;
