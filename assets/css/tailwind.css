@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -184,4 +186,16 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+h1,
+h2,
+h3 {
+  font-family: "Anton", sans-serif;
+  font-family: "Jost", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+  text-transform: uppercase !important;
+  letter-spacing: 1px;
 }

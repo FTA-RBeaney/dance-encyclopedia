@@ -31,7 +31,13 @@ export default defineNuxtConfig({
     pageTransition: { name: "fade", mode: "out-in" },
     layoutTransition: { name: "fade", mode: "out-in" },
   },
-  devtools: { enabled: true },
+  devtools: {
+    enabled: true,
+
+    timeline: {
+      enabled: true,
+    },
+  },
 
   modules: [
     "@nuxt/content",
@@ -104,8 +110,8 @@ export default defineNuxtConfig({
     key: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1pc3lycG94dnl4d3JuaG5tZXd3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTk0ODkxMjEsImV4cCI6MjAzNTA2NTEyMX0.IIVld8FNxJrqPbIfBzXxYMOz2RCEBWwvfeHNHaenZ-Q",
     redirectOptions: {
       login: "/login",
-      callback: "/confirm",
-      exclude: ["/*"],
+      callback: "/account",
+      exclude: ["*"],
     },
   },
 

@@ -76,7 +76,7 @@ body {
               Create an account
             </h1>
             <p class="text-sm text-muted-foreground">
-              Enter your email below to create your account
+              Sign in below with your Google account
             </p>
           </div>
           <Auth

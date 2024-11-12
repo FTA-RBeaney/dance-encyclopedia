@@ -37,7 +37,10 @@ onMounted(async () => {
 <template>
   <div class="h-full" :class="!supabaseUser && 'mx-auto'">
     <LoadingCircle v-if="showHideSpinner" />
-    <header v-else class="h-full">
+    <Hero v-else class="h-full" :user="supabaseUser" />
+    <Testimonials />
+    <!-- <header v-else class="h-full">
+
       <div
         class="w-full bg-center bg-cover h-[500px]"
         style="
@@ -90,6 +93,6 @@ onMounted(async () => {
           </Card>
         </div>
       </div>
-    </header>
+    </header> -->
   </div>
 </template>

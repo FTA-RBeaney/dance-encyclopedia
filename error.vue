@@ -4,7 +4,7 @@ const props = defineProps({
   required: true,
 });
 
-const handleError = () => clearError({ redirect: "/" });
+const handleError = () => clearError({ redirect: "/account" });
 
 const backgrounds = [
   "https://res.cloudinary.com/dgbn0ttzf/image/upload/v1721777582/451636138_1856865591467589_3547137860137697654_n_ixijcz.png",

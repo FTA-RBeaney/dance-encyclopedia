@@ -21,17 +21,6 @@ const { data } = await supabase
   .eq("user_id", supabaseUser?.value?.id);
 
 favourites.value = data;
-
-async function userLogout() {
-  try {
-    const { error } = await supabase.auth.signOut();
-    if (error) throw error;
-  } catch (error) {
-    alert(error.message);
-  } finally {
-    await navigateTo("/login");
-  }
-}
 </script>
 
 <template>

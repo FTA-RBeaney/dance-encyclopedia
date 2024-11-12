@@ -22,8 +22,8 @@
       </NuxtLink>
       <Admin v-if="supabaseUser" />
 
-      <div class="flex">
-        <FeedbackAdd v-if="supabaseUser" class="mr-4" />
+      <div class="flex" v-if="supabaseUser">
+        <FeedbackAdd class="mr-4" />
         <NuxtLink to="/feedback">
           <Button class="relative"
             ><Bug class="w-4 h-4 mr-2" /> View feedback
