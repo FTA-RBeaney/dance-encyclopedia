@@ -1,17 +1,17 @@
 <template>
   <NuxtLink
-    class="space-y-3 h-full flex overflow-hidden"
+    class="space-y-3 h-full w-full flex overflow-hidden"
     aspect-ratio="square"
     :to="`/dancer/${dancer.name}`"
   >
-    <Card class="overflow-clip rounded-md">
+    <Card class="overflow-clip rounded-md w-full">
       <div>
         <img
           :src="dancer.image"
           :alt="dancer.name"
           width="150px"
           height="150px"
-          class="h-auto w-auto object-cover transition-all hover:scale-105 aspect-square"
+          class="h-auto w-full object-cover transition-all hover:scale-105 aspect-square"
           placeholder="https://res.cloudinary.com/dgbn0ttzf/image/upload/v1721434977/person-placeholder_ztoak6.png"
           @error="
             $event.target.src =

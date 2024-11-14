@@ -19,7 +19,7 @@
           <img
             :src="props.media.cover"
             :alt="props.media.name"
-            class="h-full object-cover max-w-[110%]"
+            class="h-full object-cover w-[110%] max-w-[110%]"
           />
         </div>
       </NuxtLink>

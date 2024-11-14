@@ -199,3 +199,7 @@ h3 {
   text-transform: uppercase !important;
   letter-spacing: 1px;
 }
+
+.ce-block__content {
+  max-width: 100%;
+}

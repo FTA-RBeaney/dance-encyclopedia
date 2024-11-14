@@ -40,7 +40,7 @@ function titleCase(string) {
   <div>
     <Heading title="Dancers" :description="`${dancers?.length} records`" />
     <div class="flex items-start">
-      <div class="w-3/12 mr-6">
+      <div class="w-3/12 xl:w-2/12 mr-6">
         <Card>
           <CardHeader>
             <CardTitle>Filter</CardTitle>
@@ -85,7 +85,7 @@ function titleCase(string) {
         </Card>
       </div>
 
-      <div class="w-9/12 ml-4">
+      <div class="w-9/12 xl:w-10/12 ml-4">
         <div class="relative">
           <div class="grid-container">
             <DancerCard

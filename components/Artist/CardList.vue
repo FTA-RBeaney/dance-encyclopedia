@@ -17,11 +17,13 @@ console.log("musc", musicians);
 
 <template>
   <div>
-    <ul class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 w-full">
+    <ul
+      class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-7 gap-4 w-full"
+    >
       <li
         v-for="(musician, i) in musicians"
         :key="`musician-${i}`"
-        class="flex"
+        class="flex w-full"
       >
         <ArtistCard :artistId="musician.id" :musician="musician" />
       </li>

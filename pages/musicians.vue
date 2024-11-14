@@ -71,14 +71,12 @@ onUnmounted(() => {
     <div>
       <Heading title="Artists" />
 
-      <div class="xl:flex justify-between g-5 gx-xl-10 mb-5 mb-xl-10 mt-4">
+      <div class="lg:flex justify-between g-5 gx-xl-10 mb-5 mb-xl-10 mt-4">
         <div class="lg:w-8/12 2xl:w-9/12">
           <ArtistFeaturedCard />
         </div>
 
-        <div
-          class="hidden xl:block lg:w-4/12 2xl:w-3/12 min-w-sm max-w-sm xl:ml-6"
-        >
+        <div class="hidden lg:block lg:w-4/12 2xl:w-3/12 min-w-sm lg:ml-6">
           <!-- <Card class="card card-flush h-xl-100" id="kt_player_widget_2">
             <div class="card-header bg-black">
               <h3 class="card-title fw-bold text-white">Player</h3>
