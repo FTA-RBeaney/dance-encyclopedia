@@ -3,7 +3,7 @@
     <div class="max-w-screen-xl mx-auto px-4 md:px-8">
       <div class="max-w-xl sm:text-center md:mx-auto">
         <h3 class="text-gray-800 text-3xl font-semibold sm:text-4xl">
-          See what others saying about us
+          See what others say:
         </h3>
         <p class="mt-3 text-gray-600">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc et est
