@@ -45,6 +45,18 @@ export default defineNuxtConfig({
     "notivue/animations.css", // Only needed if using default animations
   ],
 
+  notivue: {
+    position: "top-right",
+    limit: 4,
+    enqueue: true,
+    avoidDuplicates: true,
+    notifications: {
+      global: {
+        duration: 10000,
+      },
+    },
+  },
+
   modules: [
     "@nuxt/content",
     "@nuxtjs/tailwindcss",

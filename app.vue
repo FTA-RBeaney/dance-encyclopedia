@@ -10,11 +10,17 @@ useSeoMeta({
 import { ConfigProvider } from "radix-vue";
 
 const useIdFunction = () => useId();
+
+// push.success({
+//   title: "Message sent",
+//   message: "Your message has been successfully sent.",
+//   position: "top-right",
+// });
 </script>
 
 <template>
   <Notivue v-slot="item">
-    <Notification :item="item" />
+    <Notification :item="item" :theme="pastelTheme" />
   </Notivue>
   <ConfigProvider :use-id="useIdFunction">
     <div class="bg-background">

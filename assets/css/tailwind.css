@@ -188,9 +188,7 @@
   }
 }
 
-h1,
-h2,
-h3 {
+h1 {
   font-family: "Anton", sans-serif;
   font-family: "Jost", sans-serif;
   font-optical-sizing: auto;
