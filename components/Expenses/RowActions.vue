@@ -18,8 +18,6 @@ import {
   TrendingUp,
 } from "lucide-vue-next";
 
-const { $toast } = useNuxtApp();
-
 const supabase = useSupabaseClient();
 const supabaseUser = useSupabaseUser();
 
@@ -35,16 +33,11 @@ async function onDelete(id) {
       .delete()
       .eq("id", id);
 
-    $toast("Task deleted", {
-      description: "Task deleted",
-    });
+    push.success("Task deleted");
 
     if (error) throw error;
   } catch (error) {
-    $toast("There was an error", {
-      title: "There was an error",
-      description: error,
-    });
+    push.error(error);
   } finally {
   }
 }

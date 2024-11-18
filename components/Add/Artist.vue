@@ -5,7 +5,6 @@ import { toTypedSchema } from "@vee-validate/zod";
 import * as z from "zod";
 import { useForm } from "vee-validate";
 
-const { $toast } = useNuxtApp();
 const supabase = useSupabaseClient();
 
 const formSchema = toTypedSchema(
@@ -32,13 +31,8 @@ const onSubmit = handleSubmit(async (values) => {
       })
       .select();
 
-    $toast("You submitted the following values:", {
-      description: h(
-        "pre",
-        { class: "mt-2 w-full rounded-md bg-slate-950 p-4" },
-        h("code", { class: "text-white" }, JSON.stringify(values, null, 2))
-      ),
-    });
+      push.success("Artist submitted");
+
     if (error) {
       console.log(error);
     }

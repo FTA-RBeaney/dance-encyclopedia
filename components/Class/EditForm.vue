@@ -33,7 +33,6 @@ const props = defineProps({
   lesson: Object,
 });
 
-const { $toast } = useNuxtApp();
 const supabase = useSupabaseClient();
 
 const { data } = await supabase
@@ -106,13 +105,7 @@ const onSubmit = handleSubmit(async (values) => {
 
     reloadNuxtApp();
 
-    $toast("You submitted the following values:", {
-      description: h(
-        "pre",
-        { class: "mt-2 w-full rounded-md bg-slate-950 p-4" },
-        h("code", { class: "text-white" }, JSON.stringify(values, null, 2))
-      ),
-    });
+    push.success("Class edited");
     if (error) {
       console.log(error);
     }

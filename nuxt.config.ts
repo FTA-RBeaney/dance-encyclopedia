@@ -2,6 +2,14 @@
 import { vite as vidstack } from "vidstack/plugins";
 
 export default defineNuxtConfig({
+  devtools: {
+    enabled: true,
+
+    timeline: {
+      enabled: true,
+    },
+  },
+
   app: {
     head: {
       link: [
@@ -31,13 +39,11 @@ export default defineNuxtConfig({
     pageTransition: { name: "fade", mode: "out-in" },
     layoutTransition: { name: "fade", mode: "out-in" },
   },
-  devtools: {
-    enabled: true,
 
-    timeline: {
-      enabled: true,
-    },
-  },
+  css: [
+    "notivue/notification.css", // Only needed if using built-in <Notification />
+    "notivue/animations.css", // Only needed if using default animations
+  ],
 
   modules: [
     "@nuxt/content",
@@ -53,13 +59,17 @@ export default defineNuxtConfig({
     "@nuxt/scripts",
     "@vueuse/motion/nuxt",
     "nuxt-highcharts",
+    "notivue/nuxt",
   ],
+
   colorMode: {
     classSuffix: "",
   },
+
   alias: {
     pinia: "/node_modules/@pinia/nuxt/node_modules/pinia/dist/pinia.mjs",
   },
+
   algolia: {
     apiKey: "b17aa4af840f1188bd26139185711c9f",
     applicationId: "3GXH3T2OIX",
@@ -120,12 +130,16 @@ export default defineNuxtConfig({
       ignore: ["/"],
     },
   },
+
   vue: {
     compilerOptions: {
       isCustomElement: (tag) => tag.startsWith("media-"),
     },
   },
+
   vite: {
     plugins: [vidstack()],
   },
+
+  compatibilityDate: "2024-11-18",
 });

@@ -6,7 +6,6 @@ import { CirclePlus } from "lucide-vue-next";
 // Reuse `form` section
 const [UseTemplate, GridForm] = createReusableTemplate();
 const isDesktop = useMediaQuery("(min-width: 768px)");
-const { $toast } = useNuxtApp();
 const open = ref();
 const isOpen = ref(false);
 
@@ -31,6 +30,26 @@ const addAlbum = async (spotifyId) => {
   isOpen.value = false;
 
   try {
+    // Check if the record already exists
+    const { data: existingRecords, error: selectError } = await supabase
+      .from("albums")
+      .select("*")
+      .eq("id", spotifyId); // Use a unique identifier column
+
+    if (selectError) throw selectError;
+
+    if (existingRecords && existingRecords.length > 0) {
+      // Record exists
+      push.error("Album already exists");
+      console.error("Record already exists");
+      return { success: false, message: "Record already exists" };
+    }
+  } catch (error) {
+    console.error("Error adding record:", error.message);
+    return { success: false, message: error.message };
+  }
+
+  try {
     const { data, error } = await supabase
       .from("albums")
       .upsert(
@@ -42,21 +61,20 @@ const addAlbum = async (spotifyId) => {
           artist: spotifyInfo.value.artists[0].name,
           type: "album",
         },
-        { onConflict: "id" }
+        { onConflict: "id", ignoreDuplicates: true }
       )
       .select();
 
     if (error) {
       console.log(error);
     } else {
-      $toast("Success", {
-        description: "Video successfully added",
-      });
+      push.success("Album successfully added!");
     }
   } catch (error) {
-    console.log("EXISTS", error);
+    console.log(error);
   }
 
+  // then add the tracks from the album to the Songs page
   spotifyInfo.value.tracks.items.forEach(async (track, i) => {
     const audioAnalysisInfo = await getTrackInfo(track.id);
 
@@ -78,9 +96,6 @@ const addAlbum = async (spotifyId) => {
       if (error) {
         console.log(error);
       } else {
-        $toast("Success!", {
-          description: "Video successfully added.",
-        });
       }
     } catch (error) {
       console.log("EXISTS", error);

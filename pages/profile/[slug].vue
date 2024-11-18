@@ -4,7 +4,6 @@ import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 import { columns } from "../components/Favourites/columns.ts";
 import { CalendarIcon, Globe } from "lucide-vue-next";
-const { $toast } = useNuxtApp();
 import {
   CalendarDate,
   DateFormatter,
@@ -90,9 +89,9 @@ const handleSubmit = async (values) => {
       .eq("id", supabaseUser.value.id);
 
     if (error) {
-      $toast("Error", error);
+      push.error(error);
     } else {
-      $toast("Profile has been updated", {});
+      push.success("Profile has been updated");
     }
   } catch (error) {
     console.log("CAUGHT ERROR", error);

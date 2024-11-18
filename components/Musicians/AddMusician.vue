@@ -1,15 +1,12 @@
 <script setup>
 import { ref } from "vue";
-import { createReusableTemplate, useMediaQuery } from "@vueuse/core";
-const { $toast } = useNuxtApp();
+import { createReusableTemplate } from "@vueuse/core";
 
 // Reuse `form` section
 const [UseTemplate, GridForm] = createReusableTemplate();
-const isDesktop = useMediaQuery("(min-width: 768px)");
 const open = ref();
 const isOpen = ref(false);
 const mbid = ref("15ab8bb8-7348-4377-ab73-b7acdad1459c");
-const spotify_id = ref();
 const newArtistName = ref();
 const alertMessage = ref("");
 const artistExists = ref(false);
@@ -69,10 +66,7 @@ const addArtist = async (mbid) => {
       .select();
 
     if (data != null) {
-      $toast("This artist already exists!", {
-        description: "Please try again with another Artist MBID" + error,
-        variant: "destructive",
-      });
+      push.error("This artist already exists");
 
       isOpen.value = false;
       await delay(1000);
@@ -81,10 +75,7 @@ const addArtist = async (mbid) => {
       newArtistName.value = null;
       artistExists.value = false;
     } else {
-      $toast("Success!", {
-        description: "Artist successfully added.",
-        variant: "success",
-      });
+      push.success("Artist successfully added!");
       isOpen.value = false;
       await delay(1000);
       alertMessage.value = "";

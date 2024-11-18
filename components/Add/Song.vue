@@ -6,7 +6,6 @@ import { CirclePlus } from "lucide-vue-next";
 // Reuse `form` section
 const [UseTemplate, GridForm] = createReusableTemplate();
 const isDesktop = useMediaQuery("(min-width: 768px)");
-const { $toast } = useNuxtApp();
 const open = ref();
 const isOpen = ref(false);
 
@@ -78,9 +77,7 @@ const addAlbum = async (spotifyId) => {
     if (error) {
       console.log(error);
     } else {
-      $toast("Success!", {
-        description: "Track successfully added.",
-      });
+      push.success("Track successfully added!");
     }
   } catch (error) {
     console.log("EXISTS", error);

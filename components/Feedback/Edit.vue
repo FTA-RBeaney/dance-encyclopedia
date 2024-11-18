@@ -12,8 +12,6 @@ import { useForm } from "vee-validate";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-const { $toast } = useNuxtApp();
-
 const username = ref(props.feedback.feedback_title);
 const feedback_status = ref(props.feedback.feedback_status);
 const isOpen = ref(false);
@@ -44,18 +42,12 @@ const onSubmit = handleSubmit(async (values) => {
       .eq("id", props.feedback.id.value);
 
     if (error) {
-      $toast({
-        title: "Error!",
-        description: error,
-        variant: "destructive",
-      });
+      push.error(error);
 
       isOpen.value = false;
       await delay(1000);
     } else {
-      $toast("Task has been updated", {
-        description: `${props.feedback.id.value}: ${values.username} ${values.feedback_status}`,
-      });
+      push.success("Feedback edited");
       isOpen.value = false;
       await delay(1000);
     }

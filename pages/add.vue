@@ -19,7 +19,7 @@ import {
   today,
 } from "@internationalized/date";
 import { toDate } from "radix-vue/date";
-import TableCell from "../components/ui/table/TableCell.vue";
+import TableCell from "../components/Ui/table/TableCell.vue";
 
 const { $toast } = useNuxtApp();
 const supabase = useSupabaseClient();
