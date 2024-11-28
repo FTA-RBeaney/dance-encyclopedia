@@ -1,15 +1,18 @@
 <script setup lang="ts">
-import "vidstack/player/styles/default/theme.css";
-import "vidstack/player/styles/default/layouts/video.css";
+  import "vidstack/player/styles/default/theme.css";
+  import "vidstack/player/styles/default/layouts/video.css";
 
-import "vidstack/player";
-import "vidstack/player/layouts/default";
-import "vidstack/player/ui";
+  import "vidstack/player";
+  import "vidstack/player/layouts/default";
+  import "vidstack/player/ui";
 
-const props = defineProps({
-  video: String,
-  poster: String,
-});
+  const props = defineProps({
+    video: String,
+    poster: String,
+    start: String,
+    end: String,
+    tags: Array,
+  });
 </script>
 
 <template>
@@ -20,14 +23,10 @@ const props = defineProps({
       keep-alive
       playsinline
       style="width: 100%; height: 100%"
-    >
-      <media-provider playsinline>
-        <media-poster
-          class="vds-poster"
-          :src="poster"
-          alt="Girl walks into campfire with gnomes surrounding her friend ready for their next meal!"
-        />
-      </media-provider>
+      autoplay
+      :clipStartTime="start"
+      :clipEndTime="end">
+      <media-provider playsinline> </media-provider>
       <media-video-layout></media-video-layout>
       <media-controls>
         <media-controls-group></media-controls-group>
@@ -38,7 +37,7 @@ const props = defineProps({
 </template>
 
 <style>
-iframe.vds-youtube[data-no-controls] {
-  height: 100% !important;
-}
+  iframe.vds-youtube[data-no-controls] {
+    height: 100% !important;
+  }
 </style>
