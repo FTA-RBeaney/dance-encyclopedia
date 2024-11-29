@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script setup>
 import {
   firstNavigation,
   danceNavigation,
@@ -7,7 +7,7 @@ import {
 import { playlists } from "~/data/playlists";
 import * as lucideIcons from "lucide-vue-next";
 
-const search = ref<string>("");
+const search = ref("");
 
 const user = {
   avatar: "https://randomuser.me/api/portraits/med/men/2.jpg",
@@ -143,9 +143,9 @@ const { data, refresh } = await useAsyncData("sidebarPosts", async () => {
       <Navbar />
     </Card>
   </div>
-  <div class="min-h-screen lg:flex lg:grid grid-cols-9">
+  <div class="min-h-screen lg:flex">
     <nav
-      class="fixed top-0 left-0 w-full h-full border-r bg-white space-y-8 sm:w-80 lg:col-span-1"
+      class="fixed top-0 left-0 w-full h-full border-r bg-white space-y-8 sm:w-80"
     >
       <div class="flex flex-col h-full bg-white">
         <div class="h-20 flex items-center px-8">
@@ -380,10 +380,7 @@ const { data, refresh } = await useAsyncData("sidebarPosts", async () => {
       </div>
     </aside> -->
 
-    <div
-      id="main-content"
-      class="main-content relative w-full lg:col-span-10 lg:col-start-2"
-    >
+    <div id="main-content" class="main-content relative w-full ml-80">
       <Suspense>
         <div class="mx-auto">
           <slot />

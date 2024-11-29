@@ -28,6 +28,5 @@
         </div>
       </div>
     </div>
-    <UiToastToaster />
   </div>
 </template>

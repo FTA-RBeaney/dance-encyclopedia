@@ -7,7 +7,7 @@ definePageMeta({
     name: "slide",
     mode: "out-in",
   },
-  layout: "custom",
+  layout: "feed",
 });
 
 import { AlertCircle } from "lucide-vue-next";
@@ -47,7 +47,7 @@ onMounted(() => {
 
 <template>
   <div class="grid grid-cols-12">
-    <div class="m-6 xl:pb-8 col-span-6">
+    <div class="m-6 xl:pb-8 col-span-9">
       <Alert variant="note" class="mb-6">
         <AlertCircle class="w-4 h-4" />
         <AlertTitle>Note</AlertTitle>
@@ -66,7 +66,7 @@ onMounted(() => {
       <LoadingCircle v-if="showHideSpinner" />
       <FeedList v-else :key="refreshKey" />
     </div>
-    <div class="lg:w-4/12 lg:pr-4 m-6 lg:mx-0 col-span-5">
+    <div class="lg:pr-4 m-6 lg:mx-0 col-span-3">
       <Card class="p-4">
         <UserList class="px-2" />
       </Card>

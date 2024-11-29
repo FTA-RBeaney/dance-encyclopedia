@@ -243,7 +243,8 @@ const lengthInSeconds = (start, end) => {
                       </p>
                       <div>
                         <Badge
-                          v-for="tag in userVideos[i].tags"
+                          v-for="(tag, i) in userVideos[i].tags"
+                          :key="`tag${i}`"
                           class="rounded-sm mt-2 mr-1"
                         >
                           {{ tag }}

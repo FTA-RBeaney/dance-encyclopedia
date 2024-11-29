@@ -15,14 +15,9 @@
             id="main-content"
             class="main-content col-span-4 lg:col-span-5 relative"
           >
-            <div class="lg:flex mx-auto">
-              <div class="lg:w-8/12">
+            <div class="mx-auto">
+              <div class="lg:w-12/12">
                 <slot />
-              </div>
-              <div class="lg:w-4/12 lg:pr-4 m-6 lg:mx-0">
-                <Card class="p-4">
-                  <UserList class="px-2" />
-                </Card>
               </div>
             </div>
           </div>

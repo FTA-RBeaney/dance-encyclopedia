@@ -47,7 +47,7 @@ onUnmounted(() => {
 <template>
   <div class="dark:bg-black/[.1] dark:border-gray-700 dark:text-white">
     <div class="flex flex-row items-center justify-between py-6 px-4">
-      <!-- <NuxtLink to="/" class="text-xl font-medium">
+      <NuxtLink to="/" class="text-xl font-medium">
         <div class="relative z-20 flex items-center text-lg font-medium">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -65,7 +65,7 @@ onUnmounted(() => {
           </svg>
           <strong>Dance Encyclopedia</strong>
         </div>
-      </NuxtLink> -->
+      </NuxtLink>
       <Admin v-if="supabaseUser" />
 
       <div class="flex" v-if="supabaseUser">

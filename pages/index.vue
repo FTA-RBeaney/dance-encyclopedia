@@ -4,7 +4,7 @@ definePageMeta({
     name: "slide",
     mode: "out-in",
   },
-  layout: "custom",
+  layout: "homepage",
 });
 
 import { Coffee } from "lucide-vue-next";

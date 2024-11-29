@@ -33,7 +33,7 @@ const { data: isAdmin, error } = await supabase
     class="sidebar pb-12 lg:block dark:bg-black/[.1] dark:border-gray-700 dark:text-white"
   >
     <div class="space-y-4 py-4">
-      <div class="py-2">
+      <div class="px-3 py-2">
         <NuxtLink
           :to="item.path"
           v-for="(item, i) in firstNavigation"
@@ -62,7 +62,7 @@ const { data: isAdmin, error } = await supabase
         </NuxtLink>
       </div>
 
-      <div class="py-2">
+      <div class="px-3 py-2">
         <div class="mb-2 px-4 text-lg font-semibold tracking-tight">Dance</div>
         <div class="space-y-1">
           <NuxtLink
@@ -87,7 +87,8 @@ const { data: isAdmin, error } = await supabase
           </NuxtLink>
         </div>
       </div>
-      <div class="py-2">
+
+      <div class="px-3 py-2">
         <div class="mb-2 px-4 text-lg font-semibold tracking-tight">Music</div>
         <div class="space-y-1">
           <NuxtLink
@@ -114,7 +115,7 @@ const { data: isAdmin, error } = await supabase
         </div>
       </div>
 
-      <div class="py-2" v-if="isAdmin">
+      <div class="px-3 py-2" v-if="isAdmin">
         <div class="mb-2 px-4 text-lg font-semibold tracking-tight">
           Sunshine Swing
         </div>
