@@ -158,8 +158,8 @@ defineEmits<{
           :disabled="!table.getCanPreviousPage()"
           @click="table.previousPage()"
         >
-          Previous
-        </Button>
+          Previous</Button
+        >
         <div
           class="flex w-[100px] items-center justify-center text-sm font-medium"
         >

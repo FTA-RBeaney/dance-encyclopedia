@@ -61,6 +61,17 @@ const search = async (searchString = "") => {
   searching.value = false;
 };
 
+const { data: musicians } = await useAsyncData(
+  "cardListMusicians",
+  async () => {
+    const { data, error } = await supabase
+      .from("musicians")
+      .select()
+      .order("name", { ascending: true });
+    return data;
+  }
+);
+
 onUnmounted(() => {
   supabase.removeChannel(channel);
 });
@@ -285,29 +296,31 @@ onUnmounted(() => {
       <div class="w-full">
         <div>
           <Card>
-            <!-- <CardHeader
-              ><CardTitle>All artists</CardTitle>
-              <CardDescription
-                >{{ allArtists?.length }} records</CardDescription
-              ></CardHeader
-            > -->
             <CardHeader>
               <CardTitle>All artists</CardTitle>
             </CardHeader>
             <CardContent>
-              <ArtistCardList />
-              <!-- <div v-if="!isToggled && !noResults">
-                <ArtistCardList :musicians="results" />
+              <div v-if="noResults && !isToggled">
+                <ArtistCardList />
               </div>
 
               <MusiciansDataTable
                 :columns="columns"
-                :data="allArtists"
+                :data="results"
                 class="mt-4"
-                v-else-if="isToggled"
+                v-if="!noResults"
               />
 
-              <div v-else>
+              <MusiciansDataTable
+                :columns="columns"
+                :data="musicians"
+                class="mt-4"
+                v-if="isToggled && noResults"
+              />
+
+              <!-- <pre>{{ results }}</pre> -->
+
+              <!-- <div v-else>
                 <ArtistCardList :musicians="allArtists" />
               </div> -->
             </CardContent>

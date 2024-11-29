@@ -4,7 +4,7 @@ definePageMeta({
     name: "slide",
     mode: "out-in",
   },
-  layout: "homepage",
+  layout: "custom",
 });
 
 import { Coffee } from "lucide-vue-next";
@@ -38,6 +38,7 @@ onMounted(async () => {
   <div class="h-full" :class="!supabaseUser && 'mx-auto'">
     <LoadingCircle v-if="showHideSpinner" />
     <Hero v-else class="h-full" :user="supabaseUser" />
+
     <Testimonials />
     <!-- <header v-else class="h-full">
 

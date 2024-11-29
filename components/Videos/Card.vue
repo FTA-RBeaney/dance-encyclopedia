@@ -1,3 +1,29 @@
+<script setup>
+const props = defineProps({
+  media: Object,
+  isLoaded: Boolean,
+});
+
+const isLoaded = ref(false);
+
+onMounted(() => {
+  isLoaded.value = true;
+});
+
+const handleMouseEnter = (e) => {
+  const vid = e.target;
+  vid.muted = true;
+  vid.play();
+};
+
+const handleMouseLeave = (e) => {
+  const vid = e.target;
+  vid.muted = true;
+  vid.currentTime = 0;
+  vid.pause();
+};
+</script>
+
 <template>
   <div
     class="p-2 rounded-xl hover:bg-emphasis transition-colors cursor-pointer"
@@ -59,32 +85,6 @@
     </div>
   </div>
 </template>
-
-<script setup>
-const props = defineProps({
-  media: Object,
-  isLoaded: Boolean,
-});
-
-const isLoaded = ref(false);
-
-onMounted(() => {
-  isLoaded.value = true;
-});
-
-const handleMouseEnter = (e) => {
-  const vid = e.target;
-  vid.muted = true;
-  vid.play();
-};
-
-const handleMouseLeave = (e) => {
-  const vid = e.target;
-  vid.muted = true;
-  vid.currentTime = 0;
-  vid.pause();
-};
-</script>
 
 <style>
 .video-container > div {

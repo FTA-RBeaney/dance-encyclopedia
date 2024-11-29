@@ -1,7 +1,53 @@
+<script setup>
+const colorMode = useColorMode();
+import { Bug, Settings, BookHeart } from "lucide-vue-next";
+const supabaseUser = useSupabaseUser();
+const supabase = useSupabaseClient();
+
+const feedbackList = ref([]);
+
+const { data: isAdmin, error } = await supabase
+  .from("profiles")
+  .select("is_admin")
+  .eq("id", supabaseUser?.value?.id);
+
+const avatar = computed(() => supabaseUser?.value.user_metadata.avatar_url);
+const fullName = computed(() => supabaseUser?.value.user_metadata.full_name);
+
+const getFeedback = async () => {
+  const { data: feedback } = await supabase
+    .from("feedback")
+    .select("*", { count: "exact" })
+    .neq("status", "done");
+
+  feedbackList.value = feedback;
+};
+
+const channel = supabase
+  .channel("public:feedback")
+  .on(
+    "postgres_changes",
+    {
+      event: "*",
+      schema: "public",
+      table: "feedback",
+    },
+
+    (payload) => getFeedback()
+  )
+  .subscribe();
+
+await getFeedback();
+
+onUnmounted(() => {
+  supabase.removeChannel(channel);
+});
+</script>
+
 <template>
   <div class="dark:bg-black/[.1] dark:border-gray-700 dark:text-white">
     <div class="flex flex-row items-center justify-between py-6 px-4">
-      <NuxtLink to="/" class="text-xl font-medium">
+      <!-- <NuxtLink to="/" class="text-xl font-medium">
         <div class="relative z-20 flex items-center text-lg font-medium">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -19,7 +65,7 @@
           </svg>
           <strong>Dance Encyclopedia</strong>
         </div>
-      </NuxtLink>
+      </NuxtLink> -->
       <Admin v-if="supabaseUser" />
 
       <div class="flex" v-if="supabaseUser">
@@ -67,49 +113,3 @@
     </div>
   </div>
 </template>
-
-<script setup>
-const colorMode = useColorMode();
-import { Bug, Settings, BookHeart } from "lucide-vue-next";
-const supabaseUser = useSupabaseUser();
-const supabase = useSupabaseClient();
-
-const feedbackList = ref([]);
-
-const { data: isAdmin, error } = await supabase
-  .from("profiles")
-  .select("is_admin")
-  .eq("id", supabaseUser?.value?.id);
-
-const avatar = computed(() => supabaseUser?.value.user_metadata.avatar_url);
-const fullName = computed(() => supabaseUser?.value.user_metadata.full_name);
-
-const getFeedback = async () => {
-  const { data: feedback } = await supabase
-    .from("feedback")
-    .select("*", { count: "exact" })
-    .neq("status", "done");
-
-  feedbackList.value = feedback;
-};
-
-const channel = supabase
-  .channel("public:feedback")
-  .on(
-    "postgres_changes",
-    {
-      event: "*",
-      schema: "public",
-      table: "feedback",
-    },
-
-    (payload) => getFeedback()
-  )
-  .subscribe();
-
-await getFeedback();
-
-onUnmounted(() => {
-  supabase.removeChannel(channel);
-});
-</script>

@@ -11,8 +11,6 @@ const { data: musicians } = await useAsyncData(
     return data;
   }
 );
-
-console.log("musc", musicians);
 </script>
 
 <template>
