@@ -17,7 +17,11 @@
         </BreadcrumbItem>
       </BreadcrumbList>
     </Breadcrumb>
-    <Heading v-if="response?.name" :title="response.name" class="mb-6" />
+    <Heading
+      v-if="response?.name"
+      :title="response.name"
+      class="mb-6"
+    />
     <a
       v-if="response?.external_urls?.spotify"
       :href="response?.external_urls?.spotify"
@@ -34,13 +38,13 @@
 </template>
 
 <script setup>
-const nuxtApp = useNuxtApp();
-const route = useRoute();
+  const nuxtApp = useNuxtApp();
+  const route = useRoute();
 
-const getArtistAlbum = nuxtApp.getArtistAlbum;
-const albumId = route.params.slug;
-const response = ref();
+  const getArtistAlbum = nuxtApp.getArtistAlbum;
+  const albumId = route.params.slug;
+  const response = ref();
 
-const res = await getArtistAlbum(albumId);
-response.value = res;
+  const res = await getArtistAlbum(albumId);
+  response.value = res;
 </script>

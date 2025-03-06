@@ -1,7 +1,7 @@
 export default defineNuxtPlugin(async (nuxtApp) => {
   const runtimeConfig = useRuntimeConfig();
-  const clientID = runtimeConfig.public.spotifyClientID;
-  const clientSecret = runtimeConfig.public.spotifyClientSecret;
+  const clientID = "13bb1428eae64e859182a5744c991e93";
+  const clientSecret = "d0df83bb2a3749f8ba4832815d8ef74c";
   const refreshToken = runtimeConfig.public.spotifyRefreshToken;
 
   const TOKEN_ENDPOINT = "https://accounts.spotify.com/api/token";
@@ -35,14 +35,11 @@ export default defineNuxtPlugin(async (nuxtApp) => {
   nuxtApp.getArtistAlbums = async (id) => {
     const { access_token: accessToken } = await getAccessToken();
 
-    return fetch(
-      `https://api.spotify.com/v1/artists/${id}/albums?include_groups=album&limit=50`,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    ).then((response) => response.json());
+    return fetch(`https://api.spotify.com/v1/artists/${id}/albums?include_groups=album&limit=50`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }).then((response) => response.json());
   };
 
   nuxtApp.getArtistAlbum = async (id) => {

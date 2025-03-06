@@ -1,8 +1,6 @@
 <template>
   <div class="w-full">
-    <div
-      class="flex flex-col sm:flex-row max-w-screen-lg justify-start items-start"
-    >
+    <div class="flex flex-col sm:flex-row max-w-screen-lg justify-start items-start">
       <div class="w-full sm:w-4/12 sm:mr-6">
         <PlaylistMusicPlayer
           :currentTrack="currentTrack"
@@ -24,25 +22,20 @@
         <div class="flex flex-col w-full start">
           <div class="flex flex-col px-5 py-3">
             <div class="border-b pb-1 flex justify-between items-center mb-2">
-              <span class="text-base font-semibold text-gray-700">
-                Playlist</span
-              >
+              <span class="text-base font-semibold text-gray-700"> Playlist</span>
               <img
                 class="w-4 cursor-pointer"
                 src="https://p.kindpng.com/picc/s/152-1529312_filter-ios-filter-icon-png-transparent-png.png"
               />
             </div>
 
-            <div v-for="(track, index) in props.tracks" :key="`item${index}`">
+            <div
+              v-for="(track, index) in props.tracks"
+              :key="`item${index}`"
+            >
               <div>
                 <PlaylistTrack
-                  v-if="track?.track?.preview_url || track.preview_url"
-                  @click="
-                    testCall(
-                      track.track || track,
-                      track?.track?.album?.images[0].url || props.trackImage
-                    )
-                  "
+                  @click="testCall(track.track || track, track?.track?.album?.images[0].url || props.trackImage)"
                   :trackId="track?.track?.id || track.id"
                   :track="track"
                   :trackImage="props.trackImage"
@@ -58,51 +51,45 @@
 </template>
 
 <script setup>
-const props = defineProps({
-  tracks: Object,
-  trackImage: String,
-});
+  const props = defineProps({
+    tracks: Object,
+    trackImage: String,
+  });
 
-const currentTrack = ref(props.tracks[0]);
-const myChild = ref(null);
-const nuxtApp = useNuxtApp();
-const getRecommendations = nuxtApp.getRecommendations;
+  const currentTrack = ref(props.tracks[0]);
+  const myChild = ref(null);
+  const nuxtApp = useNuxtApp();
+  const getRecommendations = nuxtApp.getRecommendations;
 
-const selectedTrackId = ref();
-const selectedTrackArtistId = ref();
-const recommendations = ref();
+  const selectedTrackId = ref();
+  const selectedTrackArtistId = ref();
+  const recommendations = ref();
 
-const refreshNewTrack = (e, trackImage) => {
-  selectedTrackId.value = e.id;
-  selectedTrackArtistId.value = e.artists[0].id;
-  myChild.value.changeTrack(e, trackImage);
-};
+  const refreshNewTrack = (e, trackImage) => {
+    selectedTrackId.value = e.id;
+    selectedTrackArtistId.value = e.artists[0].id;
+    myChild.value.changeTrack(e, trackImage);
+  };
 
-const refreshRecommendations = async () => {
-  recommendations.value = await getRecommendations(
-    selectedTrackArtistId.value,
-    selectedTrackId.value,
-    20
-  );
-};
+  const refreshRecommendations = async () => {
+    recommendations.value = await getRecommendations(selectedTrackArtistId.value, selectedTrackId.value, 20);
+  };
 
-const testCall = (e, trackImage) => {
-  console.log("testCall", e, trackImage);
-  refreshNewTrack(e, trackImage);
-  refreshRecommendations();
-};
+  const testCall = (e, trackImage) => {
+    console.log("testCall", e, trackImage);
+    refreshNewTrack(e, trackImage);
+    refreshRecommendations();
+  };
 
-const changeTrack = (e, trackImage) => {
-  refreshNewTrack(e, trackImage);
-};
+  const changeTrack = (e, trackImage) => {
+    refreshNewTrack(e, trackImage);
+  };
 
-const filteredItems = computed(() =>
-  recommendations?.value?.tracks.filter((track) => track.preview_url)
-);
+  const filteredItems = computed(() => recommendations?.value?.tracks.filter((track) => track.preview_url));
 </script>
 
 <style scoped>
-.sticky-div {
-  position: sticky;
-}
+  .sticky-div {
+    position: sticky;
+  }
 </style>

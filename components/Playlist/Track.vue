@@ -27,7 +27,9 @@
               class="p-0"
               ><IconsHeartFull
             /></FavouriteButton>
-            <FavouriteButton v-else @click="addFavourite(track.track)"
+            <FavouriteButton
+              v-else
+              @click="addFavourite(track.track)"
               ><IconsHeartOutline
             /></FavouriteButton>
           </TooltipTrigger>
@@ -41,64 +43,64 @@
 </template>
 
 <script setup>
-const supabaseUser = useSupabaseUser();
-const supabase = useSupabaseClient();
-const props = defineProps({
-  trackId: String,
-  track: Object,
-  trackImage: String,
-});
+  const supabaseUser = useSupabaseUser();
+  const supabase = useSupabaseClient();
+  const props = defineProps({
+    trackId: String,
+    track: Object,
+    trackImage: String,
+  });
 
-const isFavourite = ref();
-// check favourites table to see if current page is a favourite
-if (supabaseUser.value) {
-  const { data, error } = await supabase
-    .from("favourites")
-    .select("favourite_id")
-    .eq("favourite_id", supabaseUser.value.id + props.trackId);
-
-  if (data.length > 0) {
-    isFavourite.value = true;
-  }
-}
-
-// add favourite functionality
-async function addFavourite(track) {
-  isFavourite.value = true;
-
-  try {
+  const isFavourite = ref();
+  // check favourites table to see if current page is a favourite
+  if (supabaseUser.value) {
     const { data, error } = await supabase
       .from("favourites")
-      .upsert({
-        favourite_id: supabaseUser.value.id + track.id,
-        user_id: supabaseUser.value.id,
-        post_id: track.id,
-        name: track.name,
-        type: "song",
-      })
-      .select();
+      .select("favourite_id")
+      .eq("favourite_id", supabaseUser.value.id + props.trackId);
 
-    if (error) throw error;
-  } catch (error) {
-    alert(error.message);
-  } finally {
+    if (data.length > 0) {
+      isFavourite.value = true;
+    }
   }
-}
 
-//remove favourite
-async function removeFavourite(track) {
-  isFavourite.value = false;
+  // add favourite functionality
+  async function addFavourite(track) {
+    isFavourite.value = true;
 
-  try {
-    const { data } = await supabase
-      .from("favourites")
-      .delete()
-      .eq("favourite_id", supabaseUser.value.id + track.id);
+    try {
+      const { data, error } = await supabase
+        .from("favourites")
+        .upsert({
+          favourite_id: supabaseUser.value.id + track.id,
+          user_id: supabaseUser.value.id,
+          post_id: track.id,
+          name: track.name,
+          type: "song",
+        })
+        .select();
 
-    if (error) throw error;
-  } catch (error) {
-    alert(error.message);
-  } finally {
+      if (error) throw error;
+    } catch (error) {
+      alert(error.message);
+    } finally {
+    }
   }
-}
+
+  //remove favourite
+  async function removeFavourite(track) {
+    isFavourite.value = false;
+
+    try {
+      const { data } = await supabase
+        .from("favourites")
+        .delete()
+        .eq("favourite_id", supabaseUser.value.id + track.id);
+
+      if (error) throw error;
+    } catch (error) {
+      alert(error.message);
+    } finally {
+    }
+  }
 </script>
