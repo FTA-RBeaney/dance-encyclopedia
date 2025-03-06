@@ -1,37 +1,25 @@
 <script setup>
-import {
-  firstNavigation,
-  danceNavigation,
-  musicNavigation,
-} from "../data/navigation";
-import { playlists } from "~/data/playlists";
-import * as lucideIcons from "lucide-vue-next";
-import { HandCoins, School, TicketSlash } from "lucide-vue-next";
-const supabaseUser = useSupabaseUser();
-const supabase = useSupabaseClient();
+  import { firstNavigation, danceNavigation, musicNavigation } from "../data/navigation";
+  import { playlists } from "~/data/playlists";
+  import * as lucideIcons from "lucide-vue-next";
+  import { HandCoins, School, TicketSlash, CirclePlay } from "lucide-vue-next";
+  const supabaseUser = useSupabaseUser();
+  const supabase = useSupabaseClient();
 
-const { data, refresh } = await useAsyncData("sidebarPosts", async () => {
-  try {
-    const { data, error } = await supabase
-      .from("posts")
-      .select("*")
-      .is("parent", null);
-    return data;
-  } catch (error) {
-    alert(error.message);
-  }
-});
+  const { data, refresh } = await useAsyncData("sidebarPosts", async () => {
+    try {
+      const { data, error } = await supabase.from("posts").select("*").is("parent", null);
+      return data;
+    } catch (error) {
+      alert(error.message);
+    }
+  });
 
-const { data: isAdmin, error } = await supabase
-  .from("profiles")
-  .select("is_admin")
-  .eq("id", supabaseUser?.value?.id);
+  const { data: isAdmin, error } = await supabase.from("profiles").select("is_admin").eq("id", supabaseUser?.value?.id);
 </script>
 
 <template>
-  <div
-    class="sidebar pb-12 lg:block dark:bg-black/[.1] dark:border-gray-700 dark:text-white"
-  >
+  <div class="sidebar pb-12 lg:block dark:bg-black/[.1] dark:border-gray-700 dark:text-white">
     <div class="space-y-4 py-4">
       <div class="px-3 py-2">
         <NuxtLink
@@ -115,10 +103,11 @@ const { data: isAdmin, error } = await supabase
         </div>
       </div>
 
-      <div class="px-3 py-2" v-if="isAdmin">
-        <div class="mb-2 px-4 text-lg font-semibold tracking-tight">
-          Sunshine Swing
-        </div>
+      <div
+        class="px-3 py-2"
+        v-if="isAdmin"
+      >
+        <div class="mb-2 px-4 text-lg font-semibold tracking-tight">Sunshine Swing</div>
         <div class="space-y-1">
           <NuxtLink to="/classes">
             <Button
@@ -126,7 +115,10 @@ const { data: isAdmin, error } = await supabase
               class="w-full flex justify-between items-center relative font-normal"
             >
               <div class="flex items-center">
-                <School :stroke-width="1.5" class="mr-2 w-4 h-4" />
+                <School
+                  :stroke-width="1.5"
+                  class="mr-2 w-4 h-4"
+                />
                 <div class="flex items-center">Classes</div>
               </div>
             </Button>
@@ -137,7 +129,10 @@ const { data: isAdmin, error } = await supabase
               class="w-full flex justify-between items-center relative font-normal"
             >
               <div class="flex items-center">
-                <TicketSlash :stroke-width="1.5" class="mr-2 w-4 h-4" />
+                <TicketSlash
+                  :stroke-width="1.5"
+                  class="mr-2 w-4 h-4"
+                />
                 <div class="flex items-center">Socials</div>
               </div>
             </Button>
@@ -148,8 +143,25 @@ const { data: isAdmin, error } = await supabase
               class="w-full flex justify-between items-center relative font-normal"
             >
               <div class="flex items-center">
-                <HandCoins :stroke-width="1.5" class="mr-2 w-4 h-4" />
+                <HandCoins
+                  :stroke-width="1.5"
+                  class="mr-2 w-4 h-4"
+                />
                 <div class="flex items-center">Expenses</div>
+              </div>
+            </Button>
+          </NuxtLink>
+          <NuxtLink to="/user-videos">
+            <Button
+              variant="ghost"
+              class="w-full flex justify-between items-center relative font-normal"
+            >
+              <div class="flex items-center">
+                <CirclePlay
+                  :stroke-width="1.5"
+                  class="mr-2 w-4 h-4"
+                />
+                <div class="flex items-center">Class videos</div>
               </div>
             </Button>
           </NuxtLink>
@@ -160,9 +172,9 @@ const { data: isAdmin, error } = await supabase
 </template>
 
 <style scoped lang="scss">
-.router-link-active {
-  button {
-    background-color: hsl(var(--accent));
+  .router-link-active {
+    button {
+      background-color: hsl(var(--accent));
+    }
   }
-}
 </style>
